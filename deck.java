@@ -41,5 +41,10 @@ public class Deck {
     public void drawcard(){
         cards.remove(0);
     }
+
+    public void randomise(){
+        shuffle();
+        
+    }
 }
 
