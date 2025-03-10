@@ -42,16 +42,6 @@ public class Deck {
         cards.remove(0);
     }
 
-<<<<<<< HEAD
-    public boolean alwaystrue(){
-        return true;
-=======
-    public void randomise(){
-        shuffle();
-        int x = 5
-
-        
->>>>>>> df85e9512ba367663838e5164a3643fa69a4dbf7
-    }
+    
 }
 
