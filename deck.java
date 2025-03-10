@@ -42,9 +42,6 @@ public class Deck {
         cards.remove(0);
     }
 
-    public void randomise(){
-        shuffle();
-        
-    }
+    
 }
 

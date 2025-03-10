@@ -1,4 +1,4 @@
-import java.util.Collections;
+
 
 public class PlayerCardPile {
     List<Card> stack;
@@ -7,7 +7,7 @@ public class PlayerCardPile {
         return stack;
     }
 
-    public int calcualteStackScore(){
+    public int calculateStackScore(){
         int sum = 0;
         for(Card c : stack){
             sum += c.getValue();
