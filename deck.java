@@ -41,5 +41,9 @@ public class Deck {
     public void drawcard(){
         cards.remove(0);
     }
+
+    public boolean alwaystrue(){
+        return true;
+    }
 }
 
