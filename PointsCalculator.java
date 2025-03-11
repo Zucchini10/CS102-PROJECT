@@ -1,13 +1,13 @@
 import java.util.*;
 
 public class PointsCalculator {
-    private List<Player> players;
+    protected List<Player> players;
 
     public PointsCalculator(List<Player> players){
         this.players = players;
     }
     
-    public List<Player> getPlayersWithMaxCardColor(String color, List<Player> players){
+    public List<Player> getPlayersWithMaxCardColor(String color){
         int maxCount = 0;
         List<Player> max = new ArrayList<>();
 
@@ -32,14 +32,14 @@ public class PointsCalculator {
     }
 
     //"RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE"
-    public HashMap <Card, List<Player>> MajorityDecider (List<Player> players){
+    public HashMap <Card, List<Player>> majorityDecider (){
         HashMap<Card, List<Player>> result = new HashMap<>();
-        result.put(new Card("RED", 0, true), getPlayersWithMaxCardColor("RED", players));
-        result.put(new Card("BLUE", 0, true), getPlayersWithMaxCardColor("BLUE", players));
-        result.put(new Card("GREEN", 0, true), getPlayersWithMaxCardColor("GREEN", players));
-        result.put(new Card("YELLOW", 0, true), getPlayersWithMaxCardColor("YELLOW", players));
-        result.put(new Card("PURPLE", 0, true), getPlayersWithMaxCardColor("PURPLE", players));
-        result.put(new Card("ORANGE", 0, true), getPlayersWithMaxCardColor("ORANGE", players));
+        result.put(new Card("RED", 0, true), getPlayersWithMaxCardColor("RED"));
+        result.put(new Card("BLUE", 0, true), getPlayersWithMaxCardColor("BLUE"));
+        result.put(new Card("GREEN", 0, true), getPlayersWithMaxCardColor("GREEN"));
+        result.put(new Card("YELLOW", 0, true), getPlayersWithMaxCardColor("YELLOW"));
+        result.put(new Card("PURPLE", 0, true), getPlayersWithMaxCardColor("PURPLE"));
+        result.put(new Card("ORANGE", 0, true), getPlayersWithMaxCardColor("ORANGE"));
 
         return result;
     }
@@ -58,14 +58,14 @@ public class PointsCalculator {
         return mostColor;
     }
 
-    public int getMostScore(List<Player> players){
+    public int getMostScore(){
         int mostScore = Integer.MIN_VALUE;
 
         if(players == null){
             return mostScore;
         }
 
-        HashMap<Card, List<Player>> majority = MajorityDecider(players);
+        HashMap<Card, List<Player>> majority = majorityDecider();
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
@@ -84,7 +84,7 @@ public class PointsCalculator {
         return mostScore;
     }
 
-    public Player getPlayerWithMostScore(List<Player> players){
+    public Player getPlayerWithMostScore(){
         int mostScore = Integer.MIN_VALUE;
         Player mostPlayer = null;
 
@@ -92,7 +92,7 @@ public class PointsCalculator {
             return mostPlayer;
         }
 
-        HashMap<Card, List<Player>> majority = MajorityDecider(players);
+        HashMap<Card, List<Player>> majority = majorityDecider();
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
@@ -112,14 +112,14 @@ public class PointsCalculator {
         return mostPlayer;
     }
 
-    public int getLeastScore(List<Player> players){
+    public int getLeastScore(){
         int leastScore = Integer.MAX_VALUE;
 
         if(players == null){
             return leastScore;
         }
 
-        HashMap<Card, List<Player>> majority = MajorityDecider(players);
+        HashMap<Card, List<Player>> majority = majorityDecider();
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
@@ -138,7 +138,7 @@ public class PointsCalculator {
         return leastScore;
     }
 
-    public Player getPlayerWithLeastScore(List<Player> players){
+    public Player getPlayerWithLeastScore(){
         int leastScore = Integer.MAX_VALUE;
         Player leastPlayer = null;
 
@@ -146,7 +146,7 @@ public class PointsCalculator {
             return leastPlayer;
         }
 
-        HashMap<Card, List<Player>> majority = MajorityDecider(players);
+        HashMap<Card, List<Player>> majority = majorityDecider();
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);

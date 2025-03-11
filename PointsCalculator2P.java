@@ -6,7 +6,7 @@ public class PointsCalculator2P extends PointsCalculator {
     }
 
     @Override
-    public List<Player> getPlayersWithMaxCardColor(String color, List<Player> players){
+    public List<Player> getPlayersWithMaxCardColor(String color){
         Player first = players.get(0);
         Player second = players.get(1);
 
