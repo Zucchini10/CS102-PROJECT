@@ -1,7 +1,7 @@
 
 
 public class PlayerCardPile {
-    List<Card> stack;
+    private List<Card> stack;
 
     public List<Card> getStack() {
         return stack;
