@@ -23,7 +23,7 @@ public class Parade {
 
         System.out.print("Enter the number of players (2 or more): ");
         int numPlayers = scanner.nextInt();
-
+        
         if(numPlayers < 2) {
             System.out.println("Invalid number of players.");
             return;

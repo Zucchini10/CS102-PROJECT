@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class aiPlayer extends Player {
+    
     public aiPlayer(String name) {
         super(name);
         setAI(true);

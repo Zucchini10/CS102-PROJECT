@@ -4,7 +4,7 @@ public class Card {
     // private boolean faceUp;
 
     public Card(String colour, int value, boolean faceUp){
-        this.colour;
+        this.colour = colour;
         this.value = value;
         // this.faceUp = faceUp;
     }

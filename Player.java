@@ -11,7 +11,7 @@ class Player {
     public Player (String name) {
         this.name = name;
         hand = new ArrayList<Card>;
-        stack = new PlayerCardPile;
+        stack = new PlayerCardPile();
         score = 0;
         isAI = false;
     }
