@@ -40,12 +40,12 @@ public class Parade {
 
         List<Card> parade = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            parade.add(deck.remove(0));
+            parade.add(deck.drawcard(i));
         }
 
         for (Player player : players) {
             for (int i = 0; i < 5; i++) {
-                player.getHand().add(deck.remove(0));
+                player.getHand().add(deck.drawcard(i));
             }
         }
         int currentPlayerIndex = 0;
