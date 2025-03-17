@@ -12,7 +12,7 @@ public class PointsCalculator {
         List<Player> max = new ArrayList<>();
 
         for(Player p : players){
-            List<Card> currentHand = p.getHand();
+            List<Card> currentHand = p.getStack().getStack();
             int currentCount = 0;
             for(Card c : currentHand){
                 if(c.getColour().equals(color)){
@@ -20,8 +20,8 @@ public class PointsCalculator {
                 }
             }
             if(currentCount > maxCount){
+                max.clear();
                 maxCount = currentCount;
-                max = new ArrayList<>();
                 max.add(p);
             } else if(currentCount == maxCount){
                 max.add(p);
@@ -69,7 +69,7 @@ public class PointsCalculator {
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
-            List<Card> currentHand = p.getHand();
+            List<Card> currentHand = p.getStack().getStack();
             for(Card c : currentHand){
                 if(mostColor.contains(c.getColour())){
                     tempScore -= c.getValue();
@@ -96,7 +96,7 @@ public class PointsCalculator {
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
-            List<Card> currentHand = p.getHand();
+            List<Card> currentHand = p.getStack().getStack();
             for(Card c : currentHand){
                 if(mostColor.contains(c.getColour())){
                     tempScore -= c.getValue();
@@ -123,7 +123,7 @@ public class PointsCalculator {
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
-            List<Card> currentHand = p.getHand();
+            List<Card> currentHand = p.getStack().getStack();
             for(Card c : currentHand){
                 if(mostColor.contains(c.getColour())){
                     tempScore -= c.getValue();
@@ -140,17 +140,17 @@ public class PointsCalculator {
 
     public Player getPlayerWithLeastScore(){
         int leastScore = Integer.MAX_VALUE;
-        Player leastPlayer = null;
+        List<Player> playersWithLeastScore = new ArrayList<>();
 
         if(players == null){
-            return leastPlayer;
+            return null;
         }
 
         HashMap<Card, List<Player>> majority = majorityDecider();
         for(Player p : players){
             int tempScore = p.getScore();
             List<String> mostColor = getMostColor(majority, p);
-            List<Card> currentHand = p.getHand();
+            List<Card> currentHand = p.getStack().getStack();
             for(Card c : currentHand){
                 if(mostColor.contains(c.getColour())){
                     tempScore -= c.getValue();
@@ -158,11 +158,29 @@ public class PointsCalculator {
                 }
             }
             if(tempScore < leastScore){
+                playersWithLeastScore.clear();
                 leastScore = tempScore;
-                leastPlayer = p;
+                playersWithLeastScore.add(p);
+            } else if(tempScore == leastScore){
+                playersWithLeastScore.add(p);
             }
         }
+
+        if(playersWithLeastScore.size() == 1){
+            return playersWithLeastScore.get(0);
+        }
+
+        Player playerWithLeastStack = playersWithLeastScore.get(0);
+        int leastStack = playerWithLeastStack.getStack().getStack().size();
         
-        return leastPlayer;
+        for(Player p : playersWithLeastScore){
+            if(p.getStack().getStack().size() < leastStack){
+                playerWithLeastStack = p;
+                leastStack = p.getStack().getStack().size();
+            }
+        }
+
+        return playerWithLeastStack;
+        
     }
 }
