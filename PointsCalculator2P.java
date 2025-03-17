@@ -10,8 +10,8 @@ public class PointsCalculator2P extends PointsCalculator {
         Player first = players.get(0);
         Player second = players.get(1);
 
-        List<Card> firstPlayerHand = first.getHand();
-        List<Card> secondPlayerHand = second.getHand();
+        List<Card> firstPlayerHand = first.getStack().getStack();
+        List<Card> secondPlayerHand = second.getStack().getStack();
 
         int first_count = 0;
         int second_count = 0;
