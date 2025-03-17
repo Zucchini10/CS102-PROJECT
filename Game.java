@@ -103,7 +103,8 @@ public class Game {
         // runs player turn until endgame
         while (isEndGame==false){
             for (int i = 0;i<totalPlayers;i++){
-                playerTurn(playerList.get(i));
+                Player current = playerList.get(i);
+                playerTurn(current);
                 checkEndGame();
                 if (isEndGame==true){
 
@@ -120,23 +121,56 @@ public class Game {
     }
 
     public void playerTurn(Player player){
-        // Print out parade
+        // Print out parade and playercardpile
         parade.printParade();
+        
+        // CPU
+        if (player instanceof aiPlayer){
+            // 1) Choose a card to laydown and collect cards from parade
 
-        // 1) Choose a card to laydown and collect cards from parade
-        int playedCardIndex = playerChooseCard(player);
-        List <Card> paradeDrawn = playCard(player,playedCardIndex);
+            int playedCardIndex = player.CPUMove();
 
-        // 2) put into player's playercardpile
-        player.addIntoPlayerCardPile(paradeDrawn);
+            // Print out card that player has chosen 
+            Card chosen = player.getCard(playedCardIndex);
+            chosen.toString();
+            List <Card> paradeDrawn = playCard(player,playedCardIndex);
 
+            // 2) put into player's playercardpile
+            player.addIntoPlayerCardPile(paradeDrawn);
 
-        // 3) player draws card from deck
-        Card top = deck.drawcard();
-        player.drawFromDeck(top);
+            // 3) player draws card from deck
+            Card top = deck.drawcard();
+            player.drawFromDeck(top);
+
+            // End CPU
+            player.endTurnPrint();
+        } else {
+            // Player
+            player.printPlayerCardPile();
+            // 1) Choose a card to laydown and collect cards from parade
+
+            int playedCardIndex = playerChooseCard(player);
+
+            // Print out card that player has chosen 
+            Card chosen = player.getCard(playedCardIndex);
+            chosen.toString();
+
+            List <Card> paradeDrawn = playCard(player,playedCardIndex);
+
+            // 2) put into player's playercardpile
+            player.addIntoPlayerCardPile(paradeDrawn);
+
+            // 3) player draws card from deck
+            Card top = deck.drawcard();
+            player.drawFromDeck(top);
+
+            // ending turn - print out drawn card + hand + playercardpile
+            player.endingTurnPrint(paradeDrawn,top);
+        }
 
     }
 
+    // should this be in player class???
     public int playerChooseCard(Player player){
         Scanner sc = new Scanner(System.in);
         player.printHand();
