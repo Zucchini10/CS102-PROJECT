@@ -33,10 +33,10 @@ public class App {
                    Game g1 = new Game();
 
                    // Start Game 
-                   g1.start();
+                   int nextPlayerIndex = g1.start();
 
-                   // EndGame
-                   g1.startEndGame();
+                   // Start EndGame
+                   g1.startEndGame(nextPlayerIndex);
 
                    // Calculate winner
                    PointsCalculator pc = new PointsCalculator(g1);

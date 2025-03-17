@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Game {
     private boolean isEndGame;
+    private int totalPlayers;
     private List<Player> playerList;
     private Parade parade;
     private Deck deck;
@@ -39,7 +40,9 @@ public class Game {
         
         }
 
-        //Initialising players
+        totalPlayers = numCPU + numCPU;
+
+        // Initialising players
         for(int i = 0;i<numPlayers;i++){
             System.out.print("Enter Player" + i + " name > ");
             String name = sc.nextLine();
@@ -52,6 +55,7 @@ public class Game {
         }
         
         // Randomising turn order
+        // Might need to redo how we randomise
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         System.out.println(playerList);
@@ -92,28 +96,103 @@ public class Game {
         this.deck = deck;
     }
 
-    public void start(){
+    public int start(){
         
+        int endPlayerIndex=0;
+
+        // runs player turn until endgame
         while (isEndGame==false){
-            for (int i = 0;i<playerList.size();i++){
+            for (int i = 0;i<totalPlayers;i++){
                 playerTurn(playerList.get(i));
-                if (checkEndGame()==true){
+                checkEndGame();
+                if (isEndGame==true){
+
+                    // get the index of the last player before endgame started
+                    endPlayerIndex = i;
                     break;
                 }
             }
         }
+        
+        // get index of next player
+        int nextPlayerIndex = (endPlayerIndex=1)%playerList.size();
+        return nextPlayerIndex;
     }
 
     public void playerTurn(Player player){
+        // Print out parade
+        parade.printParade();
+
+        // 1) Choose a card to laydown and collect cards from parade
+        int playedCardIndex = playerChooseCard(player);
+        List <Card> paradeDrawn = playCard(player,playedCardIndex);
+
+        // 2) put into player's playercardpile
+        player.addIntoPlayerCardPile(paradeDrawn);
+
+
+        // 3) player draws card from deck
+        Card top = deck.drawcard();
+        player.drawFromDeck(top);
 
     }
 
-    public boolean checkEndGame(){
-        // Check if draw pile is out or a player has 6 cards
-        if (){
-            
+    public int playerChooseCard(Player player){
+        Scanner sc = new Scanner(System.in);
+        player.printHand();
+        System.out.println("Choose a card >");
+        int playedCardIndex = sc.nextInt();
+        
+        return playedCardIndex;
+
+    }
+
+    public List<Card> playCard(Player player, int playedCardIndex){
+        // update playCard function
+        Card playedCard= player.playCard(playedCardIndex);
+
+        // get cards from the parade after playing card
+        List<Card> paradeDrawn = parade.playedCard(playedCard);
+        
+        return paradeDrawn;
+    }
+
+
+    public int checkEndGame(){
+        boolean playerHasAllColors = false;
+        int answer = 0;
+        if (deck.getNumberOfRemainingCards()==0){
+            setEndGame(true);
+            answer = -1;
         }
-        return false;
+        if (playerHasAllColors == true){
+            setEndGame(true);
+            answer = 2;
+        }
+        // Check which endgame condition it fulfills and returns -1 / index of player that has all the cards
+        return answer;
+    }
+
+    public void startEndGame(int nextPlayer){
+        System.out.print("Endgame is starting, ");
+
+        // get how the endgame has started
+        int checkEndGameNum = checkEndGame();
+        if (checkEndGameNum == -1){
+            System.out.println("Deck has no more cards");
+        } else if (checkEndGameNum > 0){
+            System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
+        }
+
+        System.out.println("Everyone has one last turn!");
+
+        // starting from the nextplayer, give everyone one last turn
+        for (int i = nextPlayer;i<totalPlayers;i++){
+            playerTurn(playerList.get(i%totalPlayers));
+        }
+
+        // implement logic to find player with majority of each color and flip those cards over
+        
     }
     
 }

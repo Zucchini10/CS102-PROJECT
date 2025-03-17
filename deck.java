@@ -38,8 +38,10 @@ public class Deck {
     public int getNumberOfRemainingCards(){ 
         return cards.size();;
     }
-    public void drawcard(){
+    public Card drawcard(){
+        Card top = cards.get(0);
         cards.remove(0);
+        return top;
     }
 
     
