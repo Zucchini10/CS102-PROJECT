@@ -5,13 +5,13 @@ public class Deck {
     private List<Card> cards;
 
     public Deck() {
-        cards = new ArrayList<>();
+        cards = new ArrayList<Card>();
 
         String[] colors = {"RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE"};
             for (String color : colors){
                 for (int i = 0;i<11;i++){
                     Card newcard = new Card(color,i);
-                    Deck.add(newcard);
+                    cards.add(newcard);
                 }
             }
             shuffle();
@@ -36,8 +36,9 @@ public class Deck {
     }
 
     public int getNumberOfRemainingCards(){ 
-        return cards.size();;
+        return cards.size();
     }
+    
     public Card drawcard(){
         Card top = cards.get(0);
         cards.remove(0);

@@ -127,7 +127,6 @@ public class Game {
         // CPU
         if (player instanceof aiPlayer){
             // 1) Choose a card to laydown and collect cards from parade
-
             int playedCardIndex = player.CPUMove();
 
             // Print out card that player has chosen 
@@ -148,7 +147,6 @@ public class Game {
             // Player
             player.printPlayerCardPile();
             // 1) Choose a card to laydown and collect cards from parade
-
             int playedCardIndex = playerChooseCard(player);
 
             // Print out card that player has chosen 
