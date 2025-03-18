@@ -146,7 +146,9 @@ public class Game {
 
             // Print out card that player has chosen
             Card chosen = player.getCard(playedCardIndex);
-            chosen.toString();
+            System.out.println("Chosen card : ");
+            chosen.printCard();
+            
             List<Card> paradeDrawn = playCard(player, playedCardIndex);
 
             // 2) put into player's playercardpile
@@ -166,7 +168,7 @@ public class Game {
 
             // Print out card that player has chosen
             Card chosen = player.getCard(playedCardIndex);
-            chosen.toString();
+            System.out.println(card.st);
 
             List<Card> paradeDrawn = playCard(player, playedCardIndex);
 

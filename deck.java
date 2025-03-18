@@ -7,7 +7,7 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<Card>();
 
-        String[] colors = {"RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE"};
+        String[] colors = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
             for (String color : colors){
                 for (int i = 0;i<11;i++){
                     Card newcard = new Card(color,i);
@@ -38,7 +38,7 @@ public class Deck {
     public int getNumberOfRemainingCards(){ 
         return cards.size();
     }
-    
+
     public Card drawcard(){
         Card top = cards.get(0);
         cards.remove(0);

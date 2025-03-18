@@ -4,11 +4,12 @@ public class test2 {
         Parade p = new Parade();
 
         // put 6 cards into parade
-        for (int i = 0; i < 6; i++) {
+        //for (int i = 0; i < 6; i++) {
             Card c1 = d.drawcard();
-            p.addCardToParade(c1);
-        }
+            c1.printCard();
+            //p.addCardToParade(c1);
+        //}
 
-        p.displayParade();
+        //p.displayParade();
     }
 }

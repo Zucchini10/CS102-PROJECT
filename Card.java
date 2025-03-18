@@ -25,16 +25,16 @@ public class Card {
         String colourCode;
         String colour1;
         if (colour.equalsIgnoreCase("Red")) {
-            colourCode = "\033[91m"; // Red text color code
+            colourCode = "\033[38;2;255;0;0m"; // Red text color code
             colour1 = "R";
         } else if (colour.equalsIgnoreCase("Blue")){
-            colourCode = "\033[94m"; // Black text color code
+            colourCode = "\033[38;2;0;0;255m"; // Black text color code
             colour1 = "B";
         } else if (colour.equalsIgnoreCase("Green")){
-            colourCode = "\033[92m"; // Black text color code
+            colourCode = "\033[38;2;0;153;0m"; // Black text color code
             colour1 = "G";
         }else if (colour.equalsIgnoreCase("Grey")){
-            colourCode = "\033[37m"; // Black text color code
+            colourCode = "\033[38;2;204;204;204m"; // Black text color code
             colour1 = "g";
         }else if (colour.equalsIgnoreCase("Purple")){
             colourCode = "\033[35m"; // Black text color code
@@ -58,7 +58,13 @@ public class Card {
         return cardLines;
     }
 
-   
+   public void printCard(){
+        List<String> cardLines = cardRepresentation();
+        for (int i = 0;i<4;i++){
+                System.out.println(cardLines.get(i));
+            
+        }
+   }
 
     
 }
