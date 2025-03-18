@@ -10,7 +10,7 @@ class Player {
     // constructor
     public Player (String name) {
         this.name = name;
-        hand = new ArrayList<Card>;
+        hand = new ArrayList<Card>();
         stack = new PlayerCardPile();
         score = 0;
         isAI = false;
@@ -68,9 +68,9 @@ class Player {
         }
     }
 
-    public void takeFromParade(Card card) {
-        stack.add(card);
-    }
+    // public void takeFromParade(Card card) {
+    //     stack.add(card);
+    // }
 
 }
 

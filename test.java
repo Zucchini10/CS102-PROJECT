@@ -6,7 +6,7 @@ public class test {
     public static void main(String[] args) {
         Deck d = new Deck();
         List<Card> paradeExample = new ArrayList<>();
-
+        
         // draw 20 different random cards
         for (int i = 0; i < 20; i++) {
             Card c1 = d.drawcard();
