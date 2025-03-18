@@ -52,12 +52,6 @@ class Player {
 
     }
 
-    public void printHand() {
-        for (Card card : hand) {
-            System.out.print(card);
-        } 
-    }
-
     public Card playCard(Card card) {
         if (hand.contains(card)) {
             hand.remove(card);
@@ -68,6 +62,23 @@ class Player {
         }
     }
 
+    public void printHand(){
+        String line;
+        System.out.println(name + "'s Hand : ");
+        for (int i = 0; i < 5; i++) {
+            line = "";
+            for (Card c: hand) {
+                line += (c.cardRepresentation()).get(i);
+                line += " ";
+            }
+            System.out.println(line);
+
+        }
+        for (int i = 0;i<hand.size();i++){
+            System.out.print("\033[0m" + "   "+i+ "    " );
+        }
+        System.out.println();
+    }
     // public void takeFromParade(Card card) {
     //     stack.add(card);
     // }

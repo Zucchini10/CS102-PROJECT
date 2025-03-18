@@ -45,15 +45,16 @@ public class Card {
         }
     
         // Add lines to the card with proper formatting and color
-        cardLines.add(colourCode + "+----+");  // Top border
+        cardLines.add(colourCode + "+-----+");  // Top border
         if (value == 10){
-            cardLines.add(colourCode + "|" + value + colour1 +" |");  // Card value
+            cardLines.add(colourCode + "|" + value + "   |");  // Card value
         } else {
-            cardLines.add(colourCode + "|" + value + colour1 + "  |");  // Card value
+            cardLines.add(colourCode + "|" + value + "    |");  // Card value
         }
         
-        cardLines.add(colourCode + "|    |");  // Empty line for spacing
-        cardLines.add(colourCode + "+----+");  // Bottom border
+        cardLines.add(colourCode + "|     |");  // Empty line for spacing
+        cardLines.add(colourCode + "|    " + colour1 + "|");
+        cardLines.add(colourCode + "+-----+");  // Bottom border
     
         return cardLines;
     }
