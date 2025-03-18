@@ -45,23 +45,24 @@ public class Card {
         }
     
         // Add lines to the card with proper formatting and color
-        cardLines.add(colourCode + "+-----+");  // Top border
+        cardLines.add(colourCode + "+-----+"); 
+        cardLines.add(colourCode + "|" + colour1 + "    |"); 
         if (value == 10){
-            cardLines.add(colourCode + "|" + value + "   |");  // Card value
+            cardLines.add(colourCode + "| " + value + "  |"); 
         } else {
-            cardLines.add(colourCode + "|" + value + "    |");  // Card value
+            cardLines.add(colourCode + "|  " + value + "  |"); 
         }
         
-        cardLines.add(colourCode + "|     |");  // Empty line for spacing
+        
         cardLines.add(colourCode + "|    " + colour1 + "|");
-        cardLines.add(colourCode + "+-----+");  // Bottom border
+        cardLines.add(colourCode + "+-----+"); 
     
         return cardLines;
     }
 
    public void printCard(){
         List<String> cardLines = cardRepresentation();
-        for (int i = 0;i<4;i++){
+        for (int i = 0;i<5;i++){
                 System.out.println(cardLines.get(i));
             
         }

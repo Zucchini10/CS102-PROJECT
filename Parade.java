@@ -58,10 +58,10 @@ public class Parade {
     //     endGame();
     // }
     
-    public void displayParade() {
+    public void printParade() {
         String line;
         System.out.println("PARADE : ");
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             line = "";
             for (int j = 0; j < paradeLine.size(); j++) {
                 line += (paradeLine.get(j).cardRepresentation()).get(i);
