@@ -62,9 +62,22 @@ class Player {
 
     }
 
+    public Card getCard (int index) {
+        if (index >= 0 && index < hand.size()) {
+            return hand.get(index);
+        }
+
+         System.out.println("Invalid card selection.");
+        return null;  
+    }
+    
     public Card playCard(int index) {
-        return hand.get(index);
-        //return hand.get(index-1); if index printed starts from 0 instead of 1
+        // index >=1
+        if (index >= 0 && index <= hand.size()) {
+            Card card = hand.get(index);
+            hand.remove(index);
+        }
+        return card;
     }
     
     public void printPlayerCardPile() {
