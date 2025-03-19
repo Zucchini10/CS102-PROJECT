@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PlayerCardPile {
     private List<PlayerColouredStack> stack;
@@ -45,6 +44,14 @@ public class PlayerCardPile {
 
     //or
 
+    //     while (paradeIndex >= 0) {
+    //         Card currentCard = parade.get(paradeIndex);
+    //         if (currentCard.getColor() == playedCard.getColor() && currentCard.getValue() <= playedValue) {    //go through the paradeLine and add cards that fit the removal criteria
+    //             stack.add(parade.remove(paradeIndex));
+    //         }
+    //         paradeIndex--;
+    //     }
+    }
 
     public String toString() {
         StringBuilder toReturn = new StringBuilder();

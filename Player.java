@@ -12,10 +12,17 @@ class Player {
     // constructor
     public Player (String name) {
         this.name = name;
-        hand = new ArrayList<Card>;
-        stack = new PlayerCardPile;
+        hand = new ArrayList<Card>();
+        stack = new PlayerCardPile();
         score = 0;
         isAI = false;
+    }
+
+    public Player () {
+        hand = new ArrayList<Card>();
+        stack = new PlayerCardPile();
+        score = 0;
+
     }
 
     // getters
@@ -48,16 +55,13 @@ class Player {
         this.score = score;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
     // methods
     public void drawFromDeck(Card card) {
         hand.add(card);
 
-    }
-
-    public void printHand() {
-        for (Card card : hand) {
-            System.out.print(card);
-        } 
     }
 
     public Card playCard(Card card) {
@@ -70,9 +74,26 @@ class Player {
         }
     }
 
-    public void takeFromParade(Card card) {
-        stack.add(card);
+    public void printHand(){
+        String line;
+        System.out.println(name + "'s Hand : ");
+        for (int i = 0; i < 5; i++) {
+            line = "";
+            for (Card c: hand) {
+                line += (c.cardRepresentation()).get(i);
+                line += " ";
+            }
+            System.out.println(line);
+
+        }
+        for (int i = 0;i<hand.size();i++){
+            System.out.print("\033[0m" + "   "+i+ "    " );
+        }
+        System.out.println();
     }
+    // public void takeFromParade(Card card) {
+    //     stack.add(card);
+    // }
 
 }
 
