@@ -62,14 +62,9 @@ class Player {
 
     }
 
-    public Card playCard(Card card) {
-        if (hand.contains(card)) {
-            hand.remove(card);
-            return card;
-        } else {
-            System.out.println("Invalid card!");
-            return null;
-        }
+    public Card playCard(int index) {
+        return hand.get(index);
+        //return hand.get(index-1); if index printed starts from 0 instead of 1
     }
     
     public void printPlayerCardPile() {
