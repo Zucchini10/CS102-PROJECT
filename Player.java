@@ -99,6 +99,12 @@ class Player {
     // public void takeFromParade(Card card) {
     //     stack.add(card);
     // }
+
+    public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
+        for (Card card : paradeDrawn) {
+            stack.add(card);
+        }
+    }
     public void endTurnPrint() {
         System.out.println("\n========== End of " + name + "'s Turn ==========");
         System.out.println("Current Score: " + score);
