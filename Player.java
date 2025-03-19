@@ -16,6 +16,13 @@ class Player {
         isAI = false;
     }
 
+    public Player () {
+        hand = new ArrayList<Card>();
+        stack = new PlayerCardPile();
+        score = 0;
+
+    }
+
     // getters
     public String getName() {
         return name;
@@ -46,6 +53,9 @@ class Player {
         this.score = score;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
     // methods
     public void drawFromDeck(Card card) {
         hand.add(card);

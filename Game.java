@@ -245,4 +245,18 @@ public class Game {
 
     }
 
+    public void printTurnOrder(){
+        for (int i = 0; i < playerList.size(); i++) {
+            Player p = playerList.get(i);
+            System.out.print(p.getName());
+            
+            if (i != playerList.size() - 1) {
+                System.out.print(" -> ");
+            }
+        }
+
+        System.out.println();
+
+    }
+
 }
