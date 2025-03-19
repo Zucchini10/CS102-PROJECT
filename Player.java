@@ -92,6 +92,12 @@ class Player {
     // public void takeFromParade(Card card) {
     //     stack.add(card);
     // }
-
+    public void endTurnPrint() {
+        System.out.println("\n========== End of " + name + "'s Turn ==========");
+        System.out.println("Current Score: " + score);
+        printHand();
+        printPlayerCardPile();
+        System.out.println("======================================\n");
+    }
 }
 
