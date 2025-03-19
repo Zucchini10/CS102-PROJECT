@@ -22,9 +22,7 @@ public class aiPlayer extends Player {
         }
     }
         private Card calculateEasyMove() {
-            List<Card> hand = getHand();
             Card smallestCard = hand.get(0);
-    
             for (Card card : hand) {
                 if (card.getValue() < smallestCard.getValue()) {
                     smallestCard = card;
