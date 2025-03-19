@@ -142,7 +142,7 @@ public class Game {
         // CPU
         if (player instanceof aiPlayer) {
             // 1) Choose a card to laydown and collect cards from parade
-            aiPlayer ai = (aiPlayer)player;
+            //aiPlayer ai = (aiPlayer)player;
             int playedCardIndex = player.CPUMove();
 
             // Print out card that player has chosen
