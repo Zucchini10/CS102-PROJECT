@@ -14,7 +14,7 @@ public class aiPlayer extends Player {
         super.setAI(true);
     }
 
-        public Card calculateBestMove(Parade parade) {
+        public Card CPUMove(Parade parade) {
         if (difficulty.equals("easy")) {
               return calculateEasyMove();
         } else {
