@@ -118,11 +118,15 @@ class Player {
             stack.add(card);
         }
     }
-    public void endTurnPrint() {
-        System.out.println("\n========== End of " + name + "'s Turn ==========");
-        System.out.println("Current Score: " + score);
-        printHand();
-        printPlayerCardPile();
+    public void endTurnPrint(List<Card> paradeDrawn, Card top) {
+        System.out.println("\n========== End of " + name + "'s Turn ==========\n");
+        System.out.print("Drawn from parade");
+        for (Card card : paradeDrawn){
+            System.out.print(card);
+        }
+        System.out.println();
+        System.out.print("Drawn from deck");
+        System.out.println(top);
         System.out.println("======================================\n");
     }
 }
