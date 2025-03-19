@@ -57,7 +57,7 @@ class Player {
         this.name = name;
     }
     // methods
-    public void drawFromDeck(Card card) {
+    public void draw(Card card) {
         hand.add(card);
 
     }
@@ -128,6 +128,20 @@ class Player {
         System.out.print("Drawn from deck");
         System.out.println(top);
         System.out.println("======================================\n");
+    }
+
+    public Card chooseCard() {
+        // asking user which card he wants to choose
+        Scanner sc = new Scanner(System.in);
+        printHand();
+        System.out.println("Choose a card >");
+        int chosenCardIndex = sc.nextInt();
+        Card chosen = hand.get(chosenCardIndex);
+
+        // remove card from hand after playing it
+        hand.remove(chosenCardIndex);
+        return chosen;
+
     }
 }
 
