@@ -71,7 +71,19 @@ class Player {
             return null;
         }
     }
-
+    
+    public void printPlayerCardPile() {
+        System.out.println("\n" + name + "'s Stack: ");
+        List<Card> pile = stack.getStack();
+        if (pile.isEmpty()) {
+            System.out.println("No cards in stack.");
+        } else {
+            for (Card card : pile) {
+                System.out.println(card);
+            }
+        }
+    } 
+    
     public void printHand(){
         String line;
         System.out.println(name + "'s Hand : ");
