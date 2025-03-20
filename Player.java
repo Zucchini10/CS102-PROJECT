@@ -4,7 +4,7 @@ import Testing.PlayerCardPile;
 
 class Player {
     private String name;
-    private List<Card> hand;
+    protected List<Card> hand;
     private PlayerCardPile stack;
     private int score;
     private boolean isAI;
