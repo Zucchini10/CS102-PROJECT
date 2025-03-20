@@ -28,13 +28,14 @@ public class Parade {
 
     public List<Card> removedFromParade(Card chosen) {
         int playedValue = chosen.getValue();
-        int paradeIndex = paradeLine.size() - playedValue - 2;
+        int paradeIndex = paradeLine.size() - playedValue - 1;
 
         List<Card> paradeDrawn = new ArrayList<Card>();
         while (paradeIndex >= 0) {
             Card currentCard = paradeLine.get(paradeIndex);
             if (currentCard.getColour() == chosen.getColour() && currentCard.getValue() <= playedValue) {
-                paradeDrawn.add(paradeLine.remove(paradeIndex));
+                paradeLine.remove(paradeIndex);
+                paradeDrawn.add(currentCard);
             }
             paradeIndex--;
         }
