@@ -34,6 +34,17 @@ public class PlayerCardPile {
         colorStack.addCard(card);
     }
 
+    public void printPlayerCardPile(){
+        if(stack.isEmpty()){
+            System.out.println("No cards collected!");
+        }
+        for(PlayerColouredStack s : stack){
+            for(Card c : s){
+                c.printCard();
+            }
+        }
+    }
+    
     public String toString(){
         String toReturn = "";
         for(PlayerColouredStack temp : stack){
@@ -42,22 +53,27 @@ public class PlayerCardPile {
         return toReturn;
     }
 
-    //or
+    public boolean containsAllColours(){
+        if(stack.size() == 6){
+            return true;
+        }
+        return false;
+    }
+    }
 
-    //     while (paradeIndex >= 0) {
+    // public String toString() {
+    //     StringBuilder toReturn = new StringBuilder();
+    //     for (PlayerColouredStack colorStack : stack) {
+    //         toReturn.append(colorStack.toString()).append("\n");
+    //     }
+    //     return toReturn.toString();
+    // }
+
+      //     while (paradeIndex >= 0) {
     //         Card currentCard = parade.get(paradeIndex);
     //         if (currentCard.getColor() == playedCard.getColor() && currentCard.getValue() <= playedValue) {    //go through the paradeLine and add cards that fit the removal criteria
     //             stack.add(parade.remove(paradeIndex));
     //         }
     //         paradeIndex--;
     //     }
-    }
 
-    public String toString() {
-        StringBuilder toReturn = new StringBuilder();
-        for (PlayerColouredStack colorStack : stack) {
-            toReturn.append(colorStack.toString()).append("\n");
-        }
-        return toReturn.toString();
-    }
-}

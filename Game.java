@@ -6,12 +6,14 @@ public class Game {
     private List<Player> playerList;
     private Parade parade;
     private Deck deck;
+    private PlayerCardPile stack;
 
     public Game() {
         isEndGame = false;
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
+        stack = new PlayerCardPile();
 
         // Intro
         System.out.println("Welcome to PARADE!");
@@ -32,6 +34,7 @@ public class Game {
                 break;
             }
             // Catch exception here?
+            // jared : maybe can do "try catch loop" like in w7 resource q3
             if (numPlayers + numCPU <= 1) {
                 System.out.println("Invalid number of players, there has to be at least 2 players / CPU");
             } else if (numPlayers + numCPU > 6) {
@@ -138,6 +141,7 @@ public class Game {
     public void playerTurn(Player player) {
         // Print out parade and playercardpile
         parade.printParade();
+        stack.printPlayerCardPile();
 
         // CPU
         if (player instanceof aiPlayer) {
@@ -222,6 +226,14 @@ public class Game {
         return answer;
     }
 
+    //end game checking condition (jared)
+    public boolean isEndGame(){
+        if(stack.containsAllColours() || deck.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
     public void startEndGame(int nextPlayer) {
         System.out.print("Endgame is starting, ");
 
@@ -242,6 +254,25 @@ public class Game {
 
         // implement logic to find player with majority of each color and flip those
         // cards over
+
+        //iterate through each colour 
+        for(int i = 0 ; i < 6 ; i++){
+            //initialise majority
+            int majority = 0;
+            //loop through player list 
+            for(Player p : playerList){
+                if(p.getStack())
+            }
+
+        
+
+            //for player with majority, find the number of cards
+
+            //loop through agn, 
+
+            //flip cards of those that match the majority number 
+            
+        }
 
     }
 

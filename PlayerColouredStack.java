@@ -9,13 +9,13 @@ public class PlayerColouredStack {
         this.colour = colour;
     } 
 
-    public int calculateScore(){
-        int sum = 0 ;
-        for(Card c: colouredStack){
-            sum += c.getValue();
-        }
-        return sum;
-    }
+    // public int calculateScore(){
+    //     int sum = 0 ;
+    //     for(Card c: colouredStack){
+    //         sum += c.getValue();
+    //     }
+    //     return sum;
+    // }
 
     public List<Card> getColouredStack() {
         return colouredStack;
@@ -25,10 +25,11 @@ public class PlayerColouredStack {
         return colour;
     }
 
-    public void addCard(Card card){
-        colouredStack.add(card);
+    public void flipColouredStack(){
+        for(Card c : colouredStack){
+            c.isFaceUp = false;
+        }
     }
-
 
     public String toString(){
         String toReturn = "";
@@ -40,3 +41,8 @@ public class PlayerColouredStack {
 
 
 }
+  // public void printColouredStack(){
+    //     for(Card c : colouredStack){
+    //         c.printCard();
+    //     }
+    // }
