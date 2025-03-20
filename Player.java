@@ -73,14 +73,14 @@ class Player {
         return null;  
     }
     
-    public Card playCard(int index) {
-        // index >=1
-        if (index >= 0 && index <= hand.size()) {
-            Card card = hand.get(index);
-            hand.remove(index);
-        }
-        return card;
-    }
+    // public Card playCard(int index) {
+    //     // index >=1
+    //     if (index >= 0 && index <= hand.size()) {
+    //         Card card = hand.get(index);
+    //         hand.remove(index);
+    //     }
+    //     return card;
+    // }
     
     public void printPlayerCardPile() {
         System.out.println("\n" + name + "'s Stack: ");
