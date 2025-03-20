@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class PlayerCardPile {
-    private HashMap<String, List<Card>>;
+    private HashMap<String, List<Card>> playerCardPile;
 `   
 
     public PlayerCardPile() {
@@ -17,19 +17,18 @@ public class PlayerCardPile {
     public List<PlayerColouredStack> getStack() {
         return stack;
     } 
-    public void addCard(Card c){
 
-    }
+    public void addCard(Card c){
+        if(playerCardPile.containsKey(c.getColour())){
+            playerCardPile.get(c.getColour()).add(c);
+        }
+        return;
+    }   
 
 
     public void printPlayerCardPile(){
-        if(stack.isEmpty()){
-            System.out.println("No cards collected!");
-        }
-        for(PlayerColouredStack s : stack){
-            for(Card c : s){
-                c.printCard();
-            }
+        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
+            for(Card c : )
         }
     }
     
@@ -42,10 +41,16 @@ public class PlayerCardPile {
     }
 
     public boolean containsAllColours(){
-        if(stack.size() == 6){
-            return true;
+        boolean allColours = true;
+        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
+            String key = entry.getKey();
+            List<Card> value = entry.getValue();
+
+            if(value.isEmpty()){
+                allColours = false;
+            }
         }
-        return false;
+        return allColours;
     }
     }
 
