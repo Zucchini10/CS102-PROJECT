@@ -14,22 +14,22 @@ public class aiPlayer extends Player {
         super.setAI(true);
     }
 
-        public Card CPUMove(Parade parade) {
+    public Card chooseCard(Parade parade) {
         if (difficulty.equals("easy")) {
-              return calculateEasyMove();
+            return calculateEasyMove();
         } else {
-              return calculateNormalMove(parade);
+            return calculateNormalMove(parade);
         }
     }
-        private Card calculateEasyMove() {
-            Card smallestCard = hand.get(0);
+    private Card calculateEasyMove() {
+         Card smallestCard = hand.get(0);
             for (Card card : hand) {
                 if (card.getValue() < smallestCard.getValue()) {
                     smallestCard = card;
                 }
             }
-            return smallestCard;
-        }
+        return smallestCard;
+    }
     
     private Card calculateNormalMove(Parade parade) {
         int paradeSize = parade.getParadeLine().size();
