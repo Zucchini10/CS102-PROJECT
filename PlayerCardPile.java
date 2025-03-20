@@ -1,38 +1,26 @@
 import java.util.*;
 
 public class PlayerCardPile {
-    private List<PlayerColouredStack> stack;
+    private HashMap<String, List<Card>>;
+`   
 
     public PlayerCardPile() {
-        this.stack = new ArrayList<>(); // Initialize the list
+        HashMap<String, List<Card>> playerCardPile = new HashMap<>();
+        playerCardPile.put("RED", new ArrayList<>());
+        playerCardPile.put("BLUE", new ArrayList<>());
+        playerCardPile.put("GREEN", new ArrayList<>());
+        playerCardPile.put("GREY", new ArrayList<>());
+        playerCardPile.put("PURPLE", new ArrayList<>());
+        playerCardPile.put("ORANGE ", new ArrayList<>());
     }
 
     public List<PlayerColouredStack> getStack() {
         return stack;
     } 
+    public void addCard(Card c){
 
-    public void addCard(Card card) {
-        // Find the colored stack for this card's color
-        String cardColor = card.getColour();
-        PlayerColouredStack colorStack = null;
-        
-        // Look for existing stack with the same color
-        for (PlayerColouredStack cs : stack) {
-            if (cs.getColour().equals(cardColor)) {
-                colorStack = cs;
-                break;
-            }
-        }
-        
-        // If no stack exists for this color, create one
-        if (colorStack == null) {
-            colorStack = new PlayerColouredStack(cardColor);
-            stack.add(colorStack);
-        }
-        
-        // Add the card to the appropriate color stack
-        colorStack.addCard(card);
     }
+
 
     public void printPlayerCardPile(){
         if(stack.isEmpty()){
@@ -77,3 +65,25 @@ public class PlayerCardPile {
     //         paradeIndex--;
     //     }
 
+    // public void addCard(Card card) {
+    //     // Find the colored stack for this card's color
+    //     String cardColor = card.getColour();
+    //     PlayerColouredStack colorStack = null;
+        
+    //     // Look for existing stack with the same color
+    //     for (PlayerColouredStack cs : stack) {
+    //         if (cs.getColour().equals(cardColor)) {
+    //             colorStack = cs;
+    //             break;
+    //         }
+    //     }
+        
+    //     // If no stack exists for this color, create one
+    //     if (colorStack == null) {
+    //         colorStack = new PlayerColouredStack(cardColor);
+    //         stack.add(colorStack);
+    //     }
+        
+    //     // Add the card to the appropriate color stack
+    //     colorStack.addCard(card);
+    // }

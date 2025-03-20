@@ -236,6 +236,7 @@ public class Game {
         } else if (checkEndGameNum > 0) {
             System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
         }
+        
     public void startEndGame(int endPlayerIndex) {
         int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);
