@@ -121,17 +121,19 @@ public class Parade {
         paradeLine.add(card);
     }
 
-    // private static void takeCards(List<Card> parade, Card playedCard, List<Card> playerHand) {
+    // private static List<Card> playCard(List<Card> playerHand, Card playedCard) {
     //     int playedValue = playedCard.getValue();
-    //     int paradeIndex = parade.size() - playedValue - 2;
+    //     int paradeIndex = paradeLine.size() - playedValue - 2;
 
+    //     List<Card> cardDrawn = new ArrayList<Card>();
     //     while (paradeIndex >= 0) {
     //         Card currentCard = parade.get(paradeIndex);
     //         if (currentCard.getColor() == playedCard.getColor() && currentCard.getValue() <= playedValue) {
-    //             playerHand.add(parade.remove(paradeIndex));
+    //             cardDrawn.add(paradeLine.remove(paradeIndex));
     //         }
     //         paradeIndex--;
     //     }
+    //     return cardDrawn;
     // }
     
     
