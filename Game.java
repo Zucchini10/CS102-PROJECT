@@ -225,16 +225,7 @@ public class Game {
         return false;
     }
 
-    public void startEndGame(int nextPlayer) {
-        System.out.print("Endgame is starting, ");
-
-        // get how the endgame has started
-        int checkEndGameNum = checkEndGame();
-        if (checkEndGameNum == -1) {
-            System.out.println("Deck has no more cards");
-        } else if (checkEndGameNum > 0) {
-            System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
-        }
+    
     public void startEndGame(int endPlayerIndex) {
         int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);
@@ -290,5 +281,6 @@ public class Game {
         System.out.println();
 
     }
+
 
 }
