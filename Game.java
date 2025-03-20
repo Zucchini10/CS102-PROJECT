@@ -33,6 +33,7 @@ public class Game {
                 break;
             }
             // Catch exception here?
+            // jared : maybe can do "try catch loop" like in w7 resource q3
             if (numPlayers + numCPU <= 1) {
                 System.out.println("Invalid number of players, there has to be at least 2 players / CPU");
             } else if (numPlayers + numCPU > 6) {
@@ -216,6 +217,24 @@ public class Game {
         return reason;
     }
 
+    //end game checking condition (jared)
+    public boolean isEndGame(){
+        if(stack.containsAllColours() || deck.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    public void startEndGame(int nextPlayer) {
+        System.out.print("Endgame is starting, ");
+
+        // get how the endgame has started
+        int checkEndGameNum = checkEndGame();
+        if (checkEndGameNum == -1) {
+            System.out.println("Deck has no more cards");
+        } else if (checkEndGameNum > 0) {
+            System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
+        }
     public void startEndGame(int endPlayerIndex) {
         int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);
@@ -236,6 +255,25 @@ public class Game {
         HashMap <Card,List<Player>> hashmap = pc.majorityDecider();
         List<Player> majorityred = hashmap.get("RED");
 
+
+        //iterate through each colour 
+        for(int i = 0 ; i < 6 ; i++){
+            //initialise majority
+            int majority = 0;
+            //loop through player list 
+            for(Player p : playerList){
+                if(p.getStack())
+            }
+
+        
+
+            //for player with majority, find the number of cards
+
+            //loop through agn, 
+
+            //flip cards of those that match the majority number 
+            
+        }
 
     }
 
