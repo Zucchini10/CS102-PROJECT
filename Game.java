@@ -68,15 +68,15 @@ public class Game {
         // Deal 5 cards to each player 
         for (Player p: playerList) {
             for (int j = 0; j < 5; j++) {
-                Card starting = deck.drawcard();
-                p.drawFromDeck(starting);
+                Card playerStarting = deck.drawcard();
+                p.draw(playerStarting);
             }
         }
 
         // Deal 6 cards to parade
         for (int i = 0; i < 6; i++) {
-            Card starting = deck.drawcard();
-            parade.addCardToParade(starting);
+            Card paradeStarting = deck.drawcard();
+            parade.addCardToParade(paradeStarting);
         }
 
     }
@@ -123,7 +123,7 @@ public class Game {
             for (int i = 0; i < totalPlayers; i++) {
                 Player current = playerList.get(i);
                 playerTurn(current);
-                checkEndGame();
+                checkEndGame(current);
                 if (isEndGame == true) {
 
                     // get the index of the last player before endgame started
@@ -134,54 +134,57 @@ public class Game {
         }
 
         // get index of next player
-        int nextPlayerIndex = (endPlayerIndex = 1) % playerList.size();
-        return nextPlayerIndex;
+        
+        return endPlayerIndex;
     }
 
     public void playerTurn(Player player) {
         // Print out parade and playercardpile
         parade.printParade();
-        stack.printPlayerCardPile();
+        player.printPlayerCardPile();
 
         // CPU
         if (player instanceof aiPlayer) {
             // 1) Choose a card to laydown and collect cards from parade
-            int playedCardIndex = player.CPUMove();
+            //ai choose card, should override this in the child class
+            Card chosen = player.chooseCard();
 
             // Print out card that player has chosen
-            Card chosen = player.getCard(playedCardIndex);
+            
             System.out.println("Chosen card : ");
             chosen.printCard();
             
-            List<Card> paradeDrawn = playCard(player, playedCardIndex);
+            List<Card> paradeDrawn = playCard(player, chosen);
 
             // 2) put into player's playercardpile
             player.addIntoPlayerCardPile(paradeDrawn);
 
             // 3) player draws card from deck
             Card top = deck.drawcard();
-            player.drawFromDeck(top);
+            player.draw(top);
 
-            // End CPU
+            // End CPU, this should also be overriden in the child class
             player.endTurnPrint();
         } else {
             // Player
             player.printPlayerCardPile();
             // 1) Choose a card to laydown and collect cards from parade
-            int playedCardIndex = playerChooseCard(player);
+            // prompt user for which card to throw
+            Card chosen = player.chooseCard();
 
             // Print out card that player has chosen
-            Card chosen = player.getCard(playedCardIndex);
-            System.out.println(card.st);
-
-            List<Card> paradeDrawn = playCard(player, playedCardIndex);
+            System.out.println("Chosen card : ");
+            chosen.printCard();
+  
+            // get list of cards drawen from parade
+            List<Card> paradeDrawn = playCard(player, chosen);
 
             // 2) put into player's playercardpile
             player.addIntoPlayerCardPile(paradeDrawn);
 
             // 3) player draws card from deck
             Card top = deck.drawcard();
-            player.drawFromDeck(top);
+            player.draw(top);
 
             // ending turn - print out drawn card + hand + playercardpile
             player.endingTurnPrint(paradeDrawn, top);
@@ -189,41 +192,30 @@ public class Game {
 
     }
 
-    // should this be in player class???
-    public int playerChooseCard(Player player) {
-        Scanner sc = new Scanner(System.in);
-        player.printHand();
-        System.out.println("Choose a card >");
-        int playedCardIndex = sc.nextInt();
 
-        return playedCardIndex;
-
-    }
-
-    public List<Card> playCard(Player player, int playedCardIndex) {
-        // update playCard function
-        Card playedCard = player.playCard(playedCardIndex);
-
+    public List<Card> playCard(Player player,Card chosen) {
         // get cards from the parade after playing card
-        List<Card> paradeDrawn = parade.playedCard(playedCard);
-
+        List<Card> paradeDrawn = parade.removedFromParade(chosen);
         return paradeDrawn;
+
     }
 
-    public int checkEndGame() {
-        boolean playerHasAllColors = false;
-        int answer = 0;
+    public String checkEndGame(Player player) {
+        // check if deck is empty
+        String reason = "";
         if (deck.getNumberOfRemainingCards() == 0) {
             setEndGame(true);
-            answer = -1;
+            reason = "Deck has no more cards!";
         }
+        // implement logic to check everyone's playercardpiles, should return index of player that has all colors
+        boolean playerHasAllColors = false;
         if (playerHasAllColors == true) {
             setEndGame(true);
-            answer = 2;
+            reason = player.getName() + "has collected all the colors!";
         }
         // Check which endgame condition it fulfills and returns -1 / index of player
         // that has all the cards
-        return answer;
+        return reason;
     }
 
     //end game checking condition (jared)
@@ -244,12 +236,19 @@ public class Game {
         } else if (checkEndGameNum > 0) {
             System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
         }
+    public void startEndGame(int endPlayerIndex) {
+        int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
+        Player lastPlayer = playerList.get(endPlayerIndex);
 
+        // get reason why endgame started
+        String reason = checkEndGame(lastPlayer);
+        System.out.print("Endgame is starting, " + reason);
         System.out.println("Everyone has one last turn!");
 
         // starting from the nextplayer, give everyone one last turn
-        for (int i = nextPlayer; i < totalPlayers; i++) {
-            playerTurn(playerList.get(i % totalPlayers));
+        for (int i = nextPlayerIndex; i < totalPlayers; i++) {
+            Player p = playerList.get(i % totalPlayers);
+            playerTurn(p);
         }
 
         // implement logic to find player with majority of each color and flip those

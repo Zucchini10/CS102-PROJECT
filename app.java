@@ -34,7 +34,12 @@ public class App {
 
                    // Start Game 
                    int nextPlayerIndex = g1.start();
-
+        
+                   // Choose difficulty if player chooses AI
+                   Scanner sc = new Scanner(System.in);
+                   System.out.println("Choose AI difficulty: (easy / normal)");
+                   String difficulty = sc.nextLine();
+        
                    // Start EndGame
                 //    g1.startEndGame(nextPlayerIndex);
 

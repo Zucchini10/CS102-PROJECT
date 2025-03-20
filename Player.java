@@ -59,21 +59,41 @@ class Player {
         this.name = name;
     }
     // methods
-    public void drawFromDeck(Card card) {
+    public void draw(Card card) {
         hand.add(card);
 
     }
 
-    public Card playCard(Card card) {
-        if (hand.contains(card)) {
-            hand.remove(card);
-            return card;
-        } else {
-            System.out.println("Invalid card!");
-            return null;
+    public Card getCard (int index) {
+        if (index >= 0 && index < hand.size()) {
+            return hand.get(index);
         }
-    }
 
+         System.out.println("Invalid card selection.");
+        return null;  
+    }
+    
+    public Card playCard(int index) {
+        // index >=1
+        if (index >= 0 && index <= hand.size()) {
+            Card card = hand.get(index);
+            hand.remove(index);
+        }
+        return card;
+    }
+    
+    public void printPlayerCardPile() {
+        System.out.println("\n" + name + "'s Stack: ");
+        List<Card> pile = stack.getStack();
+        if (pile.isEmpty()) {
+            System.out.println("No cards in stack.");
+        } else {
+            for (Card card : pile) {
+                System.out.println(card);
+            }
+        }
+    } 
+    
     public void printHand(){
         String line;
         System.out.println(name + "'s Hand : ");
@@ -95,5 +115,35 @@ class Player {
     //     stack.add(card);
     // }
 
+    public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
+        for (Card card : paradeDrawn) {
+            stack.add(card);
+        }
+    }
+    public void endTurnPrint(List<Card> paradeDrawn, Card top) {
+        System.out.println("\n========== End of " + name + "'s Turn ==========\n");
+        System.out.print("Drawn from parade");
+        for (Card card : paradeDrawn){
+            System.out.print(card);
+        }
+        System.out.println();
+        System.out.print("Drawn from deck");
+        System.out.println(top);
+        System.out.println("======================================\n");
+    }
+
+    public Card chooseCard() {
+        // asking user which card he wants to choose
+        Scanner sc = new Scanner(System.in);
+        printHand();
+        System.out.println("Choose a card >");
+        int chosenCardIndex = sc.nextInt();
+        Card chosen = hand.get(chosenCardIndex);
+
+        // remove card from hand after playing it
+        hand.remove(chosenCardIndex);
+        return chosen;
+
+    }
 }
 
