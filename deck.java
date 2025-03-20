@@ -24,10 +24,6 @@ public class Deck {
     }
 
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
     public boolean isEmpty(){
         if (cards.size()==0){
             return true;
@@ -43,6 +39,16 @@ public class Deck {
         Card top = cards.get(0);
         cards.remove(0);
         return top;
+    }
+
+    // getters and setters
+    public List<Card> getCards() {
+        return cards;
+    }
+
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     
