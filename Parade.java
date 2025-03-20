@@ -10,7 +10,7 @@ public class Parade {
     
     public void printParade() {
         String line;
-        System.out.println("PARADE : ");
+        System.out.println("\033[0m\033[1mPARADE\033[0m : ");
         for (int i = 0; i < 5; i++) {
             line = "";
             for (int j = 0; j < paradeLine.size(); j++) {

@@ -4,18 +4,10 @@ import java.util.List;
 public class Card {
     private String colour;
     private int value;
-    private boolean faceUp;
 
-   
-
-    public Card(String colour, int value, boolean faceUp){
+    public Card(String colour, int value){
         this.colour = colour;
         this.value = value;
-        this.faceUp = faceUp;
-    }
-    
-    public boolean isFaceUp() {
-        return faceUp;
     }
 
     public String getColour() {
@@ -75,10 +67,5 @@ public class Card {
             
         }
    }
-
-   public String toString(){
-    return colour + "" + value;
-   }
-
     
 }

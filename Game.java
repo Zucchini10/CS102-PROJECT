@@ -22,7 +22,6 @@ public class Game {
         // Choosing number of players and CPU
         int numPlayers = 0;
         int numCPU = 0;
-        totalPlayers = numCPU + numCPU;
 
         while (true) {
             System.out.print("Enter the number of players > ");
@@ -31,7 +30,8 @@ public class Game {
             System.out.print("Enter the number of CPU > ");
             numCPU = sc.nextInt();
 
-            if (totalPlayers > 1 && totalPlayers < 7  ) {
+            totalPlayers = numCPU + numPlayers;
+            if (totalPlayers > 1 && totalPlayers < 7) {
                 break;
             }
             // Catch exception here?
@@ -43,8 +43,6 @@ public class Game {
             }
 
         }
-
-        
 
         // Initialising players
         for (int i = 0; i < numPlayers; i++) {
@@ -59,24 +57,23 @@ public class Game {
         }
 
         // Randomising turn order
-        // Might need to redo how we randomise
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         System.out.println(playerList);
         System.out.println("Press Enter to Continue");
         sc.nextLine();
 
-        // Deal 5 cards to each player 
-        for (Player p: playerList) {
+        // Deal 5 cards to each player
+        for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
-                Card playerStarting = deck.drawcard();
+                Card playerStarting = deck.drawCard();
                 p.draw(playerStarting);
             }
         }
 
         // Deal 6 cards to parade
         for (int i = 0; i < 6; i++) {
-            Card paradeStarting = deck.drawcard();
+            Card paradeStarting = deck.drawCard();
             parade.addCardToParade(paradeStarting);
         }
 
@@ -121,7 +118,7 @@ public class Game {
 
         // runs player turn until endgame
         while (isEndGame == false) {
-            for (int i = 0; i < totalPlayers; i++) {
+            for (int i = 0; i < totalPlayers && isEndGame == false; i++) {
                 Player current = playerList.get(i);
                 playerTurn(current);
                 checkEndGame(current);
@@ -129,13 +126,13 @@ public class Game {
 
                     // get the index of the last player before endgame started
                     endPlayerIndex = i;
-                    break;
+
                 }
             }
         }
 
-        // get index of next player
-        
+        // return index of last player
+
         return endPlayerIndex;
     }
 
@@ -147,21 +144,21 @@ public class Game {
         // CPU
         if (player instanceof aiPlayer) {
             // 1) Choose a card to laydown and collect cards from parade
-            //ai choose card, should override this in the child class
+            // ai choose card, should override this in the child class
             Card chosen = player.chooseCard();
 
             // Print out card that player has chosen
-            
+
             System.out.println("Chosen card : ");
             chosen.printCard();
-            
-            List<Card> paradeDrawn = playCard(player, chosen);
+
+            List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
             // 2) put into player's playercardpile
             player.addIntoPlayerCardPile(paradeDrawn);
 
             // 3) player draws card from deck
-            Card top = deck.drawcard();
+            Card top = deck.drawCard();
             player.draw(top);
 
             // End CPU, this should also be overriden in the child class
@@ -176,15 +173,15 @@ public class Game {
             // Print out card that player has chosen
             System.out.println("Chosen card : ");
             chosen.printCard();
-  
+
             // get list of cards drawen from parade
-            List<Card> paradeDrawn = playCard(player, chosen);
+            List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
             // 2) put into player's playercardpile
             player.addIntoPlayerCardPile(paradeDrawn);
 
             // 3) player draws card from deck
-            Card top = deck.drawcard();
+            Card top = deck.drawCard();
             player.draw(top);
 
             // ending turn - print out drawn card + hand + playercardpile
@@ -193,51 +190,25 @@ public class Game {
 
     }
 
-
-    public List<Card> playCard(Player player,Card chosen) {
-        // get cards from the parade after playing card
-        List<Card> paradeDrawn = parade.removedFromParade(chosen);
-        return paradeDrawn;
-
-    }
-
     public String checkEndGame(Player player) {
         // check if deck is empty
         String reason = "";
-        if (deck.getNumberOfRemainingCards() == 0) {
+        if (deck.isEmpty() == true) {
             setEndGame(true);
             reason = "Deck has no more cards!";
         }
-        // implement logic to check everyone's playercardpiles, should return index of player that has all colors
+        // implement logic to check everyone's playercardpiles, should return index of
+        // player that has all colors
         boolean playerHasAllColors = false;
         if (playerHasAllColors == true) {
             setEndGame(true);
             reason = player.getName() + "has collected all the colors!";
         }
-        // Check which endgame condition it fulfills and returns -1 / index of player
-        // that has all the cards
+        // returns reason why endgame has started, will be empty if endgame criteria not
+        // fulfilled
         return reason;
     }
 
-    //end game checking condition (jared)
-    public boolean isEndGame(){
-        if(stack.containsAllColours() || deck.isEmpty()){
-            return true;
-        }
-        return false;
-    }
-
-    public void startEndGame(int nextPlayer) {
-        System.out.print("Endgame is starting, ");
-
-        // get how the endgame has started
-        int checkEndGameNum = checkEndGame();
-        if (checkEndGameNum == -1) {
-            System.out.println("Deck has no more cards");
-        } else if (checkEndGameNum > 0) {
-            System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
-        }
-        
     public void startEndGame(int endPlayerIndex) {
         int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);
@@ -249,15 +220,14 @@ public class Game {
 
         // starting from the nextplayer, give everyone one last turn
         for (int i = nextPlayerIndex; i < totalPlayers; i++) {
-            Player p = playerList.get(i % totalPlayers);
-            playerTurn(p);
+            Player player = playerList.get(i % totalPlayers);
+            playerTurn(player);
         }
 
         // implement logic to find player with majority of each color and flip those cards over
         // returns hashmap of 6 the majority cardpile of each color and which player owns them
         HashMap <Card,List<Player>> hashmap = pc.majorityDecider();
         List<Player> majorityred = hashmap.get("RED");
-
 
         //iterate through each colour 
         for(int i = 0 ; i < 6 ; i++){
@@ -280,11 +250,11 @@ public class Game {
 
     }
 
-    public void printTurnOrder(){
+    public void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {
             Player p = playerList.get(i);
             System.out.print(p.getName());
-            
+
             if (i != playerList.size() - 1) {
                 System.out.print(" -> ");
             }
@@ -293,6 +263,5 @@ public class Game {
         System.out.println();
 
     }
-
 
 }

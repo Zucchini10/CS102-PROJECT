@@ -1,6 +1,6 @@
 import java.util.*;
 
-import Testing.PlayerCardPile;
+//import Testing.PlayerCardPile;
 
 class Player {
     private String name;
@@ -109,11 +109,12 @@ class Player {
     //     stack.add(card);
     // }
 
-    public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
-        for (Card card : paradeDrawn) {
-            stack.add(card);
-        }
-    }
+    // public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
+    //     for (Card card : paradeDrawn) {
+    //         stack.add(card);
+    //     }
+    // }
+
     public void endTurnPrint(List<Card> paradeDrawn, Card top) {
         System.out.println("\n========== End of " + name + "'s Turn ==========\n");
         System.out.print("Drawn from parade");
