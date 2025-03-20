@@ -22,6 +22,8 @@ public class Game {
         // Choosing number of players and CPU
         int numPlayers = 0;
         int numCPU = 0;
+        totalPlayers = numCPU + numCPU;
+
         while (true) {
             System.out.print("Enter the number of players > ");
             numPlayers = sc.nextInt();
@@ -29,7 +31,7 @@ public class Game {
             System.out.print("Enter the number of CPU > ");
             numCPU = sc.nextInt();
 
-            if (numPlayers + numCPU > 1) {
+            if (totalPlayers > 1 && totalPlayers < 7  ) {
                 break;
             }
             // Catch exception here?
@@ -42,7 +44,7 @@ public class Game {
 
         }
 
-        totalPlayers = numCPU + numCPU;
+        
 
         // Initialising players
         for (int i = 0; i < numPlayers; i++) {
