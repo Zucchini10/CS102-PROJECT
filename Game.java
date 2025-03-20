@@ -31,7 +31,7 @@ public class Game {
             numCPU = sc.nextInt();
 
             totalPlayers = numCPU + numPlayers;
-            if (totalPlayers > 1 && totalPlayers < 7  ) {
+            if (totalPlayers > 1 && totalPlayers < 7) {
                 break;
             }
             // Catch exception here?
@@ -56,15 +56,15 @@ public class Game {
             playerList.add(new aiPlayer());
         }
 
-        // Randomising turn order 
+        // Randomising turn order
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         System.out.println(playerList);
         System.out.println("Press Enter to Continue");
         sc.nextLine();
 
-        // Deal 5 cards to each player 
-        for (Player p: playerList) {
+        // Deal 5 cards to each player
+        for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
                 Card playerStarting = deck.drawcard();
                 p.draw(playerStarting);
@@ -131,8 +131,8 @@ public class Game {
             }
         }
 
-        // get index of next player
-        
+        // return index of last player
+
         return endPlayerIndex;
     }
 
@@ -144,14 +144,14 @@ public class Game {
         // CPU
         if (player instanceof aiPlayer) {
             // 1) Choose a card to laydown and collect cards from parade
-            //ai choose card, should override this in the child class
+            // ai choose card, should override this in the child class
             Card chosen = player.chooseCard();
 
             // Print out card that player has chosen
-            
+
             System.out.println("Chosen card : ");
             chosen.printCard();
-            
+
             List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
             // 2) put into player's playercardpile
@@ -173,7 +173,7 @@ public class Game {
             // Print out card that player has chosen
             System.out.println("Chosen card : ");
             chosen.printCard();
-  
+
             // get list of cards drawen from parade
             List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
@@ -193,17 +193,19 @@ public class Game {
     public String checkEndGame(Player player) {
         // check if deck is empty
         String reason = "";
-        if (deck.getNumberOfRemainingCards() == 0) {
+        if (deck.isEmpty() == true) {
             setEndGame(true);
             reason = "Deck has no more cards!";
         }
-        // implement logic to check everyone's playercardpiles, should return index of player that has all colors
+        // implement logic to check everyone's playercardpiles, should return index of
+        // player that has all colors
         boolean playerHasAllColors = false;
         if (playerHasAllColors == true) {
             setEndGame(true);
             reason = player.getName() + "has collected all the colors!";
         }
-        // returns reason why endgame has started, will be empty if endgame criteria not fulfilled
+        // returns reason why endgame has started, will be empty if endgame criteria not
+        // fulfilled
         return reason;
     }
 
@@ -248,11 +250,11 @@ public class Game {
 
     }
 
-    public void printTurnOrder(){
+    public void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {
             Player p = playerList.get(i);
             System.out.print(p.getName());
-            
+
             if (i != playerList.size() - 1) {
                 System.out.print(" -> ");
             }
@@ -261,6 +263,5 @@ public class Game {
         System.out.println();
 
     }
-
 
 }
