@@ -33,12 +33,13 @@ public class Parade {
         List<Card> paradeDrawn = new ArrayList<Card>();
         while (paradeIndex >= 0) {
             Card currentCard = paradeLine.get(paradeIndex);
-            if (currentCard.getColour() == chosen.getColour() && currentCard.getValue() <= playedValue) {
+            if (currentCard.getColour() == chosen.getColour() || currentCard.getValue() <= playedValue) {
                 paradeLine.remove(paradeIndex);
                 paradeDrawn.add(currentCard);
             }
             paradeIndex--;
         }
+        paradeLine.add(chosen);
         return paradeDrawn;
 
     }
