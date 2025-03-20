@@ -73,25 +73,19 @@ class Player {
         return null;  
     }
     
-    public Card playCard(int index) {
-        // index >=1
-        if (index >= 0 && index <= hand.size()) {
-            Card card = hand.get(index);
-            hand.remove(index);
-        }
-        return card;
-    }
+    // public Card playCard(int index) {
+    //     // index >=1
+    //     if (index >= 0 && index <= hand.size()) {
+    //         Card card = hand.get(index);
+    //         hand.remove(index);
+    //     }
+    //     return card;
+    // }
     
     public void printPlayerCardPile() {
-        System.out.println("\n" + name + "'s Stack: ");
-        List<Card> pile = stack.getStack();
-        if (pile.isEmpty()) {
-            System.out.println("No cards in stack.");
-        } else {
-            for (Card card : pile) {
-                System.out.println(card);
-            }
-        }
+        System.out.println(name + "'s Stack: ");
+        stack.printPlayerCardPile();
+        
     } 
     
     public void printHand(){

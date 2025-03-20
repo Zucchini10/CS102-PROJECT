@@ -6,15 +6,14 @@ public class Game {
     private List<Player> playerList;
     private Parade parade;
     private Deck deck;
-    private PlayerCardPile stack;
+    private PointsCalculator pc;
 
     public Game() {
         isEndGame = false;
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
-        stack = new PlayerCardPile();
-
+        pc = new PointsCalculator(playerList);
         // Intro
         System.out.println("Welcome to PARADE!");
         System.out.println("Press Enter to Start");
@@ -226,16 +225,7 @@ public class Game {
         return false;
     }
 
-    public void startEndGame(int nextPlayer) {
-        System.out.print("Endgame is starting, ");
-
-        // get how the endgame has started
-        int checkEndGameNum = checkEndGame();
-        if (checkEndGameNum == -1) {
-            System.out.println("Deck has no more cards");
-        } else if (checkEndGameNum > 0) {
-            System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
-        }
+    
     public void startEndGame(int endPlayerIndex) {
         int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);
@@ -251,8 +241,11 @@ public class Game {
             playerTurn(p);
         }
 
-        // implement logic to find player with majority of each color and flip those
-        // cards over
+        // implement logic to find player with majority of each color and flip those cards over
+        // returns hashmap of 6 the majority cardpile of each color and which player owns them
+        HashMap <Card,List<Player>> hashmap = pc.majorityDecider();
+        List<Player> majorityred = hashmap.get("RED");
+
 
         //iterate through each colour 
         for(int i = 0 ; i < 6 ; i++){
@@ -288,5 +281,6 @@ public class Game {
         System.out.println();
 
     }
+
 
 }
