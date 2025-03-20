@@ -72,7 +72,7 @@ public class aiPlayer extends Player {
         if (difficulty.equals("easy")) {
             chosen = calculateEasyMove();
         } else if (difficulty.equals("normal")) {
-            chosen = calculateNormalMove(null);
+            chosen = calculateNormalMove(null);//calculate normal move requires the size of the parade but chooseCard has no input parameters
         } else if (difficulty.equals("hard")) {
             chosen = calculateHardMove();
         }
