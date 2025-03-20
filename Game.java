@@ -22,6 +22,8 @@ public class Game {
         // Choosing number of players and CPU
         int numPlayers = 0;
         int numCPU = 0;
+        totalPlayers = numCPU + numCPU;
+
         while (true) {
             System.out.print("Enter the number of players > ");
             numPlayers = sc.nextInt();
@@ -29,7 +31,7 @@ public class Game {
             System.out.print("Enter the number of CPU > ");
             numCPU = sc.nextInt();
 
-            if (numPlayers + numCPU > 1) {
+            if (totalPlayers > 1 && totalPlayers < 7  ) {
                 break;
             }
             // Catch exception here?
@@ -42,7 +44,7 @@ public class Game {
 
         }
 
-        totalPlayers = numCPU + numCPU;
+        
 
         // Initialising players
         for (int i = 0; i < numPlayers; i++) {
@@ -225,7 +227,17 @@ public class Game {
         return false;
     }
 
-    
+    public void startEndGame(int nextPlayer) {
+        System.out.print("Endgame is starting, ");
+
+        // get how the endgame has started
+        int checkEndGameNum = checkEndGame();
+        if (checkEndGameNum == -1) {
+            System.out.println("Deck has no more cards");
+        } else if (checkEndGameNum > 0) {
+            System.out.println(playerList.get(checkEndGameNum) + " has collected all the colours!");
+        }
+        
     public void startEndGame(int endPlayerIndex) {
         int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);

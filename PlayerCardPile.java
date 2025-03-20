@@ -1,47 +1,34 @@
 import java.util.*;
 
 public class PlayerCardPile {
-    private List<PlayerColouredStack> stack;
+    private HashMap<String, List<Card>> playerCardPile;
+`   
 
     public PlayerCardPile() {
-        this.stack = new ArrayList<>(); // Initialize the list
+        HashMap<String, List<Card>> playerCardPile = new HashMap<>();
+        playerCardPile.put("RED", new ArrayList<>());
+        playerCardPile.put("BLUE", new ArrayList<>());
+        playerCardPile.put("GREEN", new ArrayList<>());
+        playerCardPile.put("GREY", new ArrayList<>());
+        playerCardPile.put("PURPLE", new ArrayList<>());
+        playerCardPile.put("ORANGE ", new ArrayList<>());
     }
 
     public List<PlayerColouredStack> getStack() {
         return stack;
     }
 
-    public void addCard(Card card) {
-        // Find the colored stack for this card's color
-        String cardColor = card.getColour();
-        PlayerColouredStack colorStack = null;
-
-        // Look for existing stack with the same color
-        for (PlayerColouredStack cs : stack) {
-            if (cs.getColour().equals(cardColor)) {
-                colorStack = cs;
-                break;
-            }
+    public void addCard(Card c){
+        if(playerCardPile.containsKey(c.getColour())){
+            playerCardPile.get(c.getColour()).add(c);
         }
+        return;
+    }   
 
-        // If no stack exists for this color, create one
-        if (colorStack == null) {
-            colorStack = new PlayerColouredStack(cardColor);
-            stack.add(colorStack);
-        }
 
-        // Add the card to the appropriate color stack
-        colorStack.addCard(card);
-    }
-
-    public void printPlayerCardPile() {
-        if (stack.isEmpty()) {
-            System.out.println("No cards collected!");
-        }
-        for (PlayerColouredStack s : stack) {
-            for (Card c : s) {
-                c.printCard();
-            }
+    public void printPlayerCardPile(){
+        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
+            for(Card c : )
         }
     }
 
@@ -53,11 +40,17 @@ public class PlayerCardPile {
         return toReturn;
     }
 
-    public boolean containsAllColours() {
-        if (stack.size() == 6) {
-            return true;
+    public boolean containsAllColours(){
+        boolean allColours = true;
+        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
+            String key = entry.getKey();
+            List<Card> value = entry.getValue();
+
+            if(value.isEmpty()){
+                allColours = false;
+            }
         }
-        return false;
+        return allColours;
     }
 
     public void printPlayerCardPile(){
@@ -92,6 +85,28 @@ public class PlayerCardPile {
 // return toReturn.toString();
 // }
 
+    // public void addCard(Card card) {
+    //     // Find the colored stack for this card's color
+    //     String cardColor = card.getColour();
+    //     PlayerColouredStack colorStack = null;
+        
+    //     // Look for existing stack with the same color
+    //     for (PlayerColouredStack cs : stack) {
+    //         if (cs.getColour().equals(cardColor)) {
+    //             colorStack = cs;
+    //             break;
+    //         }
+    //     }
+        
+    //     // If no stack exists for this color, create one
+    //     if (colorStack == null) {
+    //         colorStack = new PlayerColouredStack(cardColor);
+    //         stack.add(colorStack);
+    //     }
+        
+    //     // Add the card to the appropriate color stack
+    //     colorStack.addCard(card);
+    // }
 // while (paradeIndex >= 0) {
 // Card currentCard = parade.get(paradeIndex);
 // if (currentCard.getColor() == playedCard.getColor() && currentCard.getValue()
