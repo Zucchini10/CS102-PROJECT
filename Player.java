@@ -85,7 +85,6 @@ class Player {
     public void printPlayerCardPile() {
         System.out.println(name + "'s Stack: ");
         stack.printPlayerCardPile();
-        
     } 
     
     public void printHand(){
@@ -118,11 +117,12 @@ class Player {
         System.out.println("\n========== End of " + name + "'s Turn ==========\n");
         System.out.print("Drawn from parade");
         for (Card card : paradeDrawn){
-            System.out.print(card);
+            card.printCard();;
         }
         System.out.println();
         System.out.print("Drawn from deck");
-        System.out.println(top);
+        top.printCard();
+        printPlayerCardPile();
         System.out.println("======================================\n");
     }
 
