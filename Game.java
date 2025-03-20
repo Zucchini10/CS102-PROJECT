@@ -6,13 +6,14 @@ public class Game {
     private List<Player> playerList;
     private Parade parade;
     private Deck deck;
+    private PointsCalculator pc;
 
     public Game() {
         isEndGame = false;
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
-
+        pc = new PointsCalculator(playerList);
         // Intro
         System.out.println("Welcome to PARADE!");
         System.out.println("Press Enter to Start");
@@ -230,8 +231,11 @@ public class Game {
             playerTurn(p);
         }
 
-        // implement logic to find player with majority of each color and flip those
-        // cards over
+        // implement logic to find player with majority of each color and flip those cards over
+        // returns hashmap of 6 the majority cardpile of each color and which player owns them
+        HashMap <Card,List<Player>> hashmap = pc.majorityDecider();
+        List<Player> majorityred = hashmap.get("RED");
+
 
     }
 

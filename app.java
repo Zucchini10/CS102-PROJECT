@@ -42,6 +42,7 @@ public class App {
         
                    // Start EndGame
                 //    g1.startEndGame(nextPlayerIndex);
+                
 
                 //    // Calculate winner
                 //    PointsCalculator pc = new PointsCalculator(g1);
