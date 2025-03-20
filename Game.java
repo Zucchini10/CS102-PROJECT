@@ -66,14 +66,14 @@ public class Game {
         // Deal 5 cards to each player
         for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
-                Card playerStarting = deck.drawcard();
+                Card playerStarting = deck.drawCard();
                 p.draw(playerStarting);
             }
         }
 
         // Deal 6 cards to parade
         for (int i = 0; i < 6; i++) {
-            Card paradeStarting = deck.drawcard();
+            Card paradeStarting = deck.drawCard();
             parade.addCardToParade(paradeStarting);
         }
 
@@ -158,7 +158,7 @@ public class Game {
             player.addIntoPlayerCardPile(paradeDrawn);
 
             // 3) player draws card from deck
-            Card top = deck.drawcard();
+            Card top = deck.drawCard();
             player.draw(top);
 
             // End CPU, this should also be overriden in the child class
@@ -181,7 +181,7 @@ public class Game {
             player.addIntoPlayerCardPile(paradeDrawn);
 
             // 3) player draws card from deck
-            Card top = deck.drawcard();
+            Card top = deck.drawCard();
             player.draw(top);
 
             // ending turn - print out drawn card + hand + playercardpile

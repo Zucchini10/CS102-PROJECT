@@ -14,9 +14,6 @@ public class PlayerCardPile {
         playerCardPile.put("ORANGE ", new ArrayList<>());
     }
 
-    public List<PlayerColouredStack> getStack() {
-        return stack;
-    }
 
     public void addCard(Card c){
         if(playerCardPile.containsKey(c.getColour())){
@@ -26,19 +23,12 @@ public class PlayerCardPile {
     }   
 
 
-    public void printPlayerCardPile(){
-        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
-            for(Card c : )
-        }
-    }
+    // public void printPlayerCardPile(){
+    //     for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
+    //         for(Card c : )
+    //     }
+    // }
 
-    public String toString() {
-        String toReturn = "";
-        for (PlayerColouredStack temp : stack) {
-            toReturn += temp.toString() + "%n";
-        }
-        return toReturn;
-    }
 
     public boolean containsAllColours(){
         boolean allColours = true;

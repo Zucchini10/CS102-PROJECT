@@ -35,7 +35,7 @@ public class Deck {
         return cards.size();
     }
 
-    public Card drawcard(){
+    public Card drawCard(){
         Card top = cards.get(0);
         cards.remove(0);
         return top;
