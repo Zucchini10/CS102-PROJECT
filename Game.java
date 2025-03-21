@@ -223,25 +223,34 @@ public class Game {
             Player player = playerList.get(i % totalPlayers);
             playerTurn(player);
         }
+    }
 
+    public void calculateWinner(){
         // implement logic to find player with majority of each color and flip those cards over
         // returns hashmap of 6 the majority cardpile of each color and which player owns them
-        HashMap <Card,List<Player>> majorityHashmap = pc.majorityDecider();
-        List<Player> majorityred = majorityHashmap.get("RED");
+        HashMap <String,List<Player>> majorityHashmap = pc.majorityDecider();
+        String[] colours = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
+
+        for (String colour : colours){
+            List<Player> majorityPlayers = majorityHashmap.get(colour);
+            flipMajorityCardPile(playerList, colour);
+
+        }
         
-        
 
         
 
-            //for player with majority, find the number of cards
-
-            //loop through agn, 
-
-            //flip cards of those that match the majority number 
+             
+    }
+        
+    public void flipMajorityCardPile(List<Player> majorityPlayers, String colour){
+        for (Player player:majorityPlayers){
+            PlayerCardPileStack pcps = player.getStack();
             
         }
-
     }
+
+    
 
     public void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {

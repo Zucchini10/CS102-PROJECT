@@ -55,6 +55,18 @@ public class PlayerCardPileStack {
         return playerHasAllColors;
     }
 
+    public int totalScore(){
+
+        int total = 0;
+        Set<Map.Entry<String, PlayerCardPile>> entrySet = playerCardPileStack.entrySet();
+        for (Map.Entry<String, PlayerCardPile> entry : entrySet) {
+            PlayerCardPile pile = entry.getValue();
+            total += pile.calculateScore();
+        }
+
+
+        return total;
+    }
     
 }
 
