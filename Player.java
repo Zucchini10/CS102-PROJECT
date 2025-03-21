@@ -39,6 +39,7 @@ class Player {
     }
 
     public int getScore() {
+        score = stack.totalScore();
         return score;
     }
 
@@ -69,51 +70,28 @@ class Player {
             return hand.get(index);
         }
 
-         System.out.println("Invalid card selection.");
+        System.out.println("Invalid card selection.");
         return null;  
     }
     
-    // public Card playCard(int index) {
-    //     // index >=1
-    //     if (index >= 0 && index <= hand.size()) {
-    //         Card card = hand.get(index);
-    //         hand.remove(index);
-    //     }
-    //     return card;
-    // }
     
     public void printPlayerCardPile() {
-        System.out.println(name + "'s Stack: ");
-        stack.printPlayerCardPile();
+        stack.printPlayerCardPileStack();
         
     } 
     
     public void printHand(){
         String line;
         System.out.println(name + "'s Hand : ");
-        for (int i = 0; i < 5; i++) {
-            line = "";
-            for (Card c: hand) {
-                line += (c.cardRepresentation()).get(i);
-                line += " ";
-            }
-            System.out.println(line);
-
-        }
-        for (int i = 0;i<hand.size();i++){
-            System.out.print("\033[0m" + "   "+i+ "    " );
-        }
-        System.out.println();
+        new cardPrinter(hand);
     }
-    // public void takeFromParade(Card card) {
-    //     stack.add(card);
-    // }
 
-    // public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
-    //     for (Card card : paradeDrawn) {
-    //         stack.add(card);
-    //     }
-    // }
+
+    public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
+        for (Card card : paradeDrawn) {
+            stack.addCard(card);
+        }
+    }
 
     public void endTurnPrint(List<Card> paradeDrawn, Card top) {
         System.out.println("\n========== End of " + name + "'s Turn ==========\n");
@@ -140,5 +118,7 @@ class Player {
         return chosen;
 
     }
+
+
 }
 

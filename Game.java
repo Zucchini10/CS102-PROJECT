@@ -162,7 +162,7 @@ public class Game {
             player.draw(top);
 
             // End CPU, this should also be overriden in the child class
-            player.endTurnPrint();
+            //player.endTurnPrint();
         } else {
             // Player
             player.printPlayerCardPile();
@@ -185,7 +185,7 @@ public class Game {
             player.draw(top);
 
             // ending turn - print out drawn card + hand + playercardpile
-            player.endingTurnPrint(paradeDrawn, top);
+            //player.endingTurnPrint(paradeDrawn, top);
         }
 
     }
@@ -233,20 +233,29 @@ public class Game {
 
         for (String colour : colours){
             List<Player> majorityPlayers = majorityHashmap.get(colour);
-            flipMajorityCardPile(playerList, colour);
-
+            flipMajorityCardPile(majorityPlayers, colour);
         }
-        
 
+        // print the total score for each player then decide the winner
+        Player winner = null;
+        int highest = -1;
+        for (Player player:playerList){
+            if (player.getScore()>highest){
+                winner = player;
+                highest = player.getScore();
+            }
+            
+        }
+        System.out.println("winner is"  + winner.getName());
         
-
-             
     }
         
     public void flipMajorityCardPile(List<Player> majorityPlayers, String colour){
         for (Player player:majorityPlayers){
             PlayerCardPileStack pcps = player.getStack();
-            
+            HashMap<String,PlayerCardPile> hm = pcps.getPlayerCardPileStack();
+            PlayerCardPile pc = hm.get(colour);
+            pc.setFaceUp(true);
         }
     }
 

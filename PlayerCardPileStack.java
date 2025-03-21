@@ -67,6 +67,16 @@ public class PlayerCardPileStack {
 
         return total;
     }
+
+
+    public HashMap<String, PlayerCardPile> getPlayerCardPileStack() {
+        return playerCardPileStack;
+    }
+
+
+    public void setPlayerCardPileStack(HashMap<String, PlayerCardPile> playerCardPileStack) {
+        this.playerCardPileStack = playerCardPileStack;
+    }
     
 }
 
