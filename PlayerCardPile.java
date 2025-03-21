@@ -2,7 +2,7 @@ import java.util.*;
 
 public class PlayerCardPile {
     private HashMap<String, List<Card>> playerCardPile;
-
+    private int totalAmount;
 
     public PlayerCardPile() {
         HashMap<String, List<Card>> playerCardPile = new HashMap<>();
@@ -12,15 +12,35 @@ public class PlayerCardPile {
         playerCardPile.put("GREY", new ArrayList<>());
         playerCardPile.put("PURPLE", new ArrayList<>());
         playerCardPile.put("ORANGE ", new ArrayList<>());
+        totalAmount = 0;
     }
 
+    public List<Card> getPlayerCardPileWithColor(String color){
+        return playerCardPile.get(color);
+    }
+
+    public int getTotalAmount(){
+        return totalAmount;
+    }
+
+    public int calculateStackScore(){ // calculate stack score before the majority
+        int result = 0;
+        for(List<Card> list : playerCardPile.values()){
+            for(Card c : list){
+                result += c.getValue();
+            }
+        }
+
+        return result;
+    }
 
     public void addCard(Card c){
         if(playerCardPile.containsKey(c.getColour())){
             playerCardPile.get(c.getColour()).add(c);
+            totalAmount++;
         }
         return;
-    }   
+    } 
 
 
     // public void printPlayerCardPile(){

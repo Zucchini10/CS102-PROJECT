@@ -10,25 +10,13 @@ public class PointsCalculator2P extends PointsCalculator {
         Player first = players.get(0);
         Player second = players.get(1);
 
-        List<Card> firstPlayerHand = first.getStack().getStack();
-        List<Card> secondPlayerHand = second.getStack().getStack();
+        List<Card> firstPlayerHandColor = first.getStack().getPlayerCardPileWithColor(color);
+        List<Card> secondPlayerHandColor = second.getStack().getPlayerCardPileWithColor(color);
 
-        int first_count = 0;
-        int second_count = 0;
+        int first_count = firstPlayerHandColor.size();
+        int second_count = secondPlayerHandColor.size();
 
         List<Player> result = new ArrayList<>();
-
-        for(Card c : firstPlayerHand){
-            if(c.getColour().equals(color)){
-                first_count++;
-            }
-        }
-
-        for(Card c: secondPlayerHand){
-            if(c.getColour().equals(color)){
-                second_count++;
-            }
-        }
 
         if(first_count - second_count >= 2){
             result.add(first);
