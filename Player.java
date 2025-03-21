@@ -81,9 +81,13 @@ class Player {
     } 
     
     public void printHand(){
-        String line;
         System.out.println(name + "'s Hand : ");
         new cardPrinter(hand);
+        String handNumberLine = "\033[0m\033[1m   1       2       3       4";
+        if (hand.size() > 4){
+            handNumberLine += "       5";
+        }
+        System.out.println(handNumberLine);
     }
 
 
@@ -117,6 +121,14 @@ class Player {
         hand.remove(chosenCardIndex);
         return chosen;
 
+    }
+
+    public boolean hasAllColours(){
+        if (stack.containsAllColours()==true){
+            return true;
+        } 
+
+        return false;
     }
 
 

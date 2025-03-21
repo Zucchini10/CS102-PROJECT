@@ -5,7 +5,7 @@ public class testprintParade {
 
         //put 6 cards into parade
         for (int i = 0; i < 8; i++) {
-            Card c1 = d.drawcard();
+            Card c1 = d.drawCard();
             p.addCardToParade(c1);
         }
 

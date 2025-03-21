@@ -7,6 +7,7 @@ public class Game {
     private Parade parade;
     private Deck deck;
     private PointsCalculator pc;
+    // string colour reset code = \033[0m\033[1m
 
     public Game() {
         isEndGame = false;
@@ -14,6 +15,7 @@ public class Game {
         parade = new Parade();
         deck = new Deck();
         pc = new PointsCalculator(playerList);
+        totalPlayers = 0;
         // Intro
         System.out.println("Welcome to PARADE!");
         System.out.println("Press Enter to Start");
@@ -23,30 +25,48 @@ public class Game {
         int numPlayers = 0;
         int numCPU = 0;
 
-        while (true) {
+        while (totalPlayers > 1 || totalPlayers < 7) {
             System.out.print("Enter the number of players > ");
-            numPlayers = sc.nextInt();
+            System.out.print("Enter the number of players > ");
+            
+            // Validate numPlayers input
+            while (true) {
+                try {
+                    numPlayers = sc.nextInt();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a valid number for players.");
+                    sc.nextLine();  // Clear the buffer
+                }
+            }
 
             System.out.print("Enter the number of CPU > ");
-            numCPU = sc.nextInt();
+            
+            // Validate numCPU input
+            while (true) {
+                try {
+                    numCPU = sc.nextInt();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a valid number for CPU.");
+                    sc.nextLine();  // Clear the buffer
+                }
+            }
 
             totalPlayers = numCPU + numPlayers;
-            if (totalPlayers > 1 && totalPlayers < 7) {
-                break;
-            }
-            // Catch exception here?
-            // jared : maybe can do "try catch loop" like in w7 resource q3
-            if (numPlayers + numCPU <= 1) {
-                System.out.println("Invalid number of players, there has to be at least 2 players / CPU");
-            } else if (numPlayers + numCPU > 6) {
-                System.out.println("Too many players, maximum number of players is 6");
-            }
 
+            // Check if the total number of players is within valid limits
+            if (totalPlayers <= 1) {
+                System.out.println("Invalid number of players, there has to be at least 2 players / CPU.");
+            } else if (totalPlayers > 6) {
+                System.out.println("Too many players, maximum number of players is 6.");
+            }
         }
 
         // Initialising players
-        for (int i = 0; i < numPlayers; i++) {
-            System.out.print("Enter Player" + i + " name > ");
+        sc.nextLine();
+        for (int i = 1; i < numPlayers+1; i++) {
+            System.out.print("Enter Player " + i + " name > ");
             String name = sc.nextLine();
             playerList.add(new Player(name));
         }
@@ -59,7 +79,7 @@ public class Game {
         // Randomising turn order
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
-        System.out.println(playerList);
+        printTurnOrder();
         System.out.println("Press Enter to Continue");
         sc.nextLine();
 
@@ -197,10 +217,9 @@ public class Game {
             setEndGame(true);
             reason = "Deck has no more cards!";
         }
-        // implement logic to check everyone's playercardpiles, should return index of
-        // player that has all colors
-        boolean playerHasAllColors = false;
-        if (playerHasAllColors == true) {
+
+        // check if player has collected all colours
+        if (player.hasAllColours() == true) {
             setEndGame(true);
             reason = player.getName() + "has collected all the colors!";
         }
