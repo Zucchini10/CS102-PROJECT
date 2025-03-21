@@ -97,16 +97,28 @@ class Player {
         }
     }
 
-    public void endTurnPrint(List<Card> paradeDrawn, Card top) {
+    public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("\n========== End of " + name + "'s Turn ==========\n");
-        System.out.print("Drawn from parade");
-        for (Card card : paradeDrawn){
-            System.out.print(card);
-        }
-        System.out.println();
-        System.out.print("Drawn from deck");
-        System.out.println(top);
-        System.out.println("======================================\n");
+
+        // print drawn cards from parade
+        System.out.println("Drawn from Parade : ");
+        new cardPrinter(paradeDrawn);
+
+        // print drawn card
+        System.out.println("Drawn from deck");
+        top.printCard();
+        System.out.println("Press Enter to continue > ");
+        sc.nextLine();
+
+        // print player card piles
+        stack.printPlayerCardPileStack();
+
+        // print hand
+        printHand();
+
+        System.out.println("Press Enter to end turn > ");
+        sc.nextLine();
     }
 
     public Card chooseCard() {

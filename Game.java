@@ -205,7 +205,7 @@ public class Game {
             player.draw(top);
 
             // ending turn - print out drawn card + hand + playercardpile
-            //player.endingTurnPrint(paradeDrawn, top);
+            player.endingTurnPrint(paradeDrawn, top);
         }
 
     }

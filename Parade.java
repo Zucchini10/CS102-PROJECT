@@ -10,16 +10,9 @@ public class Parade {
     
     public void printParade() {
         String line;
-        System.out.println("\033[0m\033[1mPARADE\033[0m : ");
-        for (int i = 0; i < 5; i++) {
-            line = "";
-            for (int j = 0; j < paradeLine.size(); j++) {
-                line += (paradeLine.get(j).cardRepresentation()).get(i);
-                line += " ";
-            }
-            System.out.println(line);
+        System.out.println("\033[0m\033[1mPARADE : ");
+        new cardPrinter(paradeLine);
 
-        }
     }
 
     public void addCardToParade(Card card){
