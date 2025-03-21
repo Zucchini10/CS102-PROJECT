@@ -226,17 +226,10 @@ public class Game {
 
         // implement logic to find player with majority of each color and flip those cards over
         // returns hashmap of 6 the majority cardpile of each color and which player owns them
-        HashMap <Card,List<Player>> hashmap = pc.majorityDecider();
-        List<Player> majorityred = hashmap.get("RED");
-
-        //iterate through each colour 
-        for(int i = 0 ; i < 6 ; i++){
-            //initialise majority
-            int majority = 0;
-            //loop through player list 
-            for(Player p : playerList){
-                if(p.getStack())
-            }
+        HashMap <Card,List<Player>> majorityHashmap = pc.majorityDecider();
+        List<Player> majorityred = majorityHashmap.get("RED");
+        
+        
 
         
 

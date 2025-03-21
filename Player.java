@@ -5,7 +5,7 @@ import java.util.*;
 class Player {
     private String name;
     private List<Card> hand;
-    private PlayerCardPile stack;
+    private PlayerCardPileStack stack;
     private int score;
     private boolean isAI;
 
@@ -13,14 +13,14 @@ class Player {
     public Player (String name) {
         this.name = name;
         hand = new ArrayList<Card>();
-        stack = new PlayerCardPile();
+        stack = new PlayerCardPileStack();
         score = 0;
         isAI = false;
     }
 
     public Player () {
         hand = new ArrayList<Card>();
-        stack = new PlayerCardPile();
+        stack = new PlayerCardPileStack();
         score = 0;
 
     }
@@ -34,7 +34,7 @@ class Player {
         return hand;
     }
 
-    public PlayerCardPile getStack() {
+    public PlayerCardPileStack getStack() {
         return stack;
     }
 

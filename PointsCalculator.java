@@ -34,12 +34,12 @@ public class PointsCalculator {
     //"RED", "BLUE", "GREEN", "YELLOW", "PURPLE", "ORANGE"
     public HashMap <Card, List<Player>> majorityDecider (){
         HashMap<Card, List<Player>> result = new HashMap<>();
-        result.put(new Card("RED", 0, true), getPlayersWithMaxCardColor("RED"));
-        result.put(new Card("BLUE", 0, true), getPlayersWithMaxCardColor("BLUE"));
-        result.put(new Card("GREEN", 0, true), getPlayersWithMaxCardColor("GREEN"));
-        result.put(new Card("YELLOW", 0, true), getPlayersWithMaxCardColor("YELLOW"));
-        result.put(new Card("PURPLE", 0, true), getPlayersWithMaxCardColor("PURPLE"));
-        result.put(new Card("ORANGE", 0, true), getPlayersWithMaxCardColor("ORANGE"));
+        result.put(new Card("RED", 0), getPlayersWithMaxCardColor("RED"));
+        result.put(new Card("BLUE", 0), getPlayersWithMaxCardColor("BLUE"));
+        result.put(new Card("GREEN", 0), getPlayersWithMaxCardColor("GREEN"));
+        result.put(new Card("YELLOW", 0), getPlayersWithMaxCardColor("YELLOW"));
+        result.put(new Card("PURPLE", 0), getPlayersWithMaxCardColor("PURPLE"));
+        result.put(new Card("ORANGE", 0), getPlayersWithMaxCardColor("ORANGE"));
 
         return result;
     }
