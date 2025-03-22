@@ -1,3 +1,7 @@
+import src.Card;
+import src.Deck;
+import src.Player;
+
 public class testprintHand {
     public static void main(String[] args) {
         Deck d = new Deck();
