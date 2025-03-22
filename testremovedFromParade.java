@@ -1,8 +1,3 @@
-import src.Card;
-import src.Deck;
-import src.Parade;
-import src.cardPrinter;
-
 public class testremovedFromParade {
     public static void main(String[] args) {
         Deck d = new Deck();

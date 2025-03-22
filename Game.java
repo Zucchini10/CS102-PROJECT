@@ -1,4 +1,3 @@
-package src;
 import java.util.*;
 
 public class Game {
@@ -15,6 +14,7 @@ public class Game {
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
+        pc = new PointsCalculator(playerList);
         totalPlayers = 0;
         // Intro
         System.out.println("Welcome to PARADE!");
@@ -25,10 +25,10 @@ public class Game {
         int numPlayers = 0;
         int numCPU = 0;
 
-        do {
+        while (totalPlayers > 1 || totalPlayers < 7) {
             System.out.print("Enter the number of players > ");
             System.out.print("Enter the number of players > ");
-
+            
             // Validate numPlayers input
             while (true) {
                 try {
@@ -36,12 +36,12 @@ public class Game {
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input! Please enter a valid number for players.");
-                    sc.nextLine(); // Clear the buffer
+                    sc.nextLine();  // Clear the buffer
                 }
             }
 
             System.out.print("Enter the number of CPU > ");
-
+            
             // Validate numCPU input
             while (true) {
                 try {
@@ -49,7 +49,7 @@ public class Game {
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input! Please enter a valid number for CPU.");
-                    sc.nextLine(); // Clear the buffer
+                    sc.nextLine();  // Clear the buffer
                 }
             }
 
@@ -61,11 +61,11 @@ public class Game {
             } else if (totalPlayers > 6) {
                 System.out.println("Too many players, maximum number of players is 6.");
             }
-        } while (totalPlayers > 1 && totalPlayers < 7);
+        }
 
         // Initialising players
         sc.nextLine();
-        for (int i = 1; i < numPlayers + 1; i++) {
+        for (int i = 1; i < numPlayers+1; i++) {
             System.out.print("Enter Player " + i + " name > ");
             String name = sc.nextLine();
             playerList.add(new Player(name));
@@ -82,9 +82,6 @@ public class Game {
         printTurnOrder();
         System.out.println("Press Enter to Continue");
         sc.nextLine();
-
-        // putting final playerlist into points calculator
-        pc = new PointsCalculator(playerList);
 
         // Deal 5 cards to each player
         for (Player p : playerList) {
@@ -143,13 +140,7 @@ public class Game {
         while (isEndGame == false) {
             for (int i = 0; i < totalPlayers && isEndGame == false; i++) {
                 Player current = playerList.get(i);
-                // if player is CPU, run CPUturn if it is human player, run normal playerTurn
-                if (current instanceof aiPlayer) {
-                    CPUTurn(current);
-                } else {
-                    playerTurn(current);
-                }
-
+                playerTurn(current);
                 checkEndGame(current);
                 if (isEndGame == true) {
 
@@ -165,75 +156,59 @@ public class Game {
         return endPlayerIndex;
     }
 
-    public void CPUTurn(Player player) {
-        // Print out parade and playercardpile
-        parade.printParade();
-        player.printPlayerCardPile();
-
-        // 1) Choose a card to laydown and collect cards from parade
-        // ai choose card, should override this in the child class
-        Card chosen = player.chooseCard();
-
-        // Print out card that player has chosen
-
-        System.out.println("Chosen card : ");
-        chosen.printCard();
-        System.out.print("Press Enter to Continue > ");
-        sc.nextLine();
-        List<Card> paradeDrawn = parade.removedFromParade(chosen);
-
-        // 2) put into player's playercardpile
-        player.addIntoPlayerCardPile(paradeDrawn);
-
-        // 3) player draws card from deck
-        Card top = deck.drawCard();
-        player.draw(top);
-
-        // End CPU, this should also be overriden in the child class
-        // player.endTurnPrint();
-    }
-
     public void playerTurn(Player player) {
-        Scanner sc = new Scanner(System.in);
-
         // Print out parade and playercardpile
         parade.printParade();
         player.printPlayerCardPile();
 
-        // 1) Choose a card to laydown and collect cards from parade
-        char input = 'n';
-        Card chosen = null;
-        while (input != 'y' && input != 'Y'){
+        // CPU
+        if (player instanceof aiPlayer) {
+            // 1) Choose a card to laydown and collect cards from parade
+            // ai choose card, should override this in the child class
+            Card chosen = player.chooseCard();
 
-        // prompt user for which card to throw
-        chosen = player.chooseCard();
+            // Print out card that player has chosen
 
-        // Print out card that player has chosen
-        System.out.println("Chosen card : ");
-        chosen.printCard();
-        System.out.println("Confirm? (y/n)");
-        input = sc.nextLine().charAt(0);
+            System.out.println("Chosen card : ");
+            chosen.printCard();
 
+            List<Card> paradeDrawn = parade.removedFromParade(chosen);
+
+            // 2) put into player's playercardpile
+            player.addIntoPlayerCardPile(paradeDrawn);
+
+            // 3) player draws card from deck
+            Card top = deck.drawCard();
+            player.draw(top);
+
+            // End CPU, this should also be overriden in the child class
+            //player.endTurnPrint();
+        } else {
+            // Player
+            player.printPlayerCardPile();
+            // 1) Choose a card to laydown and collect cards from parade
+            // prompt user for which card to throw
+            Card chosen = player.chooseCard();
+
+            // Print out card that player has chosen
+            System.out.println("Chosen card : ");
+            chosen.printCard();
+
+            // get list of cards drawen from parade
+            List<Card> paradeDrawn = parade.removedFromParade(chosen);
+
+            // 2) put into player's playercardpile
+            player.addIntoPlayerCardPile(paradeDrawn);
+
+            // 3) player draws card from deck
+            Card top = deck.drawCard();
+            player.draw(top);
+
+            // ending turn - print out drawn card + hand + playercardpile
+            player.endingTurnPrint(paradeDrawn, top);
         }
-        
 
-        // get list of cards drawen from parade
-        List<Card> paradeDrawn = parade.removedFromParade(chosen);
-
-        // 2) put into player's playercardpile
-        player.addIntoPlayerCardPile(paradeDrawn);
-
-        // 3) player draws card from deck
-        Card top = deck.drawCard();
-        player.draw(top);
-
-        // ending turn - print out drawn card + hand + playercardpile
-        player.endingTurnPrint(paradeDrawn, top);
-        System.out.println("Press enter to confirm");
-        sc.nextLine();
     }
-
-
 
     public String checkEndGame(Player player) {
         // check if deck is empty
@@ -269,16 +244,14 @@ public class Game {
         }
     }
 
-    public void calculateWinner() {
+    public void calculateWinner(){
         Scanner sc = new Scanner(System.in);
-        // implement logic to find player with majority of each color and flip those
-        // cards over
-        // returns hashmap of 6 the majority cardpile of each color and which player
-        // owns them
-        HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
-        String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
+        // implement logic to find player with majority of each color and flip those cards over
+        // returns hashmap of 6 the majority cardpile of each color and which player owns them
+        HashMap <String,List<Player>> majorityHashmap = pc.majorityDecider();
+        String[] colours = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
 
-        for (String colour : colours) {
+        for (String colour : colours){
             List<Player> majorityPlayers = majorityHashmap.get(colour);
             flipMajorityCardPile(majorityPlayers, colour);
         }
@@ -286,7 +259,7 @@ public class Game {
         // print the total score for each player then decide the winner
         Player winner = null;
         int highest = -1;
-        for (Player player : playerList) {
+        for (Player player:playerList){
             System.out.println(player.getName() + " :");
             player.printPlayerCardPile();
 
@@ -294,23 +267,25 @@ public class Game {
             System.out.print("Press Enter to continue > ");
             sc.nextLine();
 
-            if (player.getScore() > highest) {
+            if (player.getScore()>highest){
                 winner = player;
                 highest = player.getScore();
             }
         }
-        System.out.println("winner is..." + winner.getName());
-
+        System.out.println("winner is..."  + winner.getName());
+        
     }
-
-    public void flipMajorityCardPile(List<Player> majorityPlayers, String colour) {
-        for (Player player : majorityPlayers) {
+        
+    public void flipMajorityCardPile(List<Player> majorityPlayers, String colour){
+        for (Player player:majorityPlayers){
             PlayerCardPileStack pcps = player.getStack();
-            HashMap<String, PlayerCardPile> hm = pcps.getPlayerCardPileStack();
+            HashMap<String,PlayerCardPile> hm = pcps.getPlayerCardPileStack();
             PlayerCardPile pc = hm.get(colour);
             pc.setFaceUp(true);
         }
     }
+
+    
 
     public void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {

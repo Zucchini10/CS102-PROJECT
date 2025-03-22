@@ -1,4 +1,3 @@
-package src;
 import java.util.*;
 
 //import Testing.PlayerCardPile;
@@ -127,7 +126,7 @@ class Player {
         Scanner sc = new Scanner(System.in);
         printHand();
         System.out.println("Choose a card >");
-        int chosenCardIndex = sc.nextInt()-1;
+        int chosenCardIndex = sc.nextInt();
         Card chosen = hand.get(chosenCardIndex);
 
         // remove card from hand after playing it

@@ -2,10 +2,6 @@
 
 import java.util.*;
 
-import src.Card;
-import src.Deck;
-import src.Player;
-
 public class testaiPlayer {
     public static void main(String[] args) {
         Deck d = new Deck();

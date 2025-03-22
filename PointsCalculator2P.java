@@ -1,4 +1,3 @@
-package src;
 import java.util.*;
 
 public class PointsCalculator2P extends PointsCalculator {

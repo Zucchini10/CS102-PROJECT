@@ -1,7 +1,3 @@
-import src.Card;
-import src.Deck;
-import src.Parade;
-
 public class testprintParade {
     public static void main(String[] args) {
         Deck d = new Deck();
