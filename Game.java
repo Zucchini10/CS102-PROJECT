@@ -245,6 +245,7 @@ public class Game {
     }
 
     public void calculateWinner(){
+        Scanner sc = new Scanner(System.in);
         // implement logic to find player with majority of each color and flip those cards over
         // returns hashmap of 6 the majority cardpile of each color and which player owns them
         HashMap <String,List<Player>> majorityHashmap = pc.majorityDecider();
@@ -259,13 +260,19 @@ public class Game {
         Player winner = null;
         int highest = -1;
         for (Player player:playerList){
+            System.out.println(player.getName() + " :");
+            player.printPlayerCardPile();
+
+            System.out.println("Final Score : " + player.getScore());
+            System.out.print("Press Enter to continue > ");
+            sc.nextLine();
+
             if (player.getScore()>highest){
                 winner = player;
                 highest = player.getScore();
             }
-            
         }
-        System.out.println("winner is"  + winner.getName());
+        System.out.println("winner is..."  + winner.getName());
         
     }
         
