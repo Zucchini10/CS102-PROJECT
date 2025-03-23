@@ -2,58 +2,101 @@ import java.util.*;
 
 public class aiPlayer extends Player {
     private String difficulty;
-    
+
     public aiPlayer(String difficulty) {
         super();
         this.difficulty = difficulty;
 
         Random rand = new Random();
-        String[] Names = {"John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia"};
+        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia" };
         String name = "\033[38;2;0;153;0m" + Names[rand.nextInt(Names.length)];
         super.setName(name);
         super.setAI(true);
     }
 
+    // choose which move depending on what difficulty player picked
     public Card chooseCard(Parade parade) {
         if (difficulty.equals("easy")) {
             return calculateEasyMove();
+        } else if (difficulty.equals("hard")) {
+            return calculateHardMove(parade);
         } else {
             return calculateNormalMove(parade);
         }
     }
+    
+
     private Card calculateEasyMove() {
-         Card smallestCard = hand.get(0);
-            for (Card card : hand) {
-                if (card.getValue() < smallestCard.getValue()) {
-                    smallestCard = card;
-                }
+        List<Card> hand = getHand();
+        Card smallestCard = hand.get(0);
+        for (Card card : hand) {
+            if (card.getValue() < smallestCard.getValue()) {
+                smallestCard = card;
             }
+        }
         return smallestCard;
     }
-    
+
     private Card calculateNormalMove(Parade parade) {
+        List<Card> hand = getHand();
         int paradeSize = parade.getParadeLine().size();
         Card bestCard = null;
         int bestValue = Integer.MAX_VALUE;
         boolean found = false;
         Card highestCard = hand.get(0);
         int highestValue = highestCard.getValue();
-    
+
         for (Card card : hand) {
             int value = card.getValue();
-    
+
             if (value > highestValue) {
                 highestValue = value;
                 highestCard = card;
             }
-    
+
             if (value >= paradeSize && value < bestValue) {
                 bestValue = value;
                 bestCard = card;
                 found = true;
             }
         }
-    
+
+        if (!found) {
+            return highestCard;
+        }
+
+        return bestCard;
+    }
+
+    private Card calculateHardMove(Parade parade) {
+        List<Card> hand = getHand();
+        int paradeSize = parade.getParadeLine().size();
+        Card bestCard = null;
+        int bestValue = Integer.MAX_VALUE;
+        boolean found = false;
+        Card highestCard = hand.get(0);
+        int highestValue = highestCard.getValue();
+        String mostColour = findMajorityColour(parade.getParadeLine());
+
+        for (Card card: hand) {
+            int value = card.getValue();
+            String colour = card.getColour();
+
+            // get highest value card
+            if (value > highestValue) {
+                highestValue = value;
+                highestCard = card;
+            }
+            if (value >= paradeSize && value < bestValue) {
+                // choose card that do not match most common colour in parade
+                if (!colour.equals(mostColour)) {
+                    bestValue = value;
+                    bestCard = card;
+                    found = true;
+                }
+            }
+        }
+        // pick highest value if all cards < paradesize
         if (!found) {
             return highestCard;
         }
@@ -61,8 +104,46 @@ public class aiPlayer extends Player {
         return bestCard;
     }
     
-        public Card playCard(Card card) {
-            hand.remove(card);
-            return card;
+    public String findMajorityColour(List<Card> cards) {
+        // set each color count to 0
+        int redCount = 0;
+        int greenCount = 0;
+        int orangeCount = 0;
+        int blueCount = 0;
+        int greyCount = 0;
+        int purpleCount = 0;
+        
+        // count total number of each card colours
+        for (Card card : cards) {
+            String color = card.getColour();
+            if (color.equals("Red")){
+                redCount++;
+            } else if (color.equals("Green")) {
+                greenCount++;
+            } else if (color.equals("Orange")) {
+                orangeCount++;
+            } else if (color.equals("Blue")) {
+                blueCount++;
+            } else if (color.equals("Grey")) {
+                greyCount++;
+            } else if (color.equals("Purple")){
+                purpleCount++;
+            }
         }
+        
+        int[] count = {redCount, greenCount, orangeCount, blueCount, greyCount, purpleCount};
+        String[] colours = {"Red", "Green", "Orange", "Blue", "Grey", "Purple"};
+        int maxIndex = 0;
+        for (int i = 1; i < count.length; i++) {
+            if (count[i] > count[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        return colours[maxIndex];
+    }
+
+    public Card playCard(Card card) {
+        getHand().remove(card);
+        return card;
+    }
 }
