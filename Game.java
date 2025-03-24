@@ -6,7 +6,7 @@ public class Game {
     private List<Player> playerList;
     private Parade parade;
     private Deck deck;
-    private PointsCalculator pc;
+    //private PointsCalculator pc;
     // string colour reset code = \033[0m\033[1m
 
     public Game() {
@@ -14,7 +14,7 @@ public class Game {
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
-        pc = new PointsCalculator(playerList);
+        //pc = new PointsCalculator(playerList);
         totalPlayers = 0;
         // Intro
         System.out.println("Welcome to PARADE!");
@@ -25,9 +25,9 @@ public class Game {
         int numPlayers = 0;
         int numCPU = 0;
 
-        while (totalPlayers > 1 || totalPlayers < 7) {
+        while (totalPlayers < 1 || totalPlayers > 6) {
             System.out.print("Enter the number of players > ");
-            System.out.print("Enter the number of players > ");
+
             
             // Validate numPlayers input
             while (true) {
@@ -80,22 +80,30 @@ public class Game {
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         printTurnOrder();
-        System.out.println("Press Enter to Continue");
+        System.out.println("\033[0mPress Enter to Continue");
         sc.nextLine();
 
         // Deal 5 cards to each player
+        System.out.println("Dealing Cards to players... ");
         for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
                 Card playerStarting = deck.drawCard();
                 p.draw(playerStarting);
             }
         }
+        System.out.println("\033[0mPress Enter to Continue");
+        sc.nextLine();
 
         // Deal 6 cards to parade
+        System.out.println("Initialising parade... ");
         for (int i = 0; i < 6; i++) {
             Card paradeStarting = deck.drawCard();
             parade.addCardToParade(paradeStarting);
         }
+        
+        parade.printParade();
+        System.out.println("\033[0mPress Enter to Continue");
+        sc.nextLine();
 
     }
 
@@ -160,7 +168,7 @@ public class Game {
         // Print out parade and playercardpile
         parade.printParade();
         player.printPlayerCardPile();
-
+        System.out.println(player.getName() + "'s Turn : ");
         // CPU
         if (player instanceof aiPlayer) {
             // 1) Choose a card to laydown and collect cards from parade
@@ -185,7 +193,6 @@ public class Game {
             //player.endTurnPrint();
         } else {
             // Player
-            player.printPlayerCardPile();
             // 1) Choose a card to laydown and collect cards from parade
             // prompt user for which card to throw
             Card chosen = player.chooseCard(parade);
@@ -244,37 +251,37 @@ public class Game {
         }
     }
 
-    public void calculateWinner(){
-        Scanner sc = new Scanner(System.in);
-        // implement logic to find player with majority of each color and flip those cards over
-        // returns hashmap of 6 the majority cardpile of each color and which player owns them
-        HashMap <String,List<Player>> majorityHashmap = pc.majorityDecider();
-        String[] colours = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
+    // public void calculateWinner(){
+    //     Scanner sc = new Scanner(System.in);
+    //     // implement logic to find player with majority of each color and flip those cards over
+    //     // returns hashmap of 6 the majority cardpile of each color and which player owns them
+    //     HashMap <String,List<Player>> majorityHashmap = pc.majorityDecider();
+    //     String[] colours = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
 
-        for (String colour : colours){
-            List<Player> majorityPlayers = majorityHashmap.get(colour);
-            flipMajorityCardPile(majorityPlayers, colour);
-        }
+    //     for (String colour : colours){
+    //         List<Player> majorityPlayers = majorityHashmap.get(colour);
+    //         flipMajorityCardPile(majorityPlayers, colour);
+    //     }
 
-        // print the total score for each player then decide the winner
-        Player winner = null;
-        int highest = -1;
-        for (Player player:playerList){
-            System.out.println(player.getName() + " :");
-            player.printPlayerCardPile();
+    //     // print the total score for each player then decide the winner
+    //     Player winner = null;
+    //     int highest = -1;
+    //     for (Player player:playerList){
+    //         System.out.println(player.getName() + " :");
+    //         player.printPlayerCardPile();
 
-            System.out.println("Final Score : " + player.getScore());
-            System.out.print("Press Enter to continue > ");
-            sc.nextLine();
+    //         System.out.println("Final Score : " + player.getScore());
+    //         System.out.print("Press Enter to continue > ");
+    //         sc.nextLine();
 
-            if (player.getScore()>highest){
-                winner = player;
-                highest = player.getScore();
-            }
-        }
-        System.out.println("winner is..."  + winner.getName());
+    //         if (player.getScore()>highest){
+    //             winner = player;
+    //             highest = player.getScore();
+    //         }
+    //     }
+    //     System.out.println("winner is..."  + winner.getName());
         
-    }
+    // }
         
     public void flipMajorityCardPile(List<Player> majorityPlayers, String colour){
         for (Player player:majorityPlayers){

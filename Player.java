@@ -11,7 +11,7 @@ class Player {
 
     // constructor
     public Player (String name) {
-        this.name = name;
+        this.name = "\033[0m" + name;
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;
@@ -125,7 +125,7 @@ class Player {
         // asking user which card he wants to choose
         Scanner sc = new Scanner(System.in);
         printHand();
-        System.out.println("Choose a card >");
+        System.out.print("Choose a card > ");
         int chosenCardIndex = sc.nextInt();
         Card chosen = hand.get(chosenCardIndex);
 
