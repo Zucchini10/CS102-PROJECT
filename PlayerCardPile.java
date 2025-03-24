@@ -1,29 +1,44 @@
 import java.util.*;
 
 public class PlayerCardPile {
-    private HashMap<String, List<Card>> playerCardPile;
-`   
+    private List<Card> playerCardPile;
+    private String colour;
+    private boolean faceUp;
 
-    public PlayerCardPile() {
-        HashMap<String, List<Card>> playerCardPile = new HashMap<>();
-        playerCardPile.put("RED", new ArrayList<>());
-        playerCardPile.put("BLUE", new ArrayList<>());
-        playerCardPile.put("GREEN", new ArrayList<>());
-        playerCardPile.put("GREY", new ArrayList<>());
-        playerCardPile.put("PURPLE", new ArrayList<>());
-        playerCardPile.put("ORANGE ", new ArrayList<>());
+    public PlayerCardPile(String colour){
+        this.playerCardPile = new ArrayList<>();
+        this.colour = colour;
+        this.faceUp = true;
     }
 
-    public List<PlayerColouredStack> getStack() {
-        return stack;
+    // getters and setters
+    public List<Card> getPlayerCardPile() {
+        return playerCardPile;
     }
+
+    public void setPlayerCardPile(List<Card> playerCardPile) {
+        this.playerCardPile = playerCardPile;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public boolean isFaceUp() {
+        return faceUp;
+    }
+
+    public void setFaceUp(boolean faceUp) {
+        this.faceUp = faceUp;
+    } 
 
     public void addCard(Card c){
-        if(playerCardPile.containsKey(c.getColour())){
-            playerCardPile.get(c.getColour()).add(c);
-        }
-        return;
-    }   
+        playerCardPile.add(c);
+    }
 
     public String toString() {
         String toReturn = "";
@@ -32,80 +47,35 @@ public class PlayerCardPile {
         }
         return toReturn;
     }
-
-    public boolean containsAllColours(){
-        boolean allColours = true;
-        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
-            String key = entry.getKey();
-            List<Card> value = entry.getValue();
-
-            if(value.isEmpty()){
-                allColours = false;
-            }
+    public boolean isEmpty(){
+        
+        if (playerCardPile.size()==0){
+            return true;
+        } else{
+            return false;
         }
-        return allColours;
+    }
+
+    public int calculateScore(){
+
+        // return total value of all cards in playercardpile
+        if (faceUp == true){
+            int sum = 0;
+        for (Card c: playerCardPile){
+            sum+=c.getValue();
+        }
+
+        return sum;
+        } else {
+            // if majority, the cards in playercardpile all count as 1
+            return playerCardPile.size();
+        }
+        
     }
 
     public void printPlayerCardPile(){
-        // List of possible colours
-        String[] colours = {"RED","BLUE","GREEN","GREY","PURPLE","ORANGE"};
 
-        // For every colour, print out the player card pile
-        for (int i = 0;i<6;i++){
-            String colour = colours[i];
-            System.out.println(colour + " : ");
-            String line = "";
-            // get the card pile for that specific colour
-            List<Card> pcp = playerCardPile.get(colour);
-            for (int j = 0; j < 5; j++) {
-                line = "";
-                for (int k = 0; k < pcp.size(); k++) {
-                    line += (pcp.get(j).cardRepresentation()).get(i);
-                    line += " ";
-                }
-                System.out.println(line);
-    
-            }
-        }
+        // print out the cards in pcp
+        new cardPrinter(playerCardPile);
     }
 }
-
-// public String toString() {
-// StringBuilder toReturn = new StringBuilder();
-// for (PlayerColouredStack colorStack : stack) {
-// toReturn.append(colorStack.toString()).append("\n");
-// }
-// return toReturn.toString();
-// }
-
-    // public void addCard(Card card) {
-    //     // Find the colored stack for this card's color
-    //     String cardColor = card.getColour();
-    //     PlayerColouredStack colorStack = null;
-        
-    //     // Look for existing stack with the same color
-    //     for (PlayerColouredStack cs : stack) {
-    //         if (cs.getColour().equals(cardColor)) {
-    //             colorStack = cs;
-    //             break;
-    //         }
-    //     }
-        
-    //     // If no stack exists for this color, create one
-    //     if (colorStack == null) {
-    //         colorStack = new PlayerColouredStack(cardColor);
-    //         stack.add(colorStack);
-    //     }
-        
-    //     // Add the card to the appropriate color stack
-    //     colorStack.addCard(card);
-    // }
-// while (paradeIndex >= 0) {
-// Card currentCard = parade.get(paradeIndex);
-// if (currentCard.getColor() == playedCard.getColor() && currentCard.getValue()
-// <= playedValue) { //go through the paradeLine and add cards that fit the
-// removal criteria
-// stack.add(parade.remove(paradeIndex));
-// }
-// paradeIndex--;
-// }

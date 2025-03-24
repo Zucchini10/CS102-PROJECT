@@ -1,11 +1,11 @@
 import java.util.*;
 
-import Testing.PlayerCardPile;
+//import Testing.PlayerCardPile;
 
 class Player {
     private String name;
     private List<Card> hand;
-    private PlayerCardPile stack;
+    private PlayerCardPileStack stack;
     private int score;
     private boolean isAI;
 
@@ -13,14 +13,14 @@ class Player {
     public Player (String name) {
         this.name = name;
         hand = new ArrayList<Card>();
-        stack = new PlayerCardPile();
+        stack = new PlayerCardPileStack();
         score = 0;
         isAI = false;
     }
 
     public Player () {
         hand = new ArrayList<Card>();
-        stack = new PlayerCardPile();
+        stack = new PlayerCardPileStack();
         score = 0;
 
     }
@@ -34,11 +34,12 @@ class Player {
         return hand;
     }
 
-    public PlayerCardPile getStack() {
+    public PlayerCardPileStack getStack() {
         return stack;
     }
 
     public int getScore() {
+        score = stack.totalScore();
         return score;
     }
 
@@ -69,61 +70,55 @@ class Player {
             return hand.get(index);
         }
 
-         System.out.println("Invalid card selection.");
+        System.out.println("Invalid card selection.");
         return null;  
     }
     
-    // public Card playCard(int index) {
-    //     // index >=1
-    //     if (index >= 0 && index <= hand.size()) {
-    //         Card card = hand.get(index);
-    //         hand.remove(index);
-    //     }
-    //     return card;
-    // }
     
     public void printPlayerCardPile() {
-        System.out.println(name + "'s Stack: ");
-        stack.printPlayerCardPile();
+        stack.printPlayerCardPileStack();
         
     } 
     
     public void printHand(){
-        String line;
         System.out.println(name + "'s Hand : ");
-        for (int i = 0; i < 5; i++) {
-            line = "";
-            for (Card c: hand) {
-                line += (c.cardRepresentation()).get(i);
-                line += " ";
-            }
-            System.out.println(line);
-
+        new cardPrinter(hand);
+        String handNumberLine = "\033[0m\033[1m   1       2       3       4";
+        if (hand.size() > 4){
+            handNumberLine += "       5";
         }
-        for (int i = 0;i<hand.size();i++){
-            System.out.print("\033[0m" + "   "+i+ "    " );
-        }
-        System.out.println();
+        System.out.println(handNumberLine);
     }
-    // public void takeFromParade(Card card) {
-    //     stack.add(card);
-    // }
+
 
     public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
         for (Card card : paradeDrawn) {
-            stack.add(card);
+            stack.addCard(card);
         }
     }
-    public void endTurnPrint(List<Card> paradeDrawn, Card top) {
+
+    public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("\n========== End of " + name + "'s Turn ==========\n");
-        System.out.print("Drawn from parade");
-        for (Card card : paradeDrawn){
-            System.out.print(card);
-        }
-        System.out.println();
-        System.out.print("Drawn from deck");
-        System.out.println(top);
-        System.out.println("======================================\n");
+
+        // print drawn cards from parade
+        System.out.println("Drawn from Parade : ");
+        new cardPrinter(paradeDrawn);
+
+        // print drawn card
+        System.out.println("Drawn from deck");
+        top.printCard();
+        System.out.println("Press Enter to continue > ");
+        sc.nextLine();
+
+        // print player card piles
+        stack.printPlayerCardPileStack();
+
+        // print hand
+        printHand();
+
+        System.out.println("Press Enter to end turn > ");
+        sc.nextLine();
     }
 
     public Card chooseCard() {
@@ -139,5 +134,15 @@ class Player {
         return chosen;
 
     }
+
+    public boolean hasAllColours(){
+        if (stack.containsAllColours()==true){
+            return true;
+        } 
+
+        return false;
+    }
+
+
 }
 

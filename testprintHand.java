@@ -5,7 +5,7 @@ public class testprintHand {
 
         //put 5 cards into player hand
         for (int i = 0; i < 5; i++) {
-            Card c1 = d.drawcard();
+            Card c1 = d.drawCard();
             p.draw(c1);
         }
 
