@@ -35,7 +35,11 @@ public class PlayerCardPileStack {
 
         for (String colour:colours){
             PlayerCardPile pcp = playerCardPileStack.get(colour);
-            if (pcp.isFaceUp()==true){
+            if (pcp.getPlayerCardPile().size()==0){
+                System.out.print( "\033[0m\033[1m" + colour + " CARD PILE :");
+                System.out.println("Is empty ");
+                System.out.println();
+            } else if (pcp.isFaceUp()==true){
                 System.out.println( "\033[0m\033[1m" + colour + " CARD PILE :");
                 pcp.printPlayerCardPile();
             } else {

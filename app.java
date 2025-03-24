@@ -9,7 +9,7 @@ public class app {
                    
         g1.startEndGame(nextPlayerIndex);
                 
-
+        System.out.println();
         // Calculate winner
         // g1.calculateWinner();
         

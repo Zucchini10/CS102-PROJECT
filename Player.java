@@ -99,7 +99,7 @@ class Player {
 
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\n========== End of " + name + "'s Turn ==========\n");
+        System.out.println(" \033[0m\033[1m \n========== End of " + name + "\033[0m\033[1m's Turn ==========\n");
 
         // print drawn cards from parade
         System.out.println("Drawn from Parade : ");
@@ -107,18 +107,19 @@ class Player {
 
         // print drawn card
         System.out.println("Drawn from deck");
-        top.printCard();
-        System.out.println("Press Enter to continue > ");
-        sc.nextLine();
+        if (top == null){
+            System.out.println("Deck is empty");
+        } else {
+            top.printCard();
+        }
+        
 
         // print player card piles
         stack.printPlayerCardPileStack();
 
-        // print hand
-        printHand();
-
         System.out.println("Press Enter to end turn > ");
         sc.nextLine();
+    
     }
 
     public Card chooseCard(Parade parade) {
@@ -127,10 +128,10 @@ class Player {
         printHand();
         System.out.print("Choose a card > ");
         int chosenCardIndex = sc.nextInt();
-        Card chosen = hand.get(chosenCardIndex);
+        Card chosen = hand.get(chosenCardIndex-1);
 
         // remove card from hand after playing it
-        hand.remove(chosenCardIndex);
+        hand.remove(chosenCardIndex-1);
         return chosen;
 
     }

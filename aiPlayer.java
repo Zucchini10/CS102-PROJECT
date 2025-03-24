@@ -16,13 +16,17 @@ public class aiPlayer extends Player {
 
     // choose which move depending on what difficulty player picked
     public Card chooseCard(Parade parade) {
+        Card chosen = null;
         if (difficulty.equals("easy")) {
-            return calculateEasyMove();
+            chosen = calculateEasyMove();
         } else if (difficulty.equals("hard")) {
-            return calculateHardMove(parade);
+            chosen = calculateHardMove(Parade);
         } else {
-            return calculateNormalMove(parade);
+            chosen = calculateNormalMove(parade);
         }
+        
+        super.getHand().remove(chosen);
+        return chosen;
     }
     
 
@@ -145,5 +149,17 @@ public class aiPlayer extends Player {
     public Card playCard(Card card) {
         getHand().remove(card);
         return card;
+    }
+
+    public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" \033[0m\033[1m \n========== End of " + super.getName() + "\033[0m\033[1m's Turn ==========\n");
+
+        // print player card piles
+        super.getStack().printPlayerCardPileStack();
+
+        System.out.println("Press Enter to end CPU turn > ");
+        sc.nextLine();
+    
     }
 }
