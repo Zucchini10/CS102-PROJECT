@@ -25,13 +25,6 @@ public class PlayerCardPile {
         return;
     }   
 
-
-    public void printPlayerCardPile(){
-        for(Map.Entry<String, List<Card>> entry : playerCardPile.entrySet()){
-            for(Card c : )
-        }
-    }
-
     public String toString() {
         String toReturn = "";
         for (PlayerColouredStack temp : stack) {
