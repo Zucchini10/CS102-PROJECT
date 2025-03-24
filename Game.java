@@ -26,11 +26,12 @@ public class Game {
         int numCPU = 0;
 
         while (totalPlayers < 1 || totalPlayers > 6) {
-            System.out.print("Enter the number of players > ");
+            
 
             // Validate numPlayers input
             while (true) {
                 try {
+                    System.out.print("Enter the number of players > ");
                     numPlayers = sc.nextInt();
                     break;
                 } catch (InputMismatchException e) {
@@ -39,10 +40,11 @@ public class Game {
                 }
             }
 
-            System.out.print("Enter the number of CPU > ");
+            
 
             // Validate numCPU input
             while (true) {
+                System.out.print("Enter the number of CPU > ");
                 try {
                     numCPU = sc.nextInt();
                     break;

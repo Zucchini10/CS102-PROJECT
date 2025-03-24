@@ -16,16 +16,16 @@ public class aiPlayer extends Player {
 
     // choose which move depending on what difficulty player picked
     public Card chooseCard(Parade parade) {
-        Card chosen = null;
-        if (difficulty.equals("easy")) {
-            chosen = calculateEasyMove();
-        } else if (difficulty.equals("hard")) {
-            chosen = calculateHardMove(Parade);
-        } else {
-            chosen = calculateNormalMove(parade);
-        }
-        
-        super.getHand().remove(chosen);
+        Card chosen = super.getHand().get(0);
+        // if (difficulty.equals("easy")) {
+        //     chosen = calculateEasyMove();
+        // } else if (difficulty.equals("hard")) {
+        //     chosen = calculateHardMove(parade);
+        // } else {
+        //     chosen = calculateNormalMove(parade);
+        // }
+
+        super.getHand().remove(0);
         return chosen;
     }
     
