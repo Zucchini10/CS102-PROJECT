@@ -17,7 +17,7 @@ public class Game {
         // pc = new PointsCalculator(playerList);
         totalPlayers = 0;
         // Intro
-        System.out.println("\033[0m\033[1mWelcome to PARADE!");
+        System.out.println(colourResetCode + "Welcome to PARADE!");
         System.out.println("\033[0m\033[1mPress Enter to Start");
         Scanner sc = new Scanner(System.in);
 
@@ -168,6 +168,7 @@ public class Game {
     public void playerTurn(Player player) {
         Scanner sc = new Scanner(System.in);
         // Print out parade and playercardpile
+        System.out.println(colourResetCode +"===========================================================================================================");
         parade.printParade();
         player.printPlayerCardPile();
         System.out.println(player.getName() + "'s Turn ! ");
@@ -175,9 +176,9 @@ public class Game {
         // 1) Get the user to choose card he plays into parade
         Card chosen = player.chooseCard(parade);
 
-        System.out.println("\033[0m\033[1mChosen card : ");
+        System.out.println(colourResetCode + "Chosen card : ");
         chosen.printCard();
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
         List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
