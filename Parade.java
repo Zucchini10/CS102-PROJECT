@@ -9,7 +9,6 @@ public class Parade {
     }
     
     public void printParade() {
-        String line;
         System.out.println("\033[0m\033[1mPARADE : ");
         new cardPrinter(paradeLine);
 
@@ -37,7 +36,7 @@ public class Parade {
 
     }
     
-    public void evaluateParade(Player player){
-        
+    public List<Card> getParadeLine(){
+        return paradeLine;
     }
 }

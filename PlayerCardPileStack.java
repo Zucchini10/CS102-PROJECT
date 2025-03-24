@@ -35,8 +35,14 @@ public class PlayerCardPileStack {
 
         for (String colour:colours){
             PlayerCardPile pcp = playerCardPileStack.get(colour);
-            System.out.println( "\033[0m\033[1m" + colour + " CARD PILE :");
-            pcp.printPlayerCardPile();
+            if (pcp.isFaceUp()==true){
+                System.out.println( "\033[0m\033[1m" + colour + " CARD PILE :");
+                pcp.printPlayerCardPile();
+            } else {
+                System.out.println( "\033[0m\033[1m" + colour + " CARD PILE : (Majority)");
+                pcp.printPlayerCardPile();
+            }
+            
         }
         
     }
@@ -55,7 +61,7 @@ public class PlayerCardPileStack {
         return playerHasAllColors;
     }
 
-    public int totalScore(){
+    public int getTotalScore(){
 
         int total = 0;
         Set<Map.Entry<String, PlayerCardPile>> entrySet = playerCardPileStack.entrySet();

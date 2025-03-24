@@ -39,7 +39,7 @@ public class app {
                 
 
                     // Calculate winner
-                   g1.calculateWinner();
+                //    g1.calculateWinner();
 
                     
             }

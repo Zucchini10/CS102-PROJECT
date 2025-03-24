@@ -73,7 +73,7 @@ public class Game {
 
         // Adding in CPU with random names
         for (int i = 0; i < numCPU; i++) {
-            playerList.add(new aiPlayer());
+            playerList.add(new aiPlayer("easy"));
         }
 
         // Randomising turn order
@@ -165,7 +165,7 @@ public class Game {
         if (player instanceof aiPlayer) {
             // 1) Choose a card to laydown and collect cards from parade
             // ai choose card, should override this in the child class
-            Card chosen = player.chooseCard();
+            Card chosen = player.chooseCard(parade);
 
             // Print out card that player has chosen
 
@@ -188,7 +188,7 @@ public class Game {
             player.printPlayerCardPile();
             // 1) Choose a card to laydown and collect cards from parade
             // prompt user for which card to throw
-            Card chosen = player.chooseCard();
+            Card chosen = player.chooseCard(parade);
 
             // Print out card that player has chosen
             System.out.println("Chosen card : ");

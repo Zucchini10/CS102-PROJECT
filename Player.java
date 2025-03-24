@@ -121,7 +121,7 @@ class Player {
         sc.nextLine();
     }
 
-    public Card chooseCard() {
+    public Card chooseCard(Parade parade) {
         // asking user which card he wants to choose
         Scanner sc = new Scanner(System.in);
         printHand();

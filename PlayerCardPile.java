@@ -40,13 +40,7 @@ public class PlayerCardPile {
         playerCardPile.add(c);
     }
 
-    public String toString() {
-        String toReturn = "";
-        for (PlayerColouredStack temp : stack) {
-            toReturn += temp.toString() + "%n";
-        }
-        return toReturn;
-    }
+    
     public boolean isEmpty(){
         
         if (playerCardPile.size()==0){

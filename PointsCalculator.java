@@ -67,7 +67,7 @@ public class PointsCalculator {
 
         HashMap<String, List<Player>> majority = majorityDecider();
         for (Player p : players) {
-            int currentScore = p.getStack().calculateStackScore();
+            int currentScore = p.getStack().getTotalScore();
             List<String> mostColor = getMostColor(majority, p);
             for(String color : mostColor){
                 List<Card> stackColor = p.getStack().getPlayerCardPileWithColor(color);
@@ -123,6 +123,7 @@ public class PointsCalculator {
         HashMap <String, List<Player>> majority = majorityDecider();
         List<Player> getMajorities = majority.get(color);
         if(getMajorities.size() != 0){
+            
             return getMajorities.get(0).getStack().getPlayerCardPileWithColor(color).size();
         }
 
