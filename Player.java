@@ -39,7 +39,7 @@ class Player {
     }
 
     public int getScore() {
-        score = stack.totalScore();
+        score = stack.getTotalScore();
         return score;
     }
 
