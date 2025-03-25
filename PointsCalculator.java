@@ -12,7 +12,7 @@ public class PointsCalculator {
         List<Player> max = new ArrayList<>();
 
         for (Player p : players) {
-            List<Card> currentHand = p.getStack().getPlayerCardPileWithColor(color);
+            List<Card> currentHand = p.getStack().getPlayerCardPileStack().get(color).getPlayerCardPile();
             int currentCount = 0;
             for (Card c : currentHand) {
                 if (c.getColour().equals(color)) {
@@ -47,11 +47,11 @@ public class PointsCalculator {
     public List<String> getMostColor(HashMap<String, List<Player>> majority, Player player) {
         List<String> mostColor = new ArrayList<>();
         for (Map.Entry<String, List<Player>> entry : majority.entrySet()) {
-            String currentCard = entry.getKey();
+            String currentColor = entry.getKey();
             List<Player> currentPlayerList = entry.getValue();
 
             if (currentPlayerList.contains(player)) {
-                mostColor.add(currentCard);
+                mostColor.add(currentColor);
             }
         }
 
@@ -70,7 +70,7 @@ public class PointsCalculator {
             int currentScore = p.getStack().getTotalScore();
             List<String> mostColor = getMostColor(majority, p);
             for(String color : mostColor){
-                List<Card> stackColor = p.getStack().getPlayerCardPileWithColor(color);
+                List<Card> stackColor = p.getStack().getPlayerCardPileStack().get(color).getPlayerCardPile();
                 for(Card c : stackColor){
                     currentScore -= c.getValue();
                     currentScore++;
@@ -106,10 +106,10 @@ public class PointsCalculator {
             return playersWithLeastScore.get(0);
         }
 
-        int leastCardAmount = playersWithLeastScore.get(0).getStack().getTotalAmount();
+        int leastCardAmount = playersWithLeastScore.get(0).getStack().getTotalCards();
         Player playerWithLeastCardAmount = playersWithLeastScore.get(0);
         for (Player p : playersWithLeastScore) {
-            int currentCardAmount = p.getStack().getTotalAmount();
+            int currentCardAmount = p.getStack().getTotalCards();
             if (currentCardAmount < leastCardAmount) {
                 leastCardAmount = currentCardAmount;
                 playerWithLeastCardAmount = p;
@@ -123,8 +123,7 @@ public class PointsCalculator {
         HashMap <String, List<Player>> majority = majorityDecider();
         List<Player> getMajorities = majority.get(color);
         if(getMajorities.size() != 0){
-            
-            return getMajorities.get(0).getStack().getPlayerCardPileWithColor(color).size();
+            return getMajorities.get(0).getStack().getPlayerCardPileStack().get(color).getPlayerCardPile().size();
         }
 
         return -1;

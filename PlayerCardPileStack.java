@@ -78,6 +78,15 @@ public class PlayerCardPileStack {
         return total;
     }
 
+    public int getTotalCards(){
+        int result = 0;
+        for(PlayerCardPile current : playerCardPileStack.values()){
+            result += current.getPlayerCardPile().size();
+        }
+
+        return result;
+    }
+
 
     public HashMap<String, PlayerCardPile> getPlayerCardPileStack() {
         return playerCardPileStack;
