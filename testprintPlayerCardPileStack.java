@@ -1,4 +1,4 @@
-public class testprintPlayerCardPile {
+public class testprintPlayerCardPileStack {
     public static void main(String[] args) {
         PlayerCardPileStack pcps = new PlayerCardPileStack();
         Deck d = new Deck();
