@@ -106,6 +106,7 @@ public class Game {
         System.out.println("\033[0m\033[1mPress Enter to Continue");
         sc.nextLine();
 
+        start();
     }
 
     // Getters and Setters
@@ -172,10 +173,19 @@ public class Game {
         parade.printParade();
         player.printPlayerCardPile();
         System.out.println(player.getName() + "'s Turn ! ");
-
+        Card chosen = null;
+        boolean validInput = false;
         // 1) Get the user to choose card he plays into parade
-        Card chosen = player.chooseCard(parade);
-
+        while (!validInput) {
+            try {
+                chosen = player.chooseCard(parade);
+                validInput = true;    //if no exception input is valid
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please select a valid card number.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid input! Please choose a card from 1 to 5.");
+            }
+        }
         System.out.println(colourResetCode + "Chosen card : ");
         chosen.printCard();
         System.out.println(colourResetCode + "Press Enter to Continue");
@@ -295,5 +305,8 @@ public class Game {
         System.out.println();
 
     }
-
+public static void main(String[] args) {
+    Game game = new Game();
 }
+}
+
