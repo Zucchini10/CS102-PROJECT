@@ -231,7 +231,7 @@ public class Game {
 
     public void startEndGame(int endPlayerIndex) {
         Scanner sc = new Scanner(System.in);
-        int nextPlayerIndex = (endPlayerIndex + 1);
+        int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
         Player lastPlayer = playerList.get(endPlayerIndex);
 
         // get reason why endgame started
