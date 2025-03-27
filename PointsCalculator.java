@@ -12,18 +12,14 @@ public class PointsCalculator {
         List<Player> max = new ArrayList<>();
 
         for (Player p : players) {
-            List<Card> currentHand = p.getStack().getPlayerCardPileStack().get(color).getPlayerCardPile();
-            int currentCount = 0;
-            for (Card c : currentHand) {
-                if (c.getColour().equals(color)) {
-                    currentCount++;
-                }
-            }
-            if (currentCount > maxCount) {
+            HashMap<String, PlayerCardPile> currentCardPileStack = p.getStack().getPlayerCardPileStack();
+            List<Card> currentColorPile = currentCardPileStack.get(color).getPlayerCardPile();
+            int currentSize = currentColorPile.size();
+            if (currentSize  > maxCount) {
                 max.clear();
-                maxCount = currentCount;
+                maxCount = currentColorPile.size();
                 max.add(p);
-            } else if (currentCount == maxCount) {
+            } else if (currentSize == maxCount) {
                 max.add(p);
             }
         }
@@ -33,8 +29,9 @@ public class PointsCalculator {
 
     // "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"
     public HashMap<String, List<Player>> majorityDecider() {
+        // Get the list of majorities holder for each color
         HashMap<String, List<Player>> result = new HashMap<>();
-        result.put("RED", getPlayersWithMaxCardColor("RED"));
+        result.put("RED", getPlayersWithMaxCardColor("RED")); 
         result.put("BLUE", getPlayersWithMaxCardColor("BLUE"));
         result.put("GREEN", getPlayersWithMaxCardColor("GREEN"));
         result.put("GREY", getPlayersWithMaxCardColor("GREY"));
@@ -70,8 +67,9 @@ public class PointsCalculator {
             int currentScore = p.getStack().getTotalScore();
             List<String> mostColor = getMostColor(majority, p);
             for(String color : mostColor){
-                List<Card> stackColor = p.getStack().getPlayerCardPileStack().get(color).getPlayerCardPile();
-                for(Card c : stackColor){
+                HashMap<String, PlayerCardPile> currentCardPileStack = p.getStack().getPlayerCardPileStack();
+                List<Card> currentColorPile = currentCardPileStack.get(color).getPlayerCardPile();
+                for(Card c : currentColorPile){
                     currentScore -= c.getValue();
                     currentScore++;
                 }
