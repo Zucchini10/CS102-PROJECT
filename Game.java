@@ -222,7 +222,7 @@ public class Game {
         // check if player has collected all colours
         if (player.hasAllColours() == true) {
             setEndGame(true);
-            reason = player.getName() + "has collected all the colors!";
+            reason = player.getName() + " has collected all the colors!";
         }
         // returns reason why endgame has started, will be empty if endgame criteria not
         // fulfilled
@@ -231,7 +231,7 @@ public class Game {
 
     public void startEndGame(int endPlayerIndex) {
         Scanner sc = new Scanner(System.in);
-        int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
+        int nextPlayerIndex = (endPlayerIndex + 1);
         Player lastPlayer = playerList.get(endPlayerIndex);
 
         // get reason why endgame started
@@ -305,8 +305,5 @@ public class Game {
         System.out.println();
 
     }
-public static void main(String[] args) {
-    Game game = new Game();
-}
 }
 
