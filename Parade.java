@@ -9,17 +9,9 @@ public class Parade {
     }
     
     public void printParade() {
-        String line;
-        System.out.println("PARADE : ");
-        for (int i = 0; i < 5; i++) {
-            line = "";
-            for (int j = 0; j < paradeLine.size(); j++) {
-                line += (paradeLine.get(j).cardRepresentation()).get(i);
-                line += " ";
-            }
-            System.out.println(line);
+        System.out.println("\033[0m\033[1mPARADE : ");
+        new cardPrinter(paradeLine);
 
-        }
     }
 
     public void addCardToParade(Card card){
@@ -28,21 +20,23 @@ public class Parade {
 
     public List<Card> removedFromParade(Card chosen) {
         int playedValue = chosen.getValue();
-        int paradeIndex = paradeLine.size() - playedValue - 2;
+        int paradeIndex = paradeLine.size() - playedValue - 1;
 
         List<Card> paradeDrawn = new ArrayList<Card>();
         while (paradeIndex >= 0) {
             Card currentCard = paradeLine.get(paradeIndex);
-            if (currentCard.getColour() == chosen.getColour() && currentCard.getValue() <= playedValue) {
-                paradeDrawn.add(paradeLine.remove(paradeIndex));
+            if (currentCard.getColour() == chosen.getColour() || currentCard.getValue() <= playedValue) {
+                paradeLine.remove(paradeIndex);
+                paradeDrawn.add(currentCard);
             }
             paradeIndex--;
         }
+        paradeLine.add(chosen);
         return paradeDrawn;
 
     }
     
-    public void evaluateParade(Player player){
-        
+    public List<Card> getParadeLine(){
+        return paradeLine;
     }
 }

@@ -14,15 +14,24 @@ public class aiPlayer extends Player {
         super.setAI(true);
     }
 
+    // choose which move depending on what difficulty player picked
     public Card chooseCard(Parade parade) {
-        if (difficulty.equals("easy")) {
-            return calculateEasyMove();
-        } else {
-            return calculateNormalMove(parade);
-        }
+        Card chosen = super.getHand().get(0);
+        // if (difficulty.equals("easy")) {
+        //     chosen = calculateEasyMove();
+        // } else if (difficulty.equals("hard")) {
+        //     chosen = calculateHardMove(parade);
+        // } else {
+        //     chosen = calculateNormalMove(parade);
+        // }
+
+        super.getHand().remove(0);
+        return chosen;
     }
+    
 
     private Card calculateEasyMove() {
+        List<Card> hand = getHand();
         Card smallestCard = hand.get(0);
         for (Card card : hand) {
             if (card.getValue() < smallestCard.getValue()) {
@@ -33,6 +42,7 @@ public class aiPlayer extends Player {
     }
 
     private Card calculateNormalMove(Parade parade) {
+        List<Card> hand = getHand();
         int paradeSize = parade.getParadeLine().size();
         Card bestCard = null;
         int bestValue = Integer.MAX_VALUE;
@@ -62,23 +72,94 @@ public class aiPlayer extends Player {
         return bestCard;
     }
 
+    private Card calculateHardMove(Parade parade) {
+        List<Card> hand = getHand();
+        int paradeSize = parade.getParadeLine().size();
+        Card bestCard = null;
+        int bestValue = Integer.MAX_VALUE;
+        boolean found = false;
+        Card highestCard = hand.get(0);
+        int highestValue = highestCard.getValue();
+        String mostColour = findMajorityColour(parade.getParadeLine());
+
+        for (Card card: hand) {
+            int value = card.getValue();
+            String colour = card.getColour();
+
+            // get highest value card
+            if (value > highestValue) {
+                highestValue = value;
+                highestCard = card;
+            }
+            if (value >= paradeSize && value < bestValue) {
+                // choose card that do not match most common colour in parade
+                if (!colour.equals(mostColour)) {
+                    bestValue = value;
+                    bestCard = card;
+                    found = true;
+                }
+            }
+        }
+        // pick highest value if all cards < paradesize
+        if (!found) {
+            return highestCard;
+        }
+
+        return bestCard;
+    }
+    
+    public String findMajorityColour(List<Card> cards) {
+        // set each color count to 0
+        int redCount = 0;
+        int greenCount = 0;
+        int orangeCount = 0;
+        int blueCount = 0;
+        int greyCount = 0;
+        int purpleCount = 0;
+        
+        // count total number of each card colours
+        for (Card card : cards) {
+            String color = card.getColour();
+            if (color.equals("Red")){
+                redCount++;
+            } else if (color.equals("Green")) {
+                greenCount++;
+            } else if (color.equals("Orange")) {
+                orangeCount++;
+            } else if (color.equals("Blue")) {
+                blueCount++;
+            } else if (color.equals("Grey")) {
+                greyCount++;
+            } else if (color.equals("Purple")){
+                purpleCount++;
+            }
+        }
+        
+        int[] count = {redCount, greenCount, orangeCount, blueCount, greyCount, purpleCount};
+        String[] colours = {"Red", "Green", "Orange", "Blue", "Grey", "Purple"};
+        int maxIndex = 0;
+        for (int i = 1; i < count.length; i++) {
+            if (count[i] > count[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        return colours[maxIndex];
+    }
+
     public Card playCard(Card card) {
-        hand.remove(card);
+        getHand().remove(card);
         return card;
     }
 
-    public Card chooseCard() {
-        Card chosen = null;
-        if (difficulty.equals("easy")) {
-            chosen = calculateEasyMove();
-        } else if (difficulty.equals("normal")) {
-            chosen = calculateNormalMove(null);//calculate normal move requires the size of the parade but chooseCard has no input parameters
-        } else if (difficulty.equals("hard")) {
-            chosen = calculateHardMove();
-        }
+    public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(" \033[0m\033[1m \n========== End of " + super.getName() + "\033[0m\033[1m's Turn ==========\n");
 
-        hand.remove(chosen);
-        return chosen;
+        // print player card piles
+        super.getStack().printPlayerCardPileStack();
 
+        System.out.println("Press Enter to end CPU turn > ");
+        sc.nextLine();
+    
     }
 }

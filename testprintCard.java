@@ -3,7 +3,7 @@ public class testprintCard {
         Deck d = new Deck();
         Parade p = new Parade();
 
-            Card c1 = d.drawcard();
+            Card c1 = d.drawCard();
             c1.printCard();
         
     }

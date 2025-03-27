@@ -4,18 +4,10 @@ import java.util.List;
 public class Card {
     private String colour;
     private int value;
-    private boolean faceUp;
 
-   
-
-    public Card(String colour, int value, boolean faceUp){
+    public Card(String colour, int value){
         this.colour = colour;
         this.value = value;
-        this.faceUp = faceUp;
-    }
-    
-    public boolean isFaceUp() {
-        return faceUp;
     }
 
     public String getColour() {
@@ -36,19 +28,19 @@ public class Card {
             colourCode = "\033[38;2;255;0;0m"; // Red text color code
             colour1 = "R";
         } else if (colour.equalsIgnoreCase("Blue")){
-            colourCode = "\033[38;2;0;0;255m"; // Black text color code
+            colourCode = "\033[38;2;0;0;255m"; // Blue text color code
             colour1 = "B";
         } else if (colour.equalsIgnoreCase("Green")){
-            colourCode = "\033[38;2;0;153;0m"; // Black text color code
+            colourCode = "\033[38;2;0;153;0m"; // Green text color code
             colour1 = "G";
         }else if (colour.equalsIgnoreCase("Grey")){
-            colourCode = "\033[38;2;204;204;204m"; // Black text color code
+            colourCode = "\033[38;2;204;204;204m"; // Grey text color code
             colour1 = "g";
         }else if (colour.equalsIgnoreCase("Purple")){
-            colourCode = "\033[35m"; // Black text color code
+            colourCode = "\033[35m"; // Purple text color code
             colour1 = "P";
         }else{
-            colourCode = "\033[38;2;255;130;0m"; // Black text color code
+            colourCode = "\033[38;2;255;130;0m"; // Orange text color code
             colour1 = "O";
         }
     
@@ -75,10 +67,5 @@ public class Card {
             
         }
    }
-
-   public String toString(){
-    return colour + "" + value;
-   }
-
     
 }
