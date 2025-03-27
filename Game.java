@@ -73,8 +73,11 @@ public class Game {
         }
 
         // Adding in CPU with random names
+        sc.nextLine();
         for (int i = 0; i < numCPU; i++) {
-            playerList.add(new aiPlayer("easy"));
+            System.out.println("Enter CPU " + i + " difficulty> ");
+            String difficulty = sc.nextLine();
+            playerList.add(new aiPlayer(difficulty));
         }
 
         // Randomising turn order
