@@ -14,18 +14,22 @@ public class aiPlayer extends Player {
         super.setAI(true);
     }
 
-    // choose which move depending on what difficulty player picked
     public Card chooseCard(Parade parade) {
-        Card chosen = super.getHand().get(0);
-        // if (difficulty.equals("easy")) {
-        //     chosen = calculateEasyMove();
-        // } else if (difficulty.equals("hard")) {
-        //     chosen = calculateHardMove(parade);
-        // } else {
-        //     chosen = calculateNormalMove(parade);
-        // }
+        Card chosen;
 
-        super.getHand().remove(0);
+        // Decide strategy based on difficulty
+        if (difficulty.equals("easy")) {
+            chosen = calculateEasyMove();
+        } else if (difficulty.equals("hard")) {
+            chosen = calculateHardMove(parade);
+        } else {
+            chosen = calculateNormalMove(parade);
+        }
+
+        // Remove the chosen card from AI's hand after playing
+        super.getHand().remove(chosen);
+
+        // Return the chosen card to be added to the parade
         return chosen;
     }
     
