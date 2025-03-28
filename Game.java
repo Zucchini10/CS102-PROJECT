@@ -241,18 +241,22 @@ public class Game {
 
     public void startEndGame(int endPlayerIndex) {
         Scanner sc = new Scanner(System.in);
-        int nextPlayerIndex = (endPlayerIndex + 1);
+        int nextPlayerIndex = (endPlayerIndex + 1)%totalPlayers;
         Player lastPlayer = playerList.get(endPlayerIndex);
 
         // get reason why endgame started
         String reason = checkEndGame(lastPlayer);
         System.out.print("Endgame is starting, " + reason);
         System.out.println("Everyone has one last turn!");
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
+    
+        // re-order the playerList to give everyone one last turn, and next player is the first element
+        Collections.rotate(playerList,-nextPlayerIndex);
+        printTurnOrder();
         // starting from the nextplayer, give everyone one last turn
-        for (int i = nextPlayerIndex; i < totalPlayers + nextPlayerIndex; i++) {
+        for (int i = 0; i < totalPlayers; i++) {
             Player player = playerList.get(i % totalPlayers);
             playerTurn(player);
         }
