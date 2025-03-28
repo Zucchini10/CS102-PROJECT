@@ -10,11 +10,13 @@ public class Game {
     String colourResetCode = "\033[0m\033[1m";
 
     public Game() {
+        // Initialising attributes
         isEndGame = false;
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
         totalPlayers = 0;
+
         // Intro
         System.out.println(colourResetCode + "Welcome to PARADE!");
         System.out.println("\033[0m\033[1mPress Enter to Start");
@@ -60,6 +62,7 @@ public class Game {
             }
         }
 
+        // initialise points calculators for the game 
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
         } else {
@@ -86,7 +89,7 @@ public class Game {
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         printTurnOrder();
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
         // Deal 5 cards to each player
@@ -97,7 +100,7 @@ public class Game {
                 p.draw(playerStarting);
             }
         }
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println("Press Enter to Continue");
         sc.nextLine();
 
         // Deal 6 cards to parade
@@ -107,11 +110,12 @@ public class Game {
             parade.addCardToParade(paradeStarting);
         }
 
+        // print parade before starting game 
         parade.printParade();
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
-        start();
+
     }
 
     // Getters and Setters
@@ -148,7 +152,7 @@ public class Game {
     }
 
     public int start() {
-
+        System.out.println("GAME START!");
         int endPlayerIndex = 0;
 
         // runs player turn until endgame
