@@ -7,7 +7,7 @@ public class Game {
     private Parade parade;
     private Deck deck;
     private PointsCalculator pc;
-    String colourResetCode = "\033[0m\033[1m";
+    private String colourResetCode = "\033[0m\033[1m";
 
     public Game() {
         // Initialising attributes

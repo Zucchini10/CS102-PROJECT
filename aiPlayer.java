@@ -2,7 +2,7 @@ import java.util.*;
 
 public class aiPlayer extends Player {
     private String difficulty;
-    String colourResetCode = "\033[0m\033[1m";
+    private String colourResetCode = "\033[0m\033[1m";
 
     public aiPlayer(String difficulty) {
         super();
