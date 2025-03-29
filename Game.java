@@ -62,7 +62,7 @@ public class Game {
             }
         }
 
-        // initialise points calculators for the game 
+        // initialise points calculators for the game
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
         } else {
@@ -78,7 +78,7 @@ public class Game {
         }
 
         // Adding in CPU with random names
-        sc.nextLine();
+        // sc.nextLine();
         for (int i = 0; i < numCPU; i++) {
             System.out.print("Enter CPU " + i + " difficulty> ");
             String difficulty = sc.nextLine();
@@ -93,28 +93,25 @@ public class Game {
         sc.nextLine();
 
         // Deal 5 cards to each player
-        System.out.println("Dealing Cards to players... ");
+        System.out.println("Initialising Game...");
         for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
                 Card playerStarting = deck.drawCard();
                 p.draw(playerStarting);
             }
         }
-        System.out.println("Press Enter to Continue");
-        sc.nextLine();
 
         // Deal 6 cards to parade
-        System.out.println("Initialising parade... ");
+        // System.out.println("Initialising parade... ");
         for (int i = 0; i < 6; i++) {
             Card paradeStarting = deck.drawCard();
             parade.addCardToParade(paradeStarting);
         }
 
-        // print parade before starting game 
+        // print parade before starting game
         parade.printParade();
-        System.out.println(colourResetCode + "Press Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to start game.");
         sc.nextLine();
-
 
     }
 
@@ -185,21 +182,59 @@ public class Game {
         System.out.println(player.getName() + "'s Turn ! ");
         Card chosen = null;
         boolean validInput = false;
+
         // 1) Get the user to choose card he plays into parade
         while (!validInput) {
             try {
                 chosen = player.chooseCard(parade);
-                validInput = true; // if no exception input is valid
+                System.out.println(colourResetCode + "Chosen card : ");
+                chosen.printCard();
+                // while loop for confirm and undo
+                while (true) {
+                    try {
+                        // only enter if player is not aiplayer
+                        if (!(player instanceof aiPlayer)) {
+                            System.out.println(colourResetCode + "Press 1 to CONFIRM or 2 to UNDO selection.");
+
+                            int confirmChoice = sc.nextInt();
+                            sc.nextLine();
+                            // if CONFIRM -> break out of both while loops
+                            if (confirmChoice == 1) {
+                                validInput = true; // Confirmed, exit the loop
+                                break;
+                            }
+                            // else if UNDO -> break out of "while(true)" loop
+                            else if (confirmChoice == 2) {
+                                System.out.println("Undoing selection. Please choose again.");
+                                // Loop continues, so no need to change validInput
+                                player.getHand().add(chosen);
+                                break;
+                            }
+                            // else prompt undo/confirm again
+                            else {
+                                System.out.println("Invalid choice! Please press 1 to CONFIRM or 2 to UNDO.");
+                            }
+
+                        }
+                        // handle for ai player
+                        else {
+                            validInput = true;
+                            break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid input! Please enter either 1 or 2");
+                        sc.nextLine();
+                    }
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input! Please select a valid card number.");
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid input! Please choose a card from 1 to 5.");
             }
         }
-        System.out.println(colourResetCode + "Chosen card : ");
-        chosen.printCard();
-        System.out.println(colourResetCode + "Press Enter to Continue");
-        sc.nextLine();
+
+        // System.out.println(colourResetCode + "Press Enter to Continue");
+        // sc.nextLine();
         List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
         // 2) put into player's playercardpile
@@ -211,14 +246,24 @@ public class Game {
             top = deck.drawCard();
             player.draw(top);
         }
+
         // 4) print out cards drawn from parade
-        new cardPrinter(paradeDrawn);
-        System.out.println("Press Enter to continue");
+        System.out.println(colourResetCode + "Cards drawn from the Parade :");
+        if (paradeDrawn.isEmpty()) {
+            System.out.println("No cards collected from the Parade.");
+
+        } else {
+            new cardPrinter(paradeDrawn);
+
+        }
+
+        System.out.println();
+
+        System.out.println(colourResetCode + "Press Enter to continue");
         sc.nextLine();
         // if player : ending turn - print out drawn card + hand + playercardpile
         // if CPU : ending turn - print out playercardpile
         player.endingTurnPrint(paradeDrawn, top);
-
     }
 
     public String checkEndGame(Player player) {
@@ -241,7 +286,7 @@ public class Game {
 
     public void startEndGame(int endPlayerIndex) {
         Scanner sc = new Scanner(System.in);
-        int nextPlayerIndex = (endPlayerIndex + 1)%totalPlayers;
+        int nextPlayerIndex = (endPlayerIndex + 1) % totalPlayers;
         Player lastPlayer = playerList.get(endPlayerIndex);
 
         // get reason why endgame started
@@ -251,9 +296,9 @@ public class Game {
         System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
-    
-        // re-order the playerList to give everyone one last turn, and next player is the first element
-        Collections.rotate(playerList,-nextPlayerIndex);
+        // re-order the playerList to give everyone one last turn, and next player is
+        // the first element
+        Collections.rotate(playerList, -nextPlayerIndex);
         printTurnOrder();
         // starting from the nextplayer, give everyone one last turn
         for (int i = 0; i < totalPlayers; i++) {

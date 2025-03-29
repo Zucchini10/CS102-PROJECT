@@ -2,6 +2,7 @@ import java.util.*;
 
 public class aiPlayer extends Player {
     private String difficulty;
+    String colourResetCode = "\033[0m\033[1m";
 
     public aiPlayer(String difficulty) {
         super();
@@ -162,7 +163,7 @@ public class aiPlayer extends Player {
         // print player card piles
         super.getStack().printPlayerCardPileStack();
 
-        System.out.println("Press Enter to end CPU turn > ");
+        System.out.println(colourResetCode + "Press Enter to end CPU turn > ");
         sc.nextLine();
     
     }
