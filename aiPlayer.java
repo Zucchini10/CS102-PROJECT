@@ -3,15 +3,21 @@ import java.util.*;
 public class aiPlayer extends Player {
     private String difficulty;
     private String colourResetCode = "\033[0m\033[1m";
+    private static final Set<String> usedNames = new HashSet<>();
+    private static final String[] Names = {"John", "Jane"};
+
 
     public aiPlayer(String difficulty) {
         super();
         this.difficulty = difficulty;
 
         Random rand = new Random();
-        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
-        String name = "\033[38;2;0;153;0m" + Names[rand.nextInt(Names.length)];
-        super.setName(name);
+        String selectedName;
+        do {
+            selectedName = Names[rand.nextInt(Names.length)];
+        } while (usedNames.contains(selectedName) && usedNames.size() < Names.length);
+        String colouredName = "\033[38;2;0;153;0m" + selectedName;
+        super.setName(colouredName);
         super.setAI(true);
     }
 
