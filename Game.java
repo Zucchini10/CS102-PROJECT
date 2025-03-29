@@ -25,6 +25,10 @@ public class Game {
         // Choosing number of players and CPU
         int numPlayers = 0;
         int numCPU = 0;
+        List<String> difficulties = new ArrayList<>();
+        difficulties.add("easy");
+        difficulties.add("normal");
+        difficulties.add("hard");
 
         while (totalPlayers <= 1 || totalPlayers > 6) {
 
@@ -79,17 +83,28 @@ public class Game {
 
         // Adding in CPU with random names
         // sc.nextLine();
+
         for (int i = 0; i < numCPU; i++) {
-            System.out.print("Enter CPU " + i + " difficulty> ");
-            String difficulty = sc.nextLine();
-            playerList.add(new aiPlayer(difficulty));
+            while (true) {
+                try {
+                    System.out.print("Enter CPU " + i + " difficulty: easy/normal/hard> ");
+                    String difficulty = sc.nextLine();
+                    if (!(difficulties.contains(difficulty.toLowerCase()))) {
+                        throw new InputMismatchException();
+                    }
+                    playerList.add(new aiPlayer(difficulty));
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid difficulty level. Choose from easy, normal or hard.");
+                }
+            }
         }
 
         // Randomising turn order
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         printTurnOrder();
-        System.out.println(colourResetCode + "Press Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Start Game");
         sc.nextLine();
 
         // Deal 5 cards to each player
@@ -110,8 +125,8 @@ public class Game {
 
         // print parade before starting game
         parade.printParade();
-        System.out.println(colourResetCode + "Press Enter to start game.");
-        sc.nextLine();
+        // System.out.println(colourResetCode + "Press Enter to start game.");
+        // sc.nextLine();
 
     }
 
@@ -176,7 +191,7 @@ public class Game {
         Scanner sc = new Scanner(System.in);
         // Print out parade and playercardpile
         System.out.println(colourResetCode
-                + "===========================================================================================================");
+                + "===========================================================================================================================");
         parade.printParade();
         player.printPlayerCardPile();
         System.out.println(player.getName() + "'s Turn ! ");
