@@ -85,7 +85,7 @@ public class PointsCalculator {
         return Collections.min(playersScoreAfterMajority.values());
     }
 
-    public Player getPlayerWithLeastScore() {
+    public Player getWinner() {
         int leastScore = getLeastScore();
         List<Player> playersWithLeastScore = new ArrayList<>();
         HashMap<Player, Integer> playersScoreAfterMajority = getPlayersScoreAfterMajority();

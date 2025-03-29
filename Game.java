@@ -309,31 +309,36 @@ public class Game {
 
     public void calculateWinner() {
         Scanner sc = new Scanner(System.in);
-        // implement logic to find player with majority of each color and flip those
-        // cards over
-        // returns hashmap of 6 the majority cardpile of each color and which player
-        // owns them
+
+        // returns hashmap of 6 of the majority cardpile of each color and which player(s) owns them,
         HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
 
+        // flips majority card pile
         for (String colour : colours) {
             List<Player> majorityPlayers = majorityHashmap.get(colour);
             flipMajorityCardPile(majorityPlayers, colour);
         }
 
-        // print the total score for each player then decide the winner
-        Player winner = pc.getPlayerWithLeastScore();
-        int lowest = pc.getLeastScore();
+        // find the winner by finding the player with lowest score and lowest number of cards, then get winner score 
+        Player winner = pc.getWinner();
+        int winnerScore = winner.getScore();
+
+        // gets hashmap of each player and his score after flipping majority card pile
         HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScoreAfterMajority();
+
+        // for every player, print out his playercardpiles and their score
         for (Player player : playerList) {
             System.out.println(player.getName() + " :");
-            player.printPlayerCardPile();
 
+            player.printPlayerCardPile();
             System.out.println("Final Score : " + playersScoreAfterMajority.get(player));
             System.out.print("Press Enter to continue > ");
             sc.nextLine();
         }
-        System.out.println("Winner is... " + winner.getName() + " with " + lowest + " points");
+
+        // finally print out the winner
+        System.out.println("Winner is... " + winner.getName() + " with " + winnerScore + " points");
 
     }
 
