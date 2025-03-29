@@ -2,14 +2,14 @@ import java.util.*;
 
 public class aiPlayer extends Player {
     private String difficulty;
-    String colourResetCode = "\033[0m\033[1m";
+    private String colourResetCode = "\033[0m\033[1m";
 
     public aiPlayer(String difficulty) {
         super();
         this.difficulty = difficulty;
 
         Random rand = new Random();
-        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia" };
+        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
         String name = "\033[38;2;0;153;0m" + Names[rand.nextInt(Names.length)];
         super.setName(name);
         super.setAI(true);

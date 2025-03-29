@@ -11,7 +11,7 @@ public class app {
                 
         System.out.println();
         // Calculate winner
-        // g1.calculateWinner();
+        g1.calculateWinner();
         
                     
             }
