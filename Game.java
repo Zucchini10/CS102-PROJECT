@@ -84,7 +84,7 @@ public class Game {
         // Adding in CPU with random names
         // sc.nextLine();
 
-        for (int i = 0; i < numCPU; i++) {
+        for (int i = 1; i <= numCPU; i++) {
             while (true) {
                 try {
                     System.out.print("Enter CPU " + i + " difficulty: easy/normal/hard> ");

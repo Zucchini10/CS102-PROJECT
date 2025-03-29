@@ -4,7 +4,7 @@ public class aiPlayer extends Player {
     private String difficulty;
     private String colourResetCode = "\033[0m\033[1m";
     private static final Set<String> usedNames = new HashSet<>();
-    private static final String[] Names = {"John", "Jane"};
+    private static final String[] Names = {"John", "Jane", "Chris", "Olivia", "Emma", "Mary"};
 
 
     public aiPlayer(String difficulty) {
@@ -16,6 +16,9 @@ public class aiPlayer extends Player {
         do {
             selectedName = Names[rand.nextInt(Names.length)];
         } while (usedNames.contains(selectedName) && usedNames.size() < Names.length);
+
+        usedNames.add(selectedName);
+
         String colouredName = "\033[38;2;0;153;0m" + selectedName;
         super.setName(colouredName);
         super.setAI(true);
