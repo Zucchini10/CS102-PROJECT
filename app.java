@@ -8,7 +8,7 @@ public class app {
         int nextPlayerIndex = g1.start();
                    
         g1.startEndGame(nextPlayerIndex);
-                
+        
         System.out.println();
         // Calculate winner
         // g1.calculateWinner();
@@ -16,5 +16,3 @@ public class app {
                     
             }
         }
-        
-

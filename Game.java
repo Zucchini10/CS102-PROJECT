@@ -242,7 +242,7 @@ public class Game {
 
         // 3) player draws card from deck
         Card top = null;
-        if (deck.isEmpty() == false) {
+        if (deck.isEmpty() == false && isEndGame == false) {
             top = deck.drawCard();
             player.draw(top);
         }
@@ -305,6 +305,13 @@ public class Game {
             Player player = playerList.get(i % totalPlayers);
             playerTurn(player);
         }
+
+        Collections.rotate(playerList, nextPlayerIndex);
+        // discard 2 cards from hand and place remaining 2 cards into cardpile
+        for (int i = 0; i < totalPlayers; i++) {
+            Player player = playerList.get(i % totalPlayers);
+            playerTurnDiscard(player);
+        }
     }
 
     public void calculateWinner() {
@@ -358,5 +365,79 @@ public class Game {
 
         System.out.println();
 
+    }
+
+    public void playerTurnDiscard(Player player) {
+        Scanner sc = new Scanner(System.in);
+        // Print out parade and playercardpile
+        System.out.println(colourResetCode
+                + "===========================================================================================================");
+        player.printPlayerCardPile();
+        System.out.println(player.getName() + "'s Turn to discard! ");
+        Card chosen = null;
+
+        // 1) Get the user to choose 2 cards to discard
+        for (int i = 0; i < 2; i++) {
+            boolean validInput = false;
+            while (!validInput) {
+                try {
+                    chosen = player.discardCard();
+                    System.out.println(colourResetCode + "Discarded card : ");
+                    chosen.printCard();
+                    // while loop for confirm and undo
+                    while (true) {
+                        try {
+                            // only enter if player is not aiplayer
+                            if (!(player instanceof aiPlayer)) {
+                                System.out.println(colourResetCode + "Press 1 to CONFIRM or 2 to UNDO selection.");
+
+                                int confirmChoice = sc.nextInt();
+                                sc.nextLine();
+                                // if CONFIRM -> break out of both while loops
+                                if (confirmChoice == 1) {
+                                    validInput = true; // Confirmed, exit the loop
+                                    break;
+                                }
+                                // else if UNDO -> break out of "while(true)" loop
+                                else if (confirmChoice == 2) {
+                                    System.out.println("Undoing selection. Please choose again.");
+                                    // Loop continues, so no need to change validInput
+                                    player.getHand().add(chosen);
+                                    break;
+                                }
+                                // else prompt undo/confirm again
+                                else {
+                                    System.out.println("Invalid choice! Please press 1 to CONFIRM or 2 to UNDO.");
+                                }
+
+                            }
+                            // handle for ai player
+                            else {
+                                validInput = true;
+                                break;
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input! Please enter either 1 or 2");
+                            sc.nextLine();
+                        }
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please select a valid card number.");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Invalid input! Please select a valid card number.");
+                }
+            }
+        }
+
+        // System.out.println(colourResetCode + "Press Enter to Continue");
+        // sc.nextLine();
+
+        // 2) put into player's playercardpile
+        player.addIntoPlayerCardPile(player.getHand());
+
+        System.out.println();
+        player.printPlayerCardPile();
+        System.out.println(colourResetCode + "Press Enter to continue");
+        sc.nextLine();
     }
 }

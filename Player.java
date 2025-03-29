@@ -84,9 +84,11 @@ class Player {
     public void printHand() {
         System.out.println(name + "'s Hand : ");
         new cardPrinter(hand);
-        String handNumberLine = "\033[0m\033[1m   1       2       3       4";
-        if (hand.size() > 4) {
-            handNumberLine += "       5";
+        String handNumberLine = "\033[0m\033[1m   1       2       3";
+        if (hand.size() == 4) {
+            handNumberLine += "       4";
+        } else if (hand.size() > 4) {
+            handNumberLine += "       4       5";
         }
         System.out.println(handNumberLine);
     }
@@ -130,6 +132,19 @@ class Player {
         Scanner sc = new Scanner(System.in);
         printHand();
         System.out.print("Choose a card > ");
+        int chosenCardIndex = sc.nextInt();
+        Card chosen = hand.get(chosenCardIndex - 1);
+
+        // remove card from hand after playing it
+        hand.remove(chosenCardIndex - 1);
+        return chosen;
+
+    }
+    public Card discardCard() {
+        // asking user which card he wants to choose
+        Scanner sc = new Scanner(System.in);
+        printHand();
+        System.out.print("Choose a card to discard > ");
         int chosenCardIndex = sc.nextInt();
         Card chosen = hand.get(chosenCardIndex - 1);
 

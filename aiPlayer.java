@@ -33,6 +33,17 @@ public class aiPlayer extends Player {
         // Return the chosen card to be added to the parade
         return chosen;
     }
+    public Card discardCard() {
+        List<Card> hand = getHand();
+        Card largestCard = hand.get(0);
+        for (Card card : hand) {
+            if (card.getValue() > largestCard.getValue()) {
+                largestCard = card;
+            }
+        }
+        super.getHand().remove(largestCard);
+        return largestCard;
+    }
     
 
     private Card calculateEasyMove() {
