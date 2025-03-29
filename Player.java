@@ -8,9 +8,10 @@ class Player {
     private PlayerCardPileStack stack;
     private int score;
     private boolean isAI;
+    String colourResetCode = "\033[0m\033[1m";
 
     // constructor
-    public Player (String name) {
+    public Player(String name) {
         this.name = "\033[0m" + name;
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
@@ -18,7 +19,7 @@ class Player {
         isAI = false;
     }
 
-    public Player () {
+    public Player() {
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;
@@ -56,42 +57,41 @@ class Player {
         this.score = score;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
+
     // methods
     public void draw(Card card) {
         hand.add(card);
 
     }
 
-    public Card getCard (int index) {
+    public Card getCard(int index) {
         if (index >= 0 && index < hand.size()) {
             return hand.get(index);
         }
 
         System.out.println("Invalid card selection.");
-        return null;  
+        return null;
     }
-    
-    
+
     public void printPlayerCardPile() {
         stack.printPlayerCardPileStack();
-        
-    } 
-    
-    public void printHand(){
+
+    }
+
+    public void printHand() {
         System.out.println(name + "'s Hand : ");
         new cardPrinter(hand);
         String handNumberLine = "\033[0m\033[1m   1       2       3       4";
-        if (hand.size() > 4){
+        if (hand.size() > 4) {
             handNumberLine += "       5";
         }
         System.out.println(handNumberLine);
     }
 
-
-    public void addIntoPlayerCardPile (List<Card> paradeDrawn) {
+    public void addIntoPlayerCardPile(List<Card> paradeDrawn) {
         for (Card card : paradeDrawn) {
             stack.addCard(card);
         }
@@ -103,23 +103,26 @@ class Player {
 
         // print drawn cards from parade
         System.out.println("Drawn from Parade : ");
-        new cardPrinter(paradeDrawn);
-
+        if (paradeDrawn.isEmpty()) {
+            System.out.println("No cards collected from the Parade.");
+        } else {
+            new cardPrinter(paradeDrawn);
+        }
+        System.out.println();
         // print drawn card
-        System.out.println("Drawn from deck");
-        if (top == null){
+        System.out.println(colourResetCode + "Drawn from deck: ");
+        if (top == null) {
             System.out.println("Deck is empty");
         } else {
             top.printCard();
         }
-        
 
         // print player card piles
         stack.printPlayerCardPileStack();
 
-        System.out.println("Press Enter to end turn > ");
+        System.out.println(colourResetCode + "Press Enter to end turn > ");
         sc.nextLine();
-    
+
     }
 
     public Card chooseCard(Parade parade) {
@@ -128,22 +131,20 @@ class Player {
         printHand();
         System.out.print("Choose a card > ");
         int chosenCardIndex = sc.nextInt();
-        Card chosen = hand.get(chosenCardIndex-1);
+        Card chosen = hand.get(chosenCardIndex - 1);
 
         // remove card from hand after playing it
-        hand.remove(chosenCardIndex-1);
+        hand.remove(chosenCardIndex - 1);
         return chosen;
 
     }
 
-    public boolean hasAllColours(){
-        if (stack.containsAllColours()==true){
+    public boolean hasAllColours() {
+        if (stack.containsAllColours() == true) {
             return true;
-        } 
+        }
 
         return false;
     }
 
-
 }
-

@@ -43,7 +43,7 @@ public class PlayerCardPile {
     
     public boolean isEmpty(){
         
-        if (playerCardPile.size()==0){
+        if (playerCardPile.size()== 0){
             return true;
         } else{
             return false;
