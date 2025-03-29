@@ -6,16 +6,17 @@ public class Game {
     private List<Player> playerList;
     private Parade parade;
     private Deck deck;
-    // private PointsCalculator pc;
+    private PointsCalculator pc;
     String colourResetCode = "\033[0m\033[1m";
 
     public Game() {
+        // Initialising attributes
         isEndGame = false;
         playerList = new ArrayList<Player>();
         parade = new Parade();
         deck = new Deck();
-        // pc = new PointsCalculator(playerList);
         totalPlayers = 0;
+
         // Intro
         System.out.println(colourResetCode + "Welcome to PARADE!");
         System.out.println("\033[0m\033[1mPress Enter to Start");
@@ -25,8 +26,7 @@ public class Game {
         int numPlayers = 0;
         int numCPU = 0;
 
-        while (totalPlayers < 1 || totalPlayers > 6) {
-            
+        while (totalPlayers <= 1 || totalPlayers > 6) {
 
             // Validate numPlayers input
             while (true) {
@@ -39,8 +39,6 @@ public class Game {
                     sc.nextLine(); // Clear the buffer
                 }
             }
-
-            
 
             // Validate numCPU input
             while (true) {
@@ -64,6 +62,13 @@ public class Game {
             }
         }
 
+        // initialise points calculators for the game
+        if (totalPlayers == 2) {
+            pc = new PointsCalculator2P(playerList);
+        } else {
+            pc = new PointsCalculator(playerList);
+        }
+
         // Initialising players
         sc.nextLine();
         for (int i = 1; i < numPlayers + 1; i++) {
@@ -73,40 +78,41 @@ public class Game {
         }
 
         // Adding in CPU with random names
+        // sc.nextLine();
         for (int i = 0; i < numCPU; i++) {
-            playerList.add(new aiPlayer("easy"));
+            System.out.print("Enter CPU " + i + " difficulty> ");
+            String difficulty = sc.nextLine();
+            playerList.add(new aiPlayer(difficulty));
         }
 
         // Randomising turn order
         Collections.shuffle(playerList);
         System.out.println("Turn order:");
         printTurnOrder();
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
         // Deal 5 cards to each player
-        System.out.println("Dealing Cards to players... ");
+        System.out.println("Initialising Game...");
         for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
                 Card playerStarting = deck.drawCard();
                 p.draw(playerStarting);
             }
         }
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
-        sc.nextLine();
 
         // Deal 6 cards to parade
-        System.out.println("Initialising parade... ");
+        // System.out.println("Initialising parade... ");
         for (int i = 0; i < 6; i++) {
             Card paradeStarting = deck.drawCard();
             parade.addCardToParade(paradeStarting);
         }
 
+        // print parade before starting game
         parade.printParade();
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to start game.");
         sc.nextLine();
 
-        start();
     }
 
     // Getters and Setters
@@ -143,7 +149,7 @@ public class Game {
     }
 
     public int start() {
-
+        System.out.println("GAME START!");
         int endPlayerIndex = 0;
 
         // runs player turn until endgame
@@ -169,27 +175,66 @@ public class Game {
     public void playerTurn(Player player) {
         Scanner sc = new Scanner(System.in);
         // Print out parade and playercardpile
-        System.out.println(colourResetCode +"===========================================================================================================");
+        System.out.println(colourResetCode
+                + "===========================================================================================================");
         parade.printParade();
         player.printPlayerCardPile();
         System.out.println(player.getName() + "'s Turn ! ");
         Card chosen = null;
         boolean validInput = false;
+
         // 1) Get the user to choose card he plays into parade
         while (!validInput) {
             try {
                 chosen = player.chooseCard(parade);
-                validInput = true;    //if no exception input is valid
+                System.out.println(colourResetCode + "Chosen card : ");
+                chosen.printCard();
+                // while loop for confirm and undo
+                while (true) {
+                    try {
+                        // only enter if player is not aiplayer
+                        if (!(player instanceof aiPlayer)) {
+                            System.out.println(colourResetCode + "Press 1 to CONFIRM or 2 to UNDO selection.");
+
+                            int confirmChoice = sc.nextInt();
+                            sc.nextLine();
+                            // if CONFIRM -> break out of both while loops
+                            if (confirmChoice == 1) {
+                                validInput = true; // Confirmed, exit the loop
+                                break;
+                            }
+                            // else if UNDO -> break out of "while(true)" loop
+                            else if (confirmChoice == 2) {
+                                System.out.println("Undoing selection. Please choose again.");
+                                // Loop continues, so no need to change validInput
+                                player.getHand().add(chosen);
+                                break;
+                            }
+                            // else prompt undo/confirm again
+                            else {
+                                System.out.println("Invalid choice! Please press 1 to CONFIRM or 2 to UNDO.");
+                            }
+
+                        }
+                        // handle for ai player
+                        else {
+                            validInput = true;
+                            break;
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid input! Please enter either 1 or 2");
+                        sc.nextLine();
+                    }
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input! Please select a valid card number.");
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid input! Please choose a card from 1 to 5.");
             }
         }
-        System.out.println(colourResetCode + "Chosen card : ");
-        chosen.printCard();
-        System.out.println(colourResetCode + "Press Enter to Continue");
-        sc.nextLine();
+
+        // System.out.println(colourResetCode + "Press Enter to Continue");
+        // sc.nextLine();
         List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
         // 2) put into player's playercardpile
@@ -201,14 +246,24 @@ public class Game {
             top = deck.drawCard();
             player.draw(top);
         }
+
         // 4) print out cards drawn from parade
-        new cardPrinter(paradeDrawn);
-        System.out.println("Press Enter to continue");
+        System.out.println(colourResetCode + "Cards drawn from the Parade :");
+        if (paradeDrawn.isEmpty()) {
+            System.out.println("No cards collected from the Parade.");
+
+        } else {
+            new cardPrinter(paradeDrawn);
+
+        }
+
+        System.out.println();
+
+        System.out.println(colourResetCode + "Press Enter to continue");
         sc.nextLine();
         // if player : ending turn - print out drawn card + hand + playercardpile
-        // if CPU : ending turn - print out playercardpile 
+        // if CPU : ending turn - print out playercardpile
         player.endingTurnPrint(paradeDrawn, top);
-        
     }
 
     public String checkEndGame(Player player) {
@@ -238,50 +293,49 @@ public class Game {
         String reason = checkEndGame(lastPlayer);
         System.out.print("Endgame is starting, " + reason);
         System.out.println("Everyone has one last turn!");
-        System.out.println("\033[0m\033[1mPress Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
-
+        // re-order the playerList to give everyone one last turn, and next player is
+        // the first element
+        Collections.rotate(playerList, -nextPlayerIndex);
+        printTurnOrder();
         // starting from the nextplayer, give everyone one last turn
-        for (int i = nextPlayerIndex; i < totalPlayers + nextPlayerIndex; i++) {
+        for (int i = 0; i < totalPlayers; i++) {
             Player player = playerList.get(i % totalPlayers);
             playerTurn(player);
         }
     }
 
-    // public void calculateWinner(){
-    // Scanner sc = new Scanner(System.in);
-    // // implement logic to find player with majority of each color and flip those
-    // cards over
-    // // returns hashmap of 6 the majority cardpile of each color and which player
-    // owns them
-    // HashMap <String,List<Player>> majorityHashmap = pc.majorityDecider();
-    // String[] colours = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
+    public void calculateWinner() {
+        Scanner sc = new Scanner(System.in);
+        // implement logic to find player with majority of each color and flip those
+        // cards over
+        // returns hashmap of 6 the majority cardpile of each color and which player
+        // owns them
+        HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
+        String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
 
-    // for (String colour : colours){
-    // List<Player> majorityPlayers = majorityHashmap.get(colour);
-    // flipMajorityCardPile(majorityPlayers, colour);
-    // }
+        for (String colour : colours) {
+            List<Player> majorityPlayers = majorityHashmap.get(colour);
+            flipMajorityCardPile(majorityPlayers, colour);
+        }
 
-    // // print the total score for each player then decide the winner
-    // Player winner = null;
-    // int highest = -1;
-    // for (Player player:playerList){
-    // System.out.println(player.getName() + " :");
-    // player.printPlayerCardPile();
+        // print the total score for each player then decide the winner
+        Player winner = pc.getPlayerWithLeastScore();
+        int lowest = pc.getLeastScore();
+        HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScoreAfterMajority();
+        for (Player player : playerList) {
+            System.out.println(player.getName() + " :");
+            player.printPlayerCardPile();
 
-    // System.out.println("Final Score : " + player.getScore());
-    // System.out.print("Press Enter to continue > ");
-    // sc.nextLine();
+            System.out.println("Final Score : " + playersScoreAfterMajority.get(player));
+            System.out.print("Press Enter to continue > ");
+            sc.nextLine();
+        }
+        System.out.println("Winner is... " + winner.getName() + " with " + lowest + " points");
 
-    // if (player.getScore()>highest){
-    // winner = player;
-    // highest = player.getScore();
-    // }
-    // }
-    // System.out.println("winner is..." + winner.getName());
-
-    // }
+    }
 
     public void flipMajorityCardPile(List<Player> majorityPlayers, String colour) {
         for (Player player : majorityPlayers) {
@@ -306,4 +360,3 @@ public class Game {
 
     }
 }
-

@@ -6,35 +6,33 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<Card>();
 
-        String[] colors = {"RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"};
-            for (String color : colors){
-                for (int i = 0;i<11;i++){
-                    Card newcard = new Card(color,i);
-                    cards.add(newcard);
-                }
+        String[] colors = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
+        for (String color : colors) {
+            for (int i = 0; i < 11; i++) {
+                Card newcard = new Card(color, i);
+                cards.add(newcard);
             }
-            shuffle();
         }
+        shuffle();
+    }
 
-    
     public void shuffle() {
         Collections.shuffle(cards);
 
     }
 
-
-    public boolean isEmpty(){
-        if (cards.size()==0){
+    public boolean isEmpty() {
+        if (cards.size() == 0) {
             return true;
         }
         return false;
     }
 
-    public int getNumberOfRemainingCards(){ 
+    public int getNumberOfRemainingCards() {
         return cards.size();
     }
 
-    public Card drawCard(){
+    public Card drawCard() {
         Card top = cards.get(0);
         cards.remove(0);
         return top;
@@ -45,11 +43,8 @@ public class Deck {
         return cards;
     }
 
-
     public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 
-    
 }
-
