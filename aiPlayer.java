@@ -1,8 +1,10 @@
 import java.util.*;
 
 public class aiPlayer extends Player {
+
+    // static attribute shared across all instances of aiPlayer
+    private static Set<String> usedNames = new HashSet<>();
     private String difficulty;
-    private String colourResetCode = "\033[0m\033[1m";
 
     public aiPlayer(String difficulty) {
         super();
@@ -10,10 +12,23 @@ public class aiPlayer extends Player {
 
         Random rand = new Random();
         String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
-        String name = "\033[38;2;0;153;0m" + Names[rand.nextInt(Names.length)];
+        
+        // Pick a random name and ensure it's not already used by another AI player
+        String name;
+        do {
+            name = Names[rand.nextInt(Names.length)];
+        } while (usedNames.contains(name));  // If the name has already been used, pick another
+
+        // Add the name to the set of used names to avoid duplicates
+        usedNames.add(name);
+
+        // Set the name with green color and bold
+        name = "\033[1m\033[38;2;0;153;0m" + name;
+        
         super.setName(name);
         super.setAI(true);
     }
+
 
     public Card chooseCard(Parade parade) {
         Card chosen;

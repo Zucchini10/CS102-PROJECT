@@ -12,7 +12,7 @@ class Player {
 
     // constructor
     public Player(String name) {
-        this.name = "\033[0m" + name;
+        this.name = colourResetCode + name;
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;

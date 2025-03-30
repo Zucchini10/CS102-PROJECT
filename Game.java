@@ -18,9 +18,11 @@ public class Game {
         totalPlayers = 0;
 
         // Intro
-        System.out.println(colourResetCode + "Welcome to PARADE!");
-        System.out.println("\033[0m\033[1mPress Enter to Start");
+        System.out.println(colourResetCode
+                + "\n================================================================= Welcome to PARADE! =================================================================\n");
+        System.out.print("Press Enter to Start > ");
         Scanner sc = new Scanner(System.in);
+        sc.nextLine();
 
         // Choosing number of players and CPU
         int numPlayers = 0;
@@ -31,7 +33,7 @@ public class Game {
             // Validate numPlayers input
             while (true) {
                 try {
-                    System.out.print("Enter the number of players > ");
+                    System.out.print("\nEnter the number of players > ");
                     numPlayers = sc.nextInt();
                     break;
                 } catch (InputMismatchException e) {
@@ -62,38 +64,65 @@ public class Game {
             }
         }
 
-        // initialise points calculators for the game
+        // initialise points calculators for the game, either 2 player game or >2 player
+        // game
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
         } else {
             pc = new PointsCalculator(playerList);
         }
 
-        // Initialising players
+        // clear buffer
         sc.nextLine();
+        System.out.println();
+        // Initialising players
         for (int i = 1; i < numPlayers + 1; i++) {
             System.out.print("Enter Player " + i + " name > ");
+
             String name = sc.nextLine();
             playerList.add(new Player(name));
         }
 
         // Adding in CPU with random names
-        // sc.nextLine();
-        for (int i = 0; i < numCPU; i++) {
-            System.out.print("Enter CPU " + i + " difficulty> ");
-            String difficulty = sc.nextLine();
-            playerList.add(new aiPlayer(difficulty));
+        System.out.println();
+        for (int i = 1; i < numCPU+1; i++) {
+            while (true) {
+                System.out.println("1. Easy   2. Medium    3. Hard");
+                System.out.print("Enter CPU " + i + " difficulty > ");
+                
+                try {
+
+                    int difficultyNum = sc.nextInt();
+
+                    if (difficultyNum == 1) {
+                        playerList.add(new aiPlayer("easy"));
+                    } else if (difficultyNum == 2) {
+                        playerList.add(new aiPlayer("medium"));
+                    } else if (difficultyNum == 3) {
+                        playerList.add(new aiPlayer("hard"));
+                    } else {
+                        throw new InputMismatchException();
+                    }
+
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a valid number.");
+                    sc.nextLine(); // Clear the buffer
+                }
+            }
         }
+
+        sc.nextLine();
 
         // Randomising turn order
         Collections.shuffle(playerList);
-        System.out.println("Turn order:");
+        System.out.println("\nTurn order:");
         printTurnOrder();
-        System.out.println(colourResetCode + "Press Enter to Continue");
+        System.out.println(colourResetCode + "Press Enter to Continue >");
         sc.nextLine();
 
         // Deal 5 cards to each player
-        System.out.println("Initialising Game...");
+        System.out.println("\nInitialising Game...\n");
         for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
                 Card playerStarting = deck.drawCard();
@@ -110,7 +139,7 @@ public class Game {
 
         // print parade before starting game
         parade.printParade();
-        System.out.println(colourResetCode + "Press Enter to start game.");
+        System.out.println(colourResetCode + "\nPress Enter to start game > ");
         sc.nextLine();
 
     }
@@ -310,7 +339,8 @@ public class Game {
     public void calculateWinner() {
         Scanner sc = new Scanner(System.in);
 
-        // returns hashmap of 6 of the majority cardpile of each color and which player(s) owns them,
+        // returns hashmap of 6 of the majority cardpile of each color and which
+        // player(s) owns them,
         HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
 
@@ -320,7 +350,8 @@ public class Game {
             flipMajorityCardPile(majorityPlayers, colour);
         }
 
-        // find the winner by finding the player with lowest score and lowest number of cards, then get winner score 
+        // find the winner by finding the player with lowest score and lowest number of
+        // cards, then get winner score
         Player winner = pc.getWinner();
         int winnerScore = winner.getScore();
 
@@ -357,7 +388,7 @@ public class Game {
             System.out.print(p.getName());
 
             if (i != playerList.size() - 1) {
-                System.out.print(" -> ");
+                System.out.print(colourResetCode +" -> ");
             }
         }
 
