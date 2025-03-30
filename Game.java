@@ -20,7 +20,7 @@ public class Game {
         // Intro
         System.out.println(colourResetCode
                 + "\n================================================================= Welcome to PARADE! =================================================================\n");
-        System.out.print("Press Enter to Start > ");
+        System.out.print("Press Enter to Start ");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
 
@@ -75,6 +75,7 @@ public class Game {
         // clear buffer
         sc.nextLine();
         System.out.println();
+
         // Initialising players
         for (int i = 1; i < numPlayers + 1; i++) {
             System.out.print("Enter Player " + i + " name > ");
@@ -85,30 +86,37 @@ public class Game {
 
         // Adding in CPU with random names
         System.out.println();
-        for (int i = 1; i < numCPU+1; i++) {
-            while (true) {
-                System.out.println("1. Easy   2. Medium    3. Hard");
-                System.out.print("Enter CPU " + i + " difficulty > ");
-                
-                try {
 
-                    int difficultyNum = sc.nextInt();
+        // get CPU difficulty
+        while (true) {
+            System.out.println("1. Easy   2. Medium    3. Hard");
+            System.out.print("Enter CPU difficulty > ");
 
-                    if (difficultyNum == 1) {
-                        playerList.add(new aiPlayer("easy"));
-                    } else if (difficultyNum == 2) {
-                        playerList.add(new aiPlayer("medium"));
-                    } else if (difficultyNum == 3) {
-                        playerList.add(new aiPlayer("hard"));
-                    } else {
-                        throw new InputMismatchException();
-                    }
+            try {
 
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter a valid number.");
-                    sc.nextLine(); // Clear the buffer
+                int difficultyNum = sc.nextInt();
+                String difficulty = null;
+                if (difficultyNum == 1) {
+                    difficulty = "easy";
+                } else if (difficultyNum == 2) {
+                    difficulty = "medium";
+                } else if (difficultyNum == 3) {
+                    difficulty = "hard";
+                } else {
+                    throw new InputMismatchException();
                 }
+
+                System.out.println("Difficulty chosen : " + difficulty);
+                for (int i = 1; i < numCPU + 1; i++) {
+                    playerList.add(new aiPlayer(difficulty));
+
+                }
+
+                break;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                sc.nextLine(); // Clear the buffer
             }
         }
 
@@ -118,7 +126,7 @@ public class Game {
         Collections.shuffle(playerList);
         System.out.println("\nTurn order:");
         printTurnOrder();
-        System.out.println(colourResetCode + "Press Enter to Continue >");
+        System.out.print(colourResetCode + "Press Enter to Continue ");
         sc.nextLine();
 
         // Deal 5 cards to each player
@@ -178,7 +186,8 @@ public class Game {
     }
 
     public int start() {
-        System.out.println("GAME START!");
+        System.out.println(
+                "------------------------------------------------------------------- GAME START! -------------------------------------------------------------------\n");
         int endPlayerIndex = 0;
 
         // runs player turn until endgame
@@ -203,64 +212,93 @@ public class Game {
 
     public void playerTurn(Player player) {
         Scanner sc = new Scanner(System.in);
+
+        // print out which player turn
+        System.out.println("----- " + player.getName() + "'s Turn ! -----\n");
+        // System.out.println(colourResetCode +
+        // "===========================================================================================================");
+
         // Print out parade and playercardpile
-        System.out.println(colourResetCode
-                + "===========================================================================================================");
-        parade.printParade();
         player.printPlayerCardPile();
-        System.out.println(player.getName() + "'s Turn ! ");
+        parade.printParade();
         Card chosen = null;
-        boolean validInput = false;
 
         // 1) Get the user to choose card he plays into parade
-        while (!validInput) {
-            try {
-                chosen = player.chooseCard(parade);
-                System.out.println(colourResetCode + "Chosen card : ");
-                chosen.printCard();
-                // while loop for confirm and undo
-                while (true) {
-                    try {
-                        // only enter if player is not aiplayer
-                        if (!(player instanceof aiPlayer)) {
-                            System.out.println(colourResetCode + "Press 1 to CONFIRM or 2 to UNDO selection.");
+        boolean confirm = false;
+        boolean valid = false;
 
-                            int confirmChoice = sc.nextInt();
-                            sc.nextLine();
-                            // if CONFIRM -> break out of both while loops
-                            if (confirmChoice == 1) {
-                                validInput = true; // Confirmed, exit the loop
-                                break;
-                            }
-                            // else if UNDO -> break out of "while(true)" loop
-                            else if (confirmChoice == 2) {
-                                System.out.println("Undoing selection. Please choose again.");
-                                // Loop continues, so no need to change validInput
-                                player.getHand().add(chosen);
-                                break;
-                            }
-                            // else prompt undo/confirm again
-                            else {
-                                System.out.println("Invalid choice! Please press 1 to CONFIRM or 2 to UNDO.");
-                            }
-
-                        }
-                        // handle for ai player
-                        else {
-                            validInput = true;
-                            break;
-                        }
-                    } catch (InputMismatchException e) {
-                        System.out.println("Invalid input! Please enter either 1 or 2");
-                        sc.nextLine();
+        if (!(player instanceof aiPlayer)){
+        while (!confirm) {
+            chosen = player.chooseCard(parade);
+            valid = false;
+                while (!valid) {
+                    System.out.print(colourResetCode + "Press 1 to confirm or 2 to select another card > ");
+                    String confirmNum = sc.nextLine();
+                    if (confirmNum.equals("1")) {
+                        confirm = true;
+                        valid = true;
+                    } else if (confirmNum.equals("2")) {
+                        valid = true;
+                    } else {
+                        System.out.println("Invalid input! Please enter a valid number.");
                     }
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please select a valid card number.");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid input! Please choose a card from 1 to 5.");
             }
+            if (confirm){
+                player.removeCardFromHand(chosen);
+            }
+        } else {
+            chosen = player.chooseCard(parade);
         }
+        // while (!validInput) {
+        // try {
+        // chosen = player.chooseCard(parade);
+
+        // // while loop for confirm and undo
+        // while (true) {
+        // try {
+        // // only enter if player is not aiplayer
+        // if (!(player instanceof aiPlayer)) {
+        // System.out.println(colourResetCode + "Press 1 to CONFIRM or 2 to UNDO
+        // selection.");
+
+        // int confirmChoice = sc.nextInt();
+        // sc.nextLine();
+        // // if CONFIRM -> break out of both while loops
+        // if (confirmChoice == 1) {
+        // validInput = true; // Confirmed, exit the loop
+        // break;
+        // }
+        // // else if UNDO -> break out of "while(true)" loop
+        // else if (confirmChoice == 2) {
+        // System.out.println("Undoing selection. Please choose again.");
+        // // Loop continues, so no need to change validInput
+        // player.getHand().add(chosen);
+        // break;
+        // }
+        // // else prompt undo/confirm again
+        // else {
+        // System.out.println("Invalid choice! Please press 1 to CONFIRM or 2 to
+        // UNDO.");
+        // }
+
+        // }
+        // // handle for ai player
+        // else {
+        // validInput = true;
+        // break;
+        // }
+        // } catch (InputMismatchException e) {
+        // System.out.println("Invalid input! Please enter either 1 or 2");
+        // sc.nextLine();
+        // }
+        // }
+        // } catch (InputMismatchException e) {
+        // System.out.println("Invalid input! Please select a valid card number.");
+        // } catch (IndexOutOfBoundsException e) {
+        // System.out.println("Invalid input! Please choose a card from 1 to 5.");
+        // }
+        // }
 
         // System.out.println(colourResetCode + "Press Enter to Continue");
         // sc.nextLine();
@@ -276,20 +314,8 @@ public class Game {
             player.draw(top);
         }
 
-        // 4) print out cards drawn from parade
-        System.out.println(colourResetCode + "Cards drawn from the Parade :");
-        if (paradeDrawn.isEmpty()) {
-            System.out.println("No cards collected from the Parade.");
-
-        } else {
-            new cardPrinter(paradeDrawn);
-
-        }
-
         System.out.println();
 
-        System.out.println(colourResetCode + "Press Enter to continue");
-        sc.nextLine();
         // if player : ending turn - print out drawn card + hand + playercardpile
         // if CPU : ending turn - print out playercardpile
         player.endingTurnPrint(paradeDrawn, top);
@@ -388,11 +414,9 @@ public class Game {
             System.out.print(p.getName());
 
             if (i != playerList.size() - 1) {
-                System.out.print(colourResetCode +" -> ");
+                System.out.print(colourResetCode + " -> ");
             }
         }
-
         System.out.println();
-
     }
 }

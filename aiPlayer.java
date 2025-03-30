@@ -42,6 +42,8 @@ public class aiPlayer extends Player {
             chosen = calculateNormalMove(parade);
         }
 
+        // print the card that CPU plays
+
         // Remove the chosen card from AI's hand after playing
         super.getHand().remove(chosen);
 
@@ -178,7 +180,7 @@ public class aiPlayer extends Player {
         // print player card piles
         super.getStack().printPlayerCardPileStack();
 
-        System.out.println(colourResetCode + "Press Enter to end CPU turn > ");
+        System.out.print(colourResetCode + "Press Enter to end CPU turn > ");
         sc.nextLine();
     
     }
