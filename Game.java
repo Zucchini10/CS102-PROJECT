@@ -80,7 +80,7 @@ public class Game {
         // Adding in CPU with random names
         // sc.nextLine();
         for (int i = 0; i < numCPU; i++) {
-            System.out.print("Enter CPU " + i + " difficulty> ");
+            System.out.print("Enter CPU " + i + " difficulty (Choose from 1 to 3, where 1 - Easy, 2 - Normal, 3 - Hard)> ");
             String difficulty = sc.nextLine();
             playerList.add(new aiPlayer(difficulty));
         }
