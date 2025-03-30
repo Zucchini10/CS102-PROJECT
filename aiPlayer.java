@@ -19,9 +19,9 @@ public class aiPlayer extends Player {
         Card chosen;
 
         // Decide strategy based on difficulty
-        if (difficulty.equals("easy")) {
+        if (difficulty.equals("1")) {
             chosen = calculateEasyMove();
-        } else if (difficulty.equals("hard")) {
+        } else if (difficulty.equals("3")) {
             chosen = calculateHardMove(parade);
         } else {
             chosen = calculateNormalMove(parade);
