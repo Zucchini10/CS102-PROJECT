@@ -342,15 +342,6 @@ public class Game {
 
     }
 
-    public void flipMajorityCardPile(List<Player> majorityPlayers, String colour) {
-        for (Player player : majorityPlayers) {
-            PlayerCardPileStack pcps = player.getStack();
-            HashMap<String, PlayerCardPile> hm = pcps.getPlayerCardPileStack();
-            PlayerCardPile pc = hm.get(colour);
-            pc.setFaceUp(true);
-        }
-    }
-
     public void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {
             Player p = playerList.get(i);
