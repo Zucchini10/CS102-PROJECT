@@ -167,7 +167,7 @@ public class Game {
 
     public int start() {
         System.out.println(
-                "------------------------------------------------------------------- GAME START! -------------------------------------------------------------------\n");
+                "------------------------------------------------------------------- GAME START! -------------------------------------------------------------------");
         int endPlayerIndex = 0;
 
         // runs player turn until endgame
@@ -194,7 +194,7 @@ public class Game {
         Scanner sc = new Scanner(System.in);
 
         // print out which player turn
-        System.out.println("----- " + player.getName() + colourResetCode + "'s Turn ! -----\n");
+        System.out.println("\n----- " + player.getName() + colourResetCode + "'s Turn ! -----\n");
         
 
         // Print out parade and playercardpile
@@ -315,13 +315,14 @@ public class Game {
         Player winner = pc.getWinner();
         int winnerScore = winner.getScore();
 
-        // for every player, print out his playercardpiles and their score
-
+        // print out 
+        HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScore();
         endingScorePrint(playersScoreAfterMajority);
         
-
+        System.out.print("Press Enter to get Winner");
+        sc.nextLine();
         // finally print out the winner
-        System.out.println("Winner is... " + winner.getName() + " with " + winnerScore + " points");
+        System.out.println("\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winnerScore + " points");
 
     }
 
@@ -371,9 +372,10 @@ public class Game {
     }
 
     public void endingScorePrint(HashMap<Player, Integer> playersScoreAfterMajority){
+        Scanner sc = new Scanner(System.in);
         for (Player player : playerList) {
             
-            System.out.println(player.getName() + " :");
+            System.out.println("----- " + player.getName() + " -----");
 
             player.printPlayerCardPile();
             System.out.println("Final Score : " + playersScoreAfterMajority.get(player));

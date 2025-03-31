@@ -75,9 +75,10 @@ class Player {
     }
 
     public void printPlayerCardPile() {
+        System.out.println("==============================================================================================================\n");
         System.out.println(name + colourResetCode + "'s card piles : \n");
         stack.printPlayerCardPileStack();
-
+        System.out.println("==============================================================================================================\n");
     }
 
     public void printHand() {
@@ -121,7 +122,7 @@ class Player {
         System.out.println();
 
         // print player card piles
-        stack.printPlayerCardPileStack();
+        printPlayerCardPile();
 
         System.out.println(colourResetCode + "Press Enter to end turn > ");
         sc.nextLine();

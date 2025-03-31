@@ -45,7 +45,6 @@ public class aiPlayer extends Player {
         // print the card that CPU plays
         System.out.println(super.getName() + colourResetCode + " chosen card: ");
         chosen.printCard();
-        System.out.println();
         // Remove the chosen card from AI's hand after playing
         super.getHand().remove(chosen);
 
@@ -168,11 +167,6 @@ public class aiPlayer extends Player {
             }
         }
         return colours[maxIndex];
-    }
-
-    public Card playCard(Card card) {
-        getHand().remove(card);
-        return card;
     }
 
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
