@@ -75,10 +75,10 @@ class Player {
     }
 
     public void printPlayerCardPile() {
-        System.out.println("==============================================================================================================\n");
+        System.out.println(colourResetCode + "==============================================================================================================\n");
         System.out.println(name + colourResetCode + "'s card piles : \n");
         stack.printPlayerCardPileStack();
-        System.out.println("==============================================================================================================\n");
+        System.out.println(colourResetCode + "==============================================================================================================\n");
     }
 
     public void printHand() {

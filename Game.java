@@ -19,7 +19,7 @@ public class Game {
 
         // Intro
         System.out.println(colourResetCode
-                + "\n================================================================= Welcome to PARADE! =================================================================\n");
+                + "\n------------------------------------------------------------------- Welcome to PARADE! -------------------------------------------------------------------\n");
         System.out.print("Press Enter to Start ");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
@@ -54,7 +54,6 @@ public class Game {
             pc = new PointsCalculator(playerList);
         }
 
-
         // Initialising players
         for (int i = 1; i < numPlayers + 1; i++) {
             System.out.print("Enter Player " + i + " name > ");
@@ -75,11 +74,11 @@ public class Game {
                 int difficultyNum = sc.nextInt();
                 String difficulty = null;
                 if (difficultyNum == 1) {
-                    difficulty = "easy";
+                    difficulty = "Easy";
                 } else if (difficultyNum == 2) {
-                    difficulty = "medium";
+                    difficulty = "Medium";
                 } else if (difficultyNum == 3) {
-                    difficulty = "hard";
+                    difficulty = "Hard";
                 } else {
                     throw new InputMismatchException();
                 }
