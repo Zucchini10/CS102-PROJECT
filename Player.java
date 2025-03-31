@@ -89,8 +89,9 @@ class Player {
             handNumberLine += "       4";
         } else if (hand.size() > 4) {
             handNumberLine += "       4       5";
+        }
         System.out.println(handNumberLine);
-    }
+    
     }
 
     public void addIntoPlayerCardPile(List<Card> paradeDrawn) {

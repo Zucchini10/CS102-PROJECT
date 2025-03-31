@@ -378,7 +378,6 @@ public class Game {
         System.out.println(colourResetCode
                 + "===========================================================================================================");
         player.printPlayerCardPile();
-        System.out.println(player.getName() + "'s Turn to discard! ");
         Card chosen = null;
 
         // 1) Get the user to choose 2 cards to discard
