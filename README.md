@@ -16,3 +16,4 @@ Things to Note:
 - The game will not display the CPU's hand / card drawn from deck, only his player card piles
 - For the best experience, play with the terminal fully expanded.
 - Sometimes the display may exceed the space given and the player is required to scroll up to see all his cards
+- The game does not support networking and does not use images 
