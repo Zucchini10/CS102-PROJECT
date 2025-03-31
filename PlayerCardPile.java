@@ -53,7 +53,7 @@ public class PlayerCardPile {
     public int calculateScore(){
 
         // return total value of all cards in playercardpile
-        if (faceUp == true){
+        if (faceUp){
             int sum = 0;
         for (Card c: playerCardPile){
             sum+=c.getValue();

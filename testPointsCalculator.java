@@ -29,44 +29,26 @@ public class testPointsCalculator {
         }
 
         PointsCalculator pc = new PointsCalculator(listofPlayer);
+        String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
         HashMap <String, List<Player>> majority = pc.majorityDecider();
-        
-        System.out.println("-----PLAYERS SCORE BEFORE MAJORITY-----");
+
+        for(String colour : colours){
+            List<Player> majorityPlayers = majority.get(colour);
+            pc.flipMajorityCardPile(majorityPlayers, colour);
+        }
+
+
+        System.out.println("-----PLAYERS SCORE-----");
 
         for(Player p : listofPlayer){
             System.out.println(p.getName() + p.getStack().getTotalScore());
             System.out.println();
         }
 
-        System.out.println("-----PLAYERS SCORE AFTER MAJORITY-----");
+        System.out.println("-----PLAYER WHO WINS-----");
 
-        HashMap <Player, Integer> finalScore = pc.getPlayersScoreAfterMajority();
-        for(Map.Entry <Player, Integer> entry : finalScore.entrySet()){
-            System.out.println(entry.getKey().getName() + " " + entry.getValue());
-            System.out.println();
-        }
-
-        System.out.println("-----PLAYERS AND THEIR MAJORITIES-----");
-
-
-        for(Player p : listofPlayer){
-            List<String> colorMajorities = pc.getMostColor(majority, p);
-            System.out.println(p.getName());
-            for(String color : colorMajorities){
-                System.out.println(color);
-            }
-            System.out.println("------");
-        }
-
-        System.out.println("-----LEAST SCORE-----");
-
-        System.out.println(pc.getLeastScore());
-        System.out.println();
-
-        System.out.println("-----PLAYER WITH LEAST SCORE-----");
-
-        Player withLeastScore = pc.getPlayerWithLeastScore();
-        System.out.println(withLeastScore.getName() + " " + pc.getLeastScore());
+        Player winner = pc.getWinner();
+        System.out.println(winner.getName() + " " + winner.getScore());
         System.out.println();
 
         System.out.println("-----MAJORITIES REQUIRED CARD AMOUNT-----");

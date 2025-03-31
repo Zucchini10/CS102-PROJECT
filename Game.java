@@ -370,10 +370,9 @@ public class Game {
         HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
 
-        // flips majority card pile
-        for (String colour : colours) {
+        for(String colour : colours){
             List<Player> majorityPlayers = majorityHashmap.get(colour);
-            flipMajorityCardPile(majorityPlayers, colour);
+            pc.flipMajorityCardPile(majorityPlayers, colour);
         }
 
         // find the winner by finding the player with lowest score and lowest number of
@@ -381,15 +380,12 @@ public class Game {
         Player winner = pc.getWinner();
         int winnerScore = winner.getScore();
 
-        // gets hashmap of each player and his score after flipping majority card pile
-        HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScoreAfterMajority();
-
         // for every player, print out his playercardpiles and their score
         for (Player player : playerList) {
             System.out.println(player.getName() + " :");
 
             player.printPlayerCardPile();
-            System.out.println("Final Score : " + playersScoreAfterMajority.get(player));
+            System.out.println("Final Score : " + player.getScore());
             System.out.print("Press Enter to continue > ");
             sc.nextLine();
         }
@@ -397,15 +393,6 @@ public class Game {
         // finally print out the winner
         System.out.println("Winner is... " + winner.getName() + " with " + winnerScore + " points");
 
-    }
-
-    public void flipMajorityCardPile(List<Player> majorityPlayers, String colour) {
-        for (Player player : majorityPlayers) {
-            PlayerCardPileStack pcps = player.getStack();
-            HashMap<String, PlayerCardPile> hm = pcps.getPlayerCardPileStack();
-            PlayerCardPile pc = hm.get(colour);
-            pc.setFaceUp(true);
-        }
     }
 
     public void printTurnOrder() {
