@@ -307,16 +307,13 @@ public class Game {
         // flips all majority card pile
         for (String colour : colours) {
             List<Player> majorityPlayers = majorityHashmap.get(colour);
-            flipMajorityCardPile(majorityPlayers, colour);
+            pc.flipMajorityCardPile(majorityPlayers, colour);
         }
 
         // find the winner by finding the player with lowest score and lowest number of
         // cards, then get winner score
         Player winner = pc.getWinner();
         int winnerScore = winner.getScore();
-
-        // gets hashmap of each player and his score after flipping majority card pile
-        HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScoreAfterMajority();
 
         // for every player, print out his playercardpiles and their score
 
