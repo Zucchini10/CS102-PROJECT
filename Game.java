@@ -31,32 +31,13 @@ public class Game {
         while (totalPlayers <= 1 || totalPlayers > 6) {
 
             // Validate numPlayers input
-            while (true) {
-                try {
-                    System.out.print("\nEnter the number of players > ");
-                    numPlayers = sc.nextInt();
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter a valid number for players.");
-                    sc.nextLine(); // Clear the buffer
-                }
-            }
+            numPlayers = validateNumberOfPlayers(false);
 
             // Validate numCPU input
-            while (true) {
-                System.out.print("Enter the number of CPU > ");
-                try {
-                    numCPU = sc.nextInt();
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input! Please enter a valid number for CPU.");
-                    sc.nextLine(); // Clear the buffer
-                }
-            }
-
-            totalPlayers = numCPU + numPlayers;
+            numCPU = validateNumberOfPlayers(true);
 
             // Check if the total number of players is within valid limits
+            totalPlayers = numCPU + numPlayers;
             if (totalPlayers <= 1) {
                 System.out.println("Invalid number of players, there has to be at least 2 players / CPU.");
             } else if (totalPlayers > 6) {
@@ -66,15 +47,13 @@ public class Game {
 
         // initialise points calculators for the game, either 2 player game or >2 player
         // game
+        System.out.println();
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
         } else {
             pc = new PointsCalculator(playerList);
         }
 
-        // clear buffer
-        sc.nextLine();
-        System.out.println();
 
         // Initialising players
         for (int i = 1; i < numPlayers + 1; i++) {
@@ -84,7 +63,6 @@ public class Game {
             playerList.add(new Player(name));
         }
 
-        // Adding in CPU with random names
         System.out.println();
 
         // get CPU difficulty
@@ -129,8 +107,10 @@ public class Game {
         System.out.print(colourResetCode + "Press Enter to Continue ");
         sc.nextLine();
 
+        System.out.println();
+
         // Deal 5 cards to each player
-        System.out.println("\nInitialising Game...\n");
+        System.out.println("Initialising Game...\n");
         for (Player p : playerList) {
             for (int j = 0; j < 5; j++) {
                 Card playerStarting = deck.drawCard();
@@ -315,12 +295,16 @@ public class Game {
     public void calculateWinner() {
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("------------------------------------------------------------------- GAME END! -------------------------------------------------------------------\\n" + //
+                        "");
+
+        System.out.println("Tabulating score ... ");
         // returns hashmap of 6 of the majority cardpile of each color and which
         // player(s) owns them,
         HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
 
-        // flips majority card pile
+        // flips all majority card pile
         for (String colour : colours) {
             List<Player> majorityPlayers = majorityHashmap.get(colour);
             flipMajorityCardPile(majorityPlayers, colour);
@@ -335,17 +319,36 @@ public class Game {
         HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScoreAfterMajority();
 
         // for every player, print out his playercardpiles and their score
-        for (Player player : playerList) {
-            System.out.println(player.getName() + " :");
 
-            player.printPlayerCardPile();
-            System.out.println("Final Score : " + playersScoreAfterMajority.get(player));
-            System.out.print("Press Enter to continue > ");
-            sc.nextLine();
-        }
+        endingScorePrint(playersScoreAfterMajority);
+        
 
         // finally print out the winner
         System.out.println("Winner is... " + winner.getName() + " with " + winnerScore + " points");
+
+    }
+
+    public int validateNumberOfPlayers(boolean CPU){
+        Scanner sc = new Scanner(System.in);
+        int numPlayers = 0;
+            while (true) {
+                try {
+                    if (!CPU){
+                        System.out.print("\nEnter the number of players > ");
+                    } else {
+                        System.out.print("Enter the number of CPU > ");
+                    }
+                    
+                    numPlayers = sc.nextInt();
+
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a valid number");
+                    sc.nextLine(); // Clear the buffer
+                }
+            }
+            
+        return numPlayers;
 
     }
 
@@ -368,5 +371,17 @@ public class Game {
             }
         }
         System.out.println();
+    }
+
+    public void endingScorePrint(HashMap<Player, Integer> playersScoreAfterMajority){
+        for (Player player : playerList) {
+            
+            System.out.println(player.getName() + " :");
+
+            player.printPlayerCardPile();
+            System.out.println("Final Score : " + playersScoreAfterMajority.get(player));
+            System.out.print("Press Enter to continue > ");
+            sc.nextLine();
+        }
     }
 }

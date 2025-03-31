@@ -99,7 +99,7 @@ class Player {
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
         System.out
-                .println(colourResetCode + "\n========== " + name + colourResetCode + "'s Turn Overview ==========\n");
+                .println(colourResetCode + "\n----- " + name + "'s Turn Overview -----\n");
 
         // print drawn cards from parade
         System.out.println("Drawn from Parade : ");

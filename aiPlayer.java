@@ -177,7 +177,7 @@ public class aiPlayer extends Player {
 
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(" \033[0m\033[1m \n========== End of " + super.getName() + "\033[0m\033[1m's Turn ==========\n");
+        System.out.println(colourResetCode + "\n----- " + super.getName() + colourResetCode + "'s Turn Overview -----\n");
 
         // print player card piles
         super.getStack().printPlayerCardPileStack();
