@@ -317,13 +317,7 @@ public class Game {
 
         // returns hashmap of 6 of the majority cardpile of each color and which
         // player(s) owns them,
-        HashMap<String, List<Player>> majorityHashmap = pc.majorityDecider();
-        String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
-
-        for(String colour : colours){
-            List<Player> majorityPlayers = majorityHashmap.get(colour);
-            pc.flipMajorityCardPile(majorityPlayers, colour);
-        }
+        pc.majorityDecider();
 
         // find the winner by finding the player with lowest score and lowest number of
         // cards, then get winner score

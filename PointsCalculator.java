@@ -29,28 +29,25 @@ public class PointsCalculator {
     }
 
     // "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"
-    public HashMap<String, List<Player>> majorityDecider() {
+    public void majorityDecider() {
         // Get the list of majorities holder for each color
-        HashMap<String, List<Player>> result = new HashMap<>();
+        HashMap<String, List<Player>> majoritiesHashmap = new HashMap<>();
+        String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
         // Get the players with max card color for each color and put them in hashmap
-        result.put("RED", getPlayersWithMaxCardColor("RED")); 
-        result.put("BLUE", getPlayersWithMaxCardColor("BLUE"));
-        result.put("GREEN", getPlayersWithMaxCardColor("GREEN"));
-        result.put("GREY", getPlayersWithMaxCardColor("GREY"));
-        result.put("PURPLE", getPlayersWithMaxCardColor("PURPLE"));
-        result.put("ORANGE", getPlayersWithMaxCardColor("ORANGE"));
-
-        return result;
+        for(String colour : colours){
+            majoritiesHashmap.put(colour, getPlayersWithMaxCardColor(colour));
+            flipMajorityCardPile(majoritiesHashmap.get(colour), colour);
+        }
     }
 
     public void flipMajorityCardPile(List<Player> majorityPlayers, String colour) {
-        // For each player in the majority players, we set their specific colour card pile to face up
         for (Player player : majorityPlayers) {
             PlayerCardPileStack pcps = player.getStack();
             HashMap<String, PlayerCardPile> hm = pcps.getPlayerCardPileStack();
             PlayerCardPile pc = hm.get(colour);
             pc.setFaceUp(false);
         }
+        // For each player in the majority players, we set their specific colour card pile to face up
     }
 
     public HashMap<Player, Integer> getPlayersScore() {
@@ -105,17 +102,5 @@ public class PointsCalculator {
         }
 
         return playerWithLeastCardAmount;
-    }
-
-    public int getMajorityAmount(String color){
-        // Majority amount is the amount of cards needed to be majority holder
-        // If there is no majority holder, return -1
-        HashMap <String, List<Player>> majority = majorityDecider();
-        List<Player> getMajorities = majority.get(color);
-        if(getMajorities.size() != 0){
-            return getMajorities.get(0).getStack().getPlayerCardPileStack().get(color).getPlayerCardPile().size();
-        }
-
-        return -1;
     }
 }

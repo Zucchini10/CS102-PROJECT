@@ -33,13 +33,7 @@ public class testPointCalc2p {
         }
 
         PointsCalculator pc = new PointsCalculator2P(listofPlayer);
-        String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
-        HashMap <String, List<Player>> majority = pc.majorityDecider();
-
-        for(String colour : colours){
-            List<Player> majorityPlayers = majority.get(colour);
-            pc.flipMajorityCardPile(majorityPlayers, colour);
-        }
+        pc.majorityDecider();
         
         System.out.println("-----PLAYERS SCORE-----");
 
@@ -53,13 +47,6 @@ public class testPointCalc2p {
         Player winner = pc.getWinner();
         System.out.println(winner.getName() + " " + winner.getStack().getTotalScore());
         System.out.println();
-
-        System.out.println("-----MAJORITIES REQUIRED CARD AMOUNT-----");
-
-        for(String color : colors){
-            System.out.println(color + " " +  pc.getMajorityAmount(color));
-        }
-
 
     }
 }
