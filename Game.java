@@ -290,7 +290,6 @@ public class Game {
             playerTurn(player);
         }
 
-        Collections.rotate(playerList, nextPlayerIndex);
         // discard 2 cards from hand and place remaining 2 cards into cardpile
         for (int i = 0; i < totalPlayers; i++) {
             Player player = playerList.get(i % totalPlayers);
