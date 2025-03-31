@@ -308,8 +308,7 @@ public class Game {
         int winnerScore = winner.getScore();
 
         // print out 
-        HashMap<Player, Integer> playersScoreAfterMajority = pc.getPlayersScore();
-        endingScorePrint(playersScoreAfterMajority);
+        endingScorePrint();
         
         System.out.print("Press Enter to get Winner");
         sc.nextLine();
@@ -354,14 +353,14 @@ public class Game {
         System.out.println();
     }
 
-    public void endingScorePrint(HashMap<Player, Integer> playersScoreAfterMajority){
+    public void endingScorePrint(){
         Scanner sc = new Scanner(System.in);
         for (Player player : playerList) {
             
             System.out.println("----- " + player.getName() + " -----");
 
             player.printPlayerCardPile();
-            System.out.println("Final Score : " + playersScoreAfterMajority.get(player));
+            System.out.println("Final Score : " + player.getScore());
             System.out.print("Press Enter to continue > ");
             sc.nextLine();
         }
