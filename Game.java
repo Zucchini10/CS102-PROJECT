@@ -214,9 +214,8 @@ public class Game {
         Scanner sc = new Scanner(System.in);
 
         // print out which player turn
-        System.out.println("----- " + player.getName() + "'s Turn ! -----\n");
-        // System.out.println(colourResetCode +
-        // "===========================================================================================================");
+        System.out.println("----- " + player.getName() + colourResetCode + "'s Turn ! -----\n");
+        
 
         // Print out parade and playercardpile
         player.printPlayerCardPile();
@@ -250,58 +249,7 @@ public class Game {
         } else {
             chosen = player.chooseCard(parade);
         }
-        // while (!validInput) {
-        // try {
-        // chosen = player.chooseCard(parade);
-
-        // // while loop for confirm and undo
-        // while (true) {
-        // try {
-        // // only enter if player is not aiplayer
-        // if (!(player instanceof aiPlayer)) {
-        // System.out.println(colourResetCode + "Press 1 to CONFIRM or 2 to UNDO
-        // selection.");
-
-        // int confirmChoice = sc.nextInt();
-        // sc.nextLine();
-        // // if CONFIRM -> break out of both while loops
-        // if (confirmChoice == 1) {
-        // validInput = true; // Confirmed, exit the loop
-        // break;
-        // }
-        // // else if UNDO -> break out of "while(true)" loop
-        // else if (confirmChoice == 2) {
-        // System.out.println("Undoing selection. Please choose again.");
-        // // Loop continues, so no need to change validInput
-        // player.getHand().add(chosen);
-        // break;
-        // }
-        // // else prompt undo/confirm again
-        // else {
-        // System.out.println("Invalid choice! Please press 1 to CONFIRM or 2 to
-        // UNDO.");
-        // }
-
-        // }
-        // // handle for ai player
-        // else {
-        // validInput = true;
-        // break;
-        // }
-        // } catch (InputMismatchException e) {
-        // System.out.println("Invalid input! Please enter either 1 or 2");
-        // sc.nextLine();
-        // }
-        // }
-        // } catch (InputMismatchException e) {
-        // System.out.println("Invalid input! Please select a valid card number.");
-        // } catch (IndexOutOfBoundsException e) {
-        // System.out.println("Invalid input! Please choose a card from 1 to 5.");
-        // }
-        // }
-
-        // System.out.println(colourResetCode + "Press Enter to Continue");
-        // sc.nextLine();
+        
         List<Card> paradeDrawn = parade.removedFromParade(chosen);
 
         // 2) put into player's playercardpile
@@ -332,7 +280,7 @@ public class Game {
         // check if player has collected all colours
         if (player.hasAllColours() == true) {
             setEndGame(true);
-            reason = player.getName() + " has collected all the colors!";
+            reason = player.getName() + colourResetCode + " has collected all the colors!";
         }
         // returns reason why endgame has started, will be empty if endgame criteria not
         // fulfilled
@@ -347,14 +295,16 @@ public class Game {
         // get reason why endgame started
         String reason = checkEndGame(lastPlayer);
         System.out.print("Endgame is starting, " + reason);
-        System.out.println("Everyone has one last turn!");
-        System.out.println(colourResetCode + "Press Enter to Continue");
+        System.out.println(" Everyone has one last turn!");
+        System.out.print(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
         // re-order the playerList to give everyone one last turn, and next player is
         // the first element
         Collections.rotate(playerList, -nextPlayerIndex);
+        System.out.println("------------------------------------------------------------------ Endgame starting ... ------------------------------------------------------------------\n");
         printTurnOrder();
+        System.out.println();
         // starting from the nextplayer, give everyone one last turn
         for (int i = 0; i < totalPlayers; i++) {
             Player player = playerList.get(i % totalPlayers);
