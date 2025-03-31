@@ -1,7 +1,5 @@
 import java.util.*;
 
-//import Testing.PlayerCardPile;
-
 class Player {
     private String name;
     private List<Card> hand;
@@ -48,7 +46,7 @@ class Player {
         return isAI;
     }
 
-    // setter
+    // setters
     public void setAI(boolean isAI) {
         this.isAI = isAI;
     }
@@ -77,7 +75,7 @@ class Player {
     }
 
     public void printPlayerCardPile() {
-        System.out.println(name + " 's card piles : \n");
+        System.out.println(name + colourResetCode + "'s card piles : \n");
         stack.printPlayerCardPileStack();
 
     }
@@ -100,7 +98,8 @@ class Player {
 
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(colourResetCode + "\n========== End of " + name + colourResetCode + "'s Turn ==========\n");
+        System.out
+                .println(colourResetCode + "\n========== " + name + colourResetCode + "'s Turn Overview ==========\n");
 
         // print drawn cards from parade
         System.out.println("Drawn from Parade : ");
@@ -131,26 +130,26 @@ class Player {
 
     public Card chooseCard(Parade parade) {
         Scanner sc = new Scanner(System.in);
-    
+
         // Asking user which card they want to choose
         while (true) {
             printHand(); // Display the player's hand
             System.out.print("Choose a card > ");
             try {
                 int chosenCardIndex = sc.nextInt(); // Get the user input
-    
+
                 // Check if the input is within a valid range (1 to hand.size())
                 if (chosenCardIndex < 1 || chosenCardIndex > hand.size()) {
                     throw new InputMismatchException(); // If the number is out of range
                 }
-    
+
                 // Get the chosen card and print it out
                 Card chosen = hand.get(chosenCardIndex - 1);
                 System.out.println(colourResetCode + "Chosen card: ");
                 chosen.printCard();
-    
+
                 return chosen; // Return the chosen card and exit the loop
-    
+
             } catch (InputMismatchException e) {
                 // Handle invalid input (non-numeric or out of range)
                 System.out.println("Invalid input! Please enter a valid number between 1 and " + hand.size() + ".");
@@ -158,10 +157,8 @@ class Player {
             }
         }
     }
-    
-    
 
-    public void removeCardFromHand(Card c){
+    public void removeCardFromHand(Card c) {
         hand.remove(c);
     }
 
