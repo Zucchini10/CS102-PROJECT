@@ -30,24 +30,21 @@ public class PointsCalculator {
 
     // "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"
     public void majorityDecider() {
-        // Get the list of majorities holder for each color
-        HashMap<String, List<Player>> majoritiesHashmap = new HashMap<>();
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
         // Get the players with max card color for each color and put them in hashmap
         for(String colour : colours){
-            majoritiesHashmap.put(colour, getPlayersWithMaxCardColor(colour));
-            flipMajorityCardPile(majoritiesHashmap.get(colour), colour);
+            flipMajorityCardPile(getPlayersWithMaxCardColor(colour), colour);
         }
     }
 
     public void flipMajorityCardPile(List<Player> majorityPlayers, String colour) {
-        for (Player player : majorityPlayers) {
-            PlayerCardPileStack pcps = player.getStack();
-            HashMap<String, PlayerCardPile> hm = pcps.getPlayerCardPileStack();
-            PlayerCardPile pc = hm.get(colour);
-            pc.setFaceUp(false);
-        }
         // For each player in the majority players, we set their specific colour card pile to face up
+        for (Player player : majorityPlayers) {
+            PlayerCardPileStack currentCardPileStack = player.getStack();
+            HashMap<String, PlayerCardPile> hm = currentCardPileStack.getPlayerCardPileStack();
+            PlayerCardPile currentCardPile = hm.get(colour);
+            currentCardPile.setFaceUp(false);
+        }
     }
 
     public HashMap<Player, Integer> getPlayersScore() {
