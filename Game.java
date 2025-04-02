@@ -54,50 +54,11 @@ public class Game {
             pc = new PointsCalculator(playerList);
         }
 
-        // Initialising players
-        for (int i = 1; i < numPlayers + 1; i++) {
-            System.out.print("Enter Player " + i + " name > ");
-
-            String name = sc.nextLine();
-            playerList.add(new Player(name));
-        }
-
-        System.out.println();
-
-        // get CPU difficulty
-        while (true) {
-            System.out.println("1. Easy   2. Medium    3. Hard");
-            System.out.print("Enter CPU difficulty > ");
-
-            try {
-
-                int difficultyNum = sc.nextInt();
-                String difficulty = null;
-                if (difficultyNum == 1) {
-                    difficulty = "Easy";
-                } else if (difficultyNum == 2) {
-                    difficulty = "Medium";
-                } else if (difficultyNum == 3) {
-                    difficulty = "Hard";
-                } else {
-                    throw new InputMismatchException();
-                }
-
-                System.out.println("Difficulty chosen : " + difficulty);
-                for (int i = 1; i < numCPU + 1; i++) {
-                    playerList.add(new aiPlayer(difficulty));
-
-                }
-
-                break;
-
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a valid number.");
-                sc.nextLine(); // Clear the buffer
-            }
-        }
-
-        sc.nextLine();
+        // Get player's name
+        inputPlayerName(numPlayers);
+        
+        // Get CPU difficulty
+        inputCPUDifficulty(numCPU);
 
         // Randomising turn order
         Collections.shuffle(playerList);
@@ -347,6 +308,57 @@ public class Game {
 
     }
 
+    public void inputPlayerName(int numPlayers){
+        Scanner sc = new Scanner(System.in);
+        for (int i = 1; i < numPlayers + 1; i++) {
+            System.out.print("Enter Player " + i + " name > ");
+
+            String name = sc.nextLine();
+            playerList.add(new Player(name));
+        }
+
+        System.out.println();
+    }
+
+    public void inputCPUDifficulty(int numCPU){
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Easy   2. Medium    3. Hard");
+            System.out.print("Enter CPU difficulty > ");
+
+            try {
+
+                int difficultyNum = sc.nextInt();
+                String difficulty = null;
+                if (difficultyNum == 1) {
+                    difficulty = "Easy";
+                } else if (difficultyNum == 2) {
+                    difficulty = "Medium";
+                } else if (difficultyNum == 3) {
+                    difficulty = "Hard";
+                } else {
+                    throw new InputMismatchException();
+                }
+
+                System.out.println("Difficulty chosen : " + difficulty);
+                for (int i = 1; i < numCPU + 1; i++) {
+                    playerList.add(new aiPlayer(difficulty));
+
+                }
+
+                break;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                sc.nextLine(); // Clear the buffer
+            }
+        }
+
+        sc.nextLine();
+
+    }
+
     public void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {
             Player p = playerList.get(i);
@@ -443,5 +455,11 @@ public class Game {
         player.printPlayerCardPile();
         System.out.println(colourResetCode + "Press Enter to continue");
         sc.nextLine();
+    }
+
+    public void confirmSelection(){
+
+
+        
     }
 }

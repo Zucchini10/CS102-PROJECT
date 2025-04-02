@@ -185,7 +185,7 @@ public class aiPlayer extends Player {
         System.out.println(colourResetCode + "\n----- " + super.getName() + colourResetCode + "'s Turn Overview -----\n");
 
         // print player card piles
-        super.getStack().printPlayerCardPileStack();
+        printPlayerCardPile();
 
         System.out.print(colourResetCode + "Press Enter to end CPU turn > ");
         sc.nextLine();
