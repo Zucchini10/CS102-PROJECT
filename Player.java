@@ -6,7 +6,7 @@ class Player {
     private PlayerCardPileStack stack;
     private int score;
     private boolean isAI;
-    String colourResetCode = "\033[0m\033[1m";
+    protected String colourResetCode = "\033[0m\033[1m";
 
     // constructor
     public Player(String name) {
@@ -115,12 +115,10 @@ class Player {
         System.out.println();
 
         // print drawn card
-        System.out.println(colourResetCode + "Drawn from deck: ");
-        if (top == null) {
-            System.out.println("Deck is empty");
-        } else {
+        if (!(top == null)) {
+            System.out.println(colourResetCode + "Drawn from deck: ");
             top.printCard();
-        }
+        } 
 
         System.out.println();
 
