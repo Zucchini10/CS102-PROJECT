@@ -28,6 +28,7 @@ public class Game {
         int numPlayers = 0;
         int numCPU = 0;
 
+        totalPlayers = initialisePlayers();
         while (totalPlayers <= 1 || totalPlayers > 6) {
 
             // Validate numPlayers input
@@ -53,12 +54,6 @@ public class Game {
         } else {
             pc = new PointsCalculator(playerList);
         }
-
-        // Get player's name
-        inputPlayerName(numPlayers);
-        
-        // Get CPU difficulty
-        inputCPUDifficulty(numCPU);
 
         // Randomising turn order
         Collections.shuffle(playerList);
@@ -146,11 +141,69 @@ public class Game {
         }
 
         // return index of last player
-
         return endPlayerIndex;
     }
 
-    public void playerTurn(Player player) {
+    public void startEndGame(int endPlayerIndex) {
+        Scanner sc = new Scanner(System.in);
+        int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
+        Player lastPlayer = playerList.get(endPlayerIndex);
+
+        // get reason why endgame started
+        String reason = checkEndGame(lastPlayer);
+        System.out.print("Endgame is starting, " + reason);
+        System.out.println(" Everyone has one last turn!");
+        System.out.print(colourResetCode + "Press Enter to Continue");
+        sc.nextLine();
+
+        // re-order the playerList to give everyone one last turn, and next player is
+        // the first element
+        Collections.rotate(playerList, -nextPlayerIndex);
+        System.out.println("------------------------------------------------------------------ Endgame starting ... ------------------------------------------------------------------\n");
+        printTurnOrder();
+        System.out.println();
+
+        // starting from the nextplayer, give everyone one last turn
+        for (int i = 0; i < totalPlayers; i++) {
+            Player player = playerList.get(i % totalPlayers);
+            playerTurn(player);
+        }
+
+        
+        // discard 2 cards from hand and place remaining 2 cards into cardpile
+        for (int i = 0; i < totalPlayers; i++) {
+            Player player = playerList.get(i % totalPlayers);
+            playerTurnDiscard(player);
+        }
+    }
+
+    public void calculateWinner() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("------------------------------------------------------------------- GAME END! -------------------------------------------------------------------\n" + //
+                        "");
+
+        System.out.println("Tabulating score ... ");
+        // returns hashmap of 6 of the majority cardpile of each color and which
+        // player(s) owns them,
+        pc.majorityDecider();
+
+        // find the winner by finding the player with lowest score and lowest number of
+        // cards, then get winner score
+        Player winner = pc.getWinner();
+        int winnerScore = winner.getScore();
+
+        // print out 
+        endingScorePrint();
+        
+        System.out.print("Press Enter to get Winner");
+        sc.nextLine();
+        // finally print out the winner
+        System.out.println("\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winnerScore + " points");
+
+    }
+
+    private void playerTurn(Player player) {
         Scanner sc = new Scanner(System.in);
 
         // print out which player turn
@@ -209,7 +262,7 @@ public class Game {
         player.endingTurnPrint(paradeDrawn, top);
     }
 
-    public String checkEndGame(Player player) {
+    private String checkEndGame(Player player) {
         // check if deck is empty
         String reason = "";
         if (deck.isEmpty() == true) {
@@ -227,66 +280,39 @@ public class Game {
         return reason;
     }
 
-    public void startEndGame(int endPlayerIndex) {
-        Scanner sc = new Scanner(System.in);
-        int nextPlayerIndex = (endPlayerIndex + 1) % playerList.size();
-        Player lastPlayer = playerList.get(endPlayerIndex);
+    
+    private int initialisePlayers(){
+        int totalPlayers = 0;
+        int numPlayers = 0;
+        int numCPU = 0;
+        while (totalPlayers <= 1 || totalPlayers > 6) {
 
-        // get reason why endgame started
-        String reason = checkEndGame(lastPlayer);
-        System.out.print("Endgame is starting, " + reason);
-        System.out.println(" Everyone has one last turn!");
-        System.out.print(colourResetCode + "Press Enter to Continue");
-        sc.nextLine();
+            // Validate numPlayers input
+            numPlayers = validateNumberOfPlayers(false);
 
-        // re-order the playerList to give everyone one last turn, and next player is
-        // the first element
-        Collections.rotate(playerList, -nextPlayerIndex);
-        System.out.println("------------------------------------------------------------------ Endgame starting ... ------------------------------------------------------------------\n");
-        printTurnOrder();
-        System.out.println();
-        // starting from the nextplayer, give everyone one last turn
-        for (int i = 0; i < totalPlayers; i++) {
-            Player player = playerList.get(i % totalPlayers);
-            playerTurn(player);
+            // Validate numCPU input
+            numCPU = validateNumberOfPlayers(true);
+
+            // Check if the total number of players is within valid limits
+            totalPlayers = numCPU + numPlayers;
+            if (totalPlayers <= 1) {
+                System.out.println("Invalid number of players, there has to be at least 2 players / CPU.");
+            } else if (totalPlayers > 6) {
+                System.out.println("Too many players, maximum number of players is 6.");
+            }
         }
 
-        // discard 2 cards from hand and place remaining 2 cards into cardpile
-        for (int i = 0; i < totalPlayers; i++) {
-            Player player = playerList.get(i % totalPlayers);
-            playerTurnDiscard(player);
-        }
+        // Get Player names
+        inputPlayerName(numPlayers);
+
+        // Get CPU difficulty
+        inputCPUDifficulty(numCPU);
+        return totalPlayers;
     }
-
-    public void calculateWinner() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("------------------------------------------------------------------- GAME END! -------------------------------------------------------------------\\n" + //
-                        "");
-
-        System.out.println("Tabulating score ... ");
-        // returns hashmap of 6 of the majority cardpile of each color and which
-        // player(s) owns them,
-        pc.majorityDecider();
-
-        // find the winner by finding the player with lowest score and lowest number of
-        // cards, then get winner score
-        Player winner = pc.getWinner();
-        int winnerScore = winner.getScore();
-
-        // print out 
-        endingScorePrint();
-        
-        System.out.print("Press Enter to get Winner");
-        sc.nextLine();
-        // finally print out the winner
-        System.out.println("\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winnerScore + " points");
-
-    }
-
-    public int validateNumberOfPlayers(boolean CPU){
+    private int validateNumberOfPlayers(boolean CPU){
         Scanner sc = new Scanner(System.in);
         int numPlayers = 0;
+        
             while (true) {
                 try {
                     if (!CPU){
@@ -294,10 +320,10 @@ public class Game {
                     } else {
                         System.out.print("Enter the number of CPU > ");
                     }
-                    
-                    numPlayers = sc.nextInt();
 
+                    numPlayers = sc.nextInt();
                     break;
+
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid input! Please enter a valid number");
                     sc.nextLine(); // Clear the buffer
@@ -308,8 +334,9 @@ public class Game {
 
     }
 
-    public void inputPlayerName(int numPlayers){
+    private void inputPlayerName(int numPlayers){
         Scanner sc = new Scanner(System.in);
+        System.out.println();
         for (int i = 1; i < numPlayers + 1; i++) {
             System.out.print("Enter Player " + i + " name > ");
 
@@ -320,46 +347,41 @@ public class Game {
         System.out.println();
     }
 
-    public void inputCPUDifficulty(int numCPU){
+    private void inputCPUDifficulty(int numCPU) {
         Scanner sc = new Scanner(System.in);
 
-        while (true) {
+        boolean valid = false;
+        String difficulty = null;
+        while (!valid) {
             System.out.println("1. Easy   2. Medium    3. Hard");
             System.out.print("Enter CPU difficulty > ");
 
-            try {
-
-                int difficultyNum = sc.nextInt();
-                String difficulty = null;
-                if (difficultyNum == 1) {
-                    difficulty = "Easy";
-                } else if (difficultyNum == 2) {
-                    difficulty = "Medium";
-                } else if (difficultyNum == 3) {
-                    difficulty = "Hard";
-                } else {
-                    throw new InputMismatchException();
-                }
-
-                System.out.println("Difficulty chosen : " + difficulty);
-                for (int i = 1; i < numCPU + 1; i++) {
-                    playerList.add(new aiPlayer(difficulty));
-
-                }
-
-                break;
-
-            } catch (InputMismatchException e) {
+            String difficultyNum = sc.nextLine();
+            if (difficultyNum.equals("1")) {
+                difficulty = "Easy";
+                valid = true;
+            } else if (difficultyNum.equals("2")) {
+                difficulty = "Medium";
+                valid = true;
+            } else if (difficultyNum.equals("3")) {
+                difficulty = "Hard";
+                valid = true;
+            } else {
                 System.out.println("Invalid input! Please enter a valid number.");
-                sc.nextLine(); // Clear the buffer
             }
+
         }
 
-        sc.nextLine();
+        System.out.println("Difficulty chosen : " + difficulty);
+        for (int i = 1; i < numCPU + 1; i++) {
+            playerList.add(new aiPlayer(difficulty));
+
+        }
 
     }
 
-    public void printTurnOrder() {
+
+    private void printTurnOrder() {
         for (int i = 0; i < playerList.size(); i++) {
             Player p = playerList.get(i);
             System.out.print(p.getName());
@@ -371,7 +393,7 @@ public class Game {
         System.out.println();
     }
 
-    public void endingScorePrint(){
+    private void endingScorePrint(){
         Scanner sc = new Scanner(System.in);
         for (Player player : playerList) {
             

@@ -25,7 +25,7 @@ public class aiPlayer extends Player {
         // Set the name with green color and bold
         name = "\033[1m\033[38;2;0;153;0m" + name;
         
-        super.setName(name);
+        super.setName(name + difficulty);
         super.setAI(true);
     }
 
@@ -34,9 +34,9 @@ public class aiPlayer extends Player {
         Card chosen;
 
         // Decide strategy based on difficulty
-        if (difficulty.equals("1")) {
+        if (difficulty.equals("Easy")) {
             chosen = calculateEasyMove();
-        } else if (difficulty.equals("3")) {
+        } else if (difficulty.equals("Hard")) {
             chosen = calculateHardMove(parade);
         } else {
             chosen = calculateNormalMove(parade);
