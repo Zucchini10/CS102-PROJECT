@@ -29,7 +29,7 @@ public class PointsCalculator {
     }
 
     // "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"
-    public void majorityDecider() {
+    public void flipMajorityCardPiles() {
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
         // Get the players with max card color for each color and put them in hashmap
         for(String colour : colours){
@@ -89,6 +89,7 @@ public class PointsCalculator {
         // If there are multiple players with the same least score, we need to check their stack amount
         int leastCardAmount = playersWithLeastScore.get(0).getStack().getTotalCards();
         Player playerWithLeastCardAmount = playersWithLeastScore.get(0);
+        
         // Get the player with least stack amount
         for (Player p : playersWithLeastScore) {
             int currentCardAmount = p.getStack().getTotalCards();

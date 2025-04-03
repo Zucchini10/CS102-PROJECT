@@ -10,7 +10,7 @@ class Player {
 
     // constructor
     public Player(String name) {
-        this.name = colourResetCode + name;
+        this.name = "\033[1m" + name;
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;
@@ -84,7 +84,7 @@ class Player {
     public void printHand() {
         System.out.println(name + "'s Hand : ");
         new cardPrinter(hand);
-        String handNumberLine = "\033[0m\033[1m   1       2       3";
+        String handNumberLine = colourResetCode + "   1       2       3";
         if (hand.size() == 4) {
             handNumberLine += "       4";
         } else if (hand.size() > 4) {
@@ -102,8 +102,7 @@ class Player {
 
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out
-                .println(colourResetCode + "\n----- " + name + "'s Turn Overview -----\n");
+        System.out.println(colourResetCode + "\n----- " + name + "'s Turn Overview -----\n");
 
         // print drawn cards from parade
         System.out.println("Drawn from Parade : ");
