@@ -24,28 +24,9 @@ public class Game {
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
 
-        // Choosing number of players and CPU
-        int numPlayers = 0;
-        int numCPU = 0;
-
+        // Create players and CPU and add them into playerList
         totalPlayers = initialisePlayers();
-        while (totalPlayers <= 1 || totalPlayers > 6) {
-
-            // Validate numPlayers input
-            numPlayers = validateNumberOfPlayers(false);
-
-            // Validate numCPU input
-            numCPU = validateNumberOfPlayers(true);
-
-            // Check if the total number of players is within valid limits
-            totalPlayers = numCPU + numPlayers;
-            if (totalPlayers <= 1) {
-                System.out.println("Invalid number of players, there has to be at least 2 players / CPU.");
-            } else if (totalPlayers > 6) {
-                System.out.println("Too many players, maximum number of players is 6.");
-            }
-        }
-
+    
         // initialise points calculators for the game, either 2 player game or >2 player
         // game
         System.out.println();
@@ -61,25 +42,11 @@ public class Game {
         printTurnOrder();
         System.out.print(colourResetCode + "Press Enter to Continue ");
         sc.nextLine();
-
         System.out.println();
 
-        // Deal 5 cards to each player
-        System.out.println("Initialising Game...\n");
-        for (Player p : playerList) {
-            for (int j = 0; j < 5; j++) {
-                Card playerStarting = deck.drawCard();
-                p.draw(playerStarting);
-            }
-        }
-
-        // Deal 6 cards to parade
-        // System.out.println("Initialising parade... ");
-        for (int i = 0; i < 6; i++) {
-            Card paradeStarting = deck.drawCard();
-            parade.addCardToParade(paradeStarting);
-        }
-
+        // Deal 5 cards to each player and deal 6 cards to parade
+        dealStartingCards();
+        
         // print parade before starting game
         parade.printParade();
         System.out.println(colourResetCode + "\nPress Enter to start game > ");
@@ -287,6 +254,7 @@ public class Game {
 
         // Get CPU difficulty
         inputCPUDifficulty(numCPU);
+        
         return totalPlayers;
     }
 
@@ -315,6 +283,24 @@ public class Game {
 
     }
 
+    private void dealStartingCards(){
+
+        System.out.println("Initialising Game...\n");
+
+        // deal 5 cards to player
+        for (Player p : playerList) {
+            for (int j = 0; j < 5; j++) {
+                Card playerStarting = deck.drawCard();
+                p.draw(playerStarting);
+            }
+        }
+
+        // Deal 6 cards to parade
+        for (int i = 0; i < 6; i++) {
+            Card paradeStarting = deck.drawCard();
+            parade.addCardToParade(paradeStarting);
+        }
+    }
     private void inputPlayerName(int numPlayers) {
         Scanner sc = new Scanner(System.in);
         System.out.println();
