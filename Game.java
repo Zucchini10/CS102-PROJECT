@@ -322,14 +322,31 @@ public class Game {
     private void inputPlayerName(int numPlayers) {
         Scanner sc = new Scanner(System.in);
         System.out.println();
-        for (int i = 1; i < numPlayers + 1; i++) {
-            System.out.print("Enter Player " + i + " name > ");
-
-            String name = sc.nextLine();
-            playerList.add(new Player(name));
+        for (int i = 1; i <= numPlayers; i++) {
+            while (true) {
+                try {
+                    System.out.print("Enter Player " + i + " name > ");
+                    String inputName = sc.nextLine().trim();
+        
+                    // Check for duplicate with ignoring colour code
+                    for (Player p : playerList) {
+                        // Remove all colour code
+                        String existingName = p.getName().replaceAll("\u001B\\[[;\\d]*m", "");
+                        if (existingName.equals(inputName)) {
+                            throw new Exception("Name already taken. Please enter a different name.");
+                        }
+                    }
+        
+                    // Format name with color again
+                    String coloredName = "\033[0m" + inputName;
+                    playerList.add(new Player(coloredName));
+                    break;
+        
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
-
-        System.out.println();
     }
 
     private void inputCPUDifficulty(int numCPU) {
