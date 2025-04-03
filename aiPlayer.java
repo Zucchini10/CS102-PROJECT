@@ -25,7 +25,7 @@ public class aiPlayer extends Player {
         // Set the name with green color and bold
         name = "\033[1m\033[38;2;0;153;0m" + name;
         
-        super.setName(name + difficulty);
+        super.setName(name);
         super.setAI(true);
     }
 
