@@ -253,7 +253,10 @@ public class Game {
         inputPlayerName(numPlayers);
 
         // Get CPU difficulty
-        inputCPUDifficulty(numCPU);
+        if (numCPU > 0){
+            inputCPUDifficulty(numCPU);
+        }
+        
         
         return totalPlayers;
     }
