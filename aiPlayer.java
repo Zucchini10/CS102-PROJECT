@@ -1,46 +1,66 @@
 import java.util.*;
 
 public class aiPlayer extends Player {
-    private String difficulty;
-    private String colourResetCode = "\033[0m\033[1m";
-    private static final Set<String> usedNames = new HashSet<>();
-    private static final String[] Names = {"John", "Jane", "Chris", "Olivia", "Emma", "Mary"};
 
+    // static attribute shared across all instances of aiPlayer
+    private static Set<String> usedNames = new HashSet<>();
+    private String difficulty;
 
     public aiPlayer(String difficulty) {
         super();
         this.difficulty = difficulty;
 
         Random rand = new Random();
-        String selectedName;
+        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
+        
+        // Pick a random name and ensure it's not already used by another AI player
+        String name;
         do {
-            selectedName = Names[rand.nextInt(Names.length)];
-        } while (usedNames.contains(selectedName) && usedNames.size() < Names.length);
+            name = Names[rand.nextInt(Names.length)];
+        } while (usedNames.contains(name));  // If the name has already been used, pick another
 
-        usedNames.add(selectedName);
+        // Add the name to the set of used names to avoid duplicates
+        usedNames.add(name);
 
-        String colouredName = "\033[38;2;0;153;0m" + selectedName;
-        super.setName(colouredName);
+        // Set the name with green color and bold
+        name = "\033[1m\033[38;2;0;153;0m" + name;
+        
+        super.setName(name + difficulty);
         super.setAI(true);
     }
+
 
     public Card chooseCard(Parade parade) {
         Card chosen;
 
         // Decide strategy based on difficulty
-        if (difficulty.equals("easy")) {
+        if (difficulty.equals("Easy")) {
             chosen = calculateEasyMove();
-        } else if (difficulty.equals("hard")) {
+        } else if (difficulty.equals("Hard")) {
             chosen = calculateHardMove(parade);
         } else {
             chosen = calculateNormalMove(parade);
         }
 
+        // print the card that CPU plays
+        System.out.println(super.getName() + colourResetCode + " chosen card: ");
+        chosen.printCard();
         // Remove the chosen card from AI's hand after playing
         super.getHand().remove(chosen);
 
         // Return the chosen card to be added to the parade
         return chosen;
+    }
+    public Card discardCard() {
+        List<Card> hand = getHand();
+        Card largestCard = hand.get(0);
+        for (Card card : hand) {
+            if (card.getValue() > largestCard.getValue()) {
+                largestCard = card;
+            }
+        }
+        super.getHand().remove(largestCard);
+        return largestCard;
     }
     
 
@@ -160,19 +180,14 @@ public class aiPlayer extends Player {
         return colours[maxIndex];
     }
 
-    public Card playCard(Card card) {
-        getHand().remove(card);
-        return card;
-    }
-
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(" \033[0m\033[1m \n========== End of " + super.getName() + "\033[0m\033[1m's Turn ==========\n");
+        System.out.println(colourResetCode + "\n----- " + super.getName() + colourResetCode + "'s Turn Overview -----\n");
 
         // print player card piles
-        super.getStack().printPlayerCardPileStack();
+        printPlayerCardPile();
 
-        System.out.println(colourResetCode + "Press Enter to end CPU turn > ");
+        System.out.print(colourResetCode + "Press Enter to end CPU turn > ");
         sc.nextLine();
     
     }

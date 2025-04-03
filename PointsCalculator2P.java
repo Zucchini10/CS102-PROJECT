@@ -10,18 +10,24 @@ public class PointsCalculator2P extends PointsCalculator {
         Player first = players.get(0);
         Player second = players.get(1);
 
-        List<Card> firstPlayerHandColor = first.getStack().getPlayerCardPileStack().get(color).getPlayerCardPile();
-        List<Card> secondPlayerHandColor = second.getStack().getPlayerCardPileStack().get(color).getPlayerCardPile();
+        HashMap<String, PlayerCardPile> firstCardPileStack = first.getStack().getPlayerCardPileStack();
+        HashMap<String, PlayerCardPile> secondCardPileStack = second.getStack().getPlayerCardPileStack();
+        // Get the specific color card pile for the first player
+        List<Card> firstPlayerColorPile = firstCardPileStack.get(color).getPlayerCardPile();
+        // Get the specific color card pile for the second player
+        List<Card> secondPlayerColorPile = secondCardPileStack.get(color).getPlayerCardPile();
 
-        int first_count = firstPlayerHandColor.size();
-        int second_count = secondPlayerHandColor.size();
+        int first_count = firstPlayerColorPile.size();
+        int second_count = secondPlayerColorPile.size();
 
         List<Player> result = new ArrayList<>();
 
+        // Check if the first player has 2 or more card amount than the second player for a specific color card pile
         if(first_count - second_count >= 2){
             result.add(first);
         }
 
+        // Check if the second player has 2 or more card amount than the second player for a specific color card pile
         if(first_count - second_count <= -2){
             result.add(second);
         }
