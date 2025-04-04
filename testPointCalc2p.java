@@ -33,7 +33,7 @@ public class testPointCalc2p {
         }
 
         PointsCalculator pc = new PointsCalculator2P(listofPlayer);
-        pc.majorityDecider();
+        pc.flipMajorityCardPiles();
         
         System.out.println("-----PLAYERS SCORE-----");
 
