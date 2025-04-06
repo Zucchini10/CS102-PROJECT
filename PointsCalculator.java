@@ -28,7 +28,6 @@ public class PointsCalculator {
         return max;
     }
 
-    // "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE"
     public void flipMajorityCardPiles() {
         String[] colours = { "RED", "BLUE", "GREEN", "GREY", "PURPLE", "ORANGE" };
         // Get the players with max card color for each color and put them in hashmap

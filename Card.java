@@ -21,23 +21,23 @@ public class Card {
         // Create a list to hold the card's lines
         List<String> cardLines = new ArrayList<>();
         
-        // Set color based on the card's color
+        // Set color based on the card's color with appropriate ANSII code for each color
         String colourCode;
         String colour1;
         if (colour.equalsIgnoreCase("Red")) {
-            colourCode = "\033[38;2;255;0;0m"; // Red text color code
+            colourCode = "\033[38;2;255;0;0m"; 
             colour1 = "R";
         } else if (colour.equalsIgnoreCase("Blue")){
-            colourCode = "\033[38;2;0;0;255m"; // Blue text color code
+            colourCode = "\033[38;2;0;0;255m"; 
             colour1 = "B";
         } else if (colour.equalsIgnoreCase("Green")){
-            colourCode = "\033[38;2;0;153;0m"; // Green text color code
+            colourCode = "\033[38;2;0;153;0m"; 
             colour1 = "G";
         }else if (colour.equalsIgnoreCase("Grey")){
-            colourCode = "\033[38;2;204;204;204m"; // Grey text color code
+            colourCode = "\033[38;2;204;204;204m"; 
             colour1 = "g";
         }else if (colour.equalsIgnoreCase("Purple")){
-            colourCode = "\033[35m"; // Purple text color code
+            colourCode = "\033[35m"; 
             colour1 = "P";
         }else{
             colourCode = "\033[38;2;255;130;0m"; // Orange text color code

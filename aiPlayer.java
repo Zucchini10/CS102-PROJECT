@@ -13,7 +13,7 @@ public class aiPlayer extends Player {
         Random rand = new Random();
         String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
         
-        // Pick a random name and ensure it's not already used by another AI player
+        // Pick a random name and ensure it's not already used by another AI player from static attribute hashset
         String name;
         do {
             name = Names[rand.nextInt(Names.length)];
@@ -53,6 +53,8 @@ public class aiPlayer extends Player {
     }
     public Card discardCard() {
         List<Card> hand = getHand();
+
+        // choose card with the biggest value
         Card largestCard = hand.get(0);
         for (Card card : hand) {
             if (card.getValue() > largestCard.getValue()) {

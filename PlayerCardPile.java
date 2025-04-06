@@ -42,7 +42,8 @@ public class PlayerCardPile {
 
     
     public boolean isEmpty(){
-        
+
+        // if size of list of cards is 0, return true
         if (playerCardPile.size()== 0){
             return true;
         } else{

@@ -10,6 +10,7 @@ class Player {
 
     // constructor
     public Player(String name) {
+        //bold name 
         this.name = "\033[1m" + name;
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
@@ -65,15 +66,6 @@ class Player {
 
     }
 
-    public Card getCard(int index) {
-        if (index >= 0 && index < hand.size()) {
-            return hand.get(index);
-        }
-
-        System.out.println("Invalid card selection.");
-        return null;
-    }
-
     public void printPlayerCardPile() {
         System.out.println(colourResetCode + "==============================================================================================================\n");
         System.out.println(name + colourResetCode + "'s card piles : \n");
@@ -82,7 +74,7 @@ class Player {
     }
 
     public void printHand() {
-        System.out.println(name + "'s Hand : ");
+        System.out.println(colourResetCode + name + "'s Hand : ");
         new cardPrinter(hand);
         String handNumberLine = colourResetCode + "   1       2       3";
         if (hand.size() == 4) {
@@ -95,6 +87,7 @@ class Player {
     }
 
     public void addIntoPlayerCardPile(List<Card> paradeDrawn) {
+        //Add a list of cards into playercardpile
         for (Card card : paradeDrawn) {
             stack.addCard(card);
         }

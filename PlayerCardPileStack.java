@@ -2,7 +2,7 @@ import java.util.*;
 
 public class PlayerCardPileStack {
     private HashMap<String, PlayerCardPile> playerCardPileStack;
-    
+    String colourResetCode = "\033[0m\033[1m";
 
     public PlayerCardPileStack() {
 
@@ -33,17 +33,19 @@ public class PlayerCardPileStack {
     public void printPlayerCardPileStack(){
         String[] colours = {"RED","BLUE","GREEN","GREY","PURPLE","ORANGE"};
 
+        // will print out the list of cards.
+        // if empty, will print out empty. If majority after endgame , will print out it is majority
         for (String colour:colours){
             PlayerCardPile pcp = playerCardPileStack.get(colour);
             if (pcp.getPlayerCardPile().size()==0){
-                System.out.print( "\033[0m\033[1m" + colour + " CARD PILE :");
+                System.out.print( colourResetCode + colour + " CARD PILE :");
                 System.out.println("Is empty ");
                 System.out.println();
             } else if (pcp.isFaceUp()==true){
-                System.out.println( "\033[0m\033[1m" + colour + " CARD PILE :");
+                System.out.println( colourResetCode + colour + " CARD PILE :");
                 pcp.printPlayerCardPile();
             } else {
-                System.out.println( "\033[0m\033[1m" + colour + " CARD PILE : (Majority)");
+                System.out.println( colourResetCode + colour + " CARD PILE : (Majority)");
                 pcp.printPlayerCardPile();
             }
             
@@ -54,6 +56,8 @@ public class PlayerCardPileStack {
 
     public boolean containsAllColours(){
         boolean playerHasAllColors = true;
+
+        // for every playercardpile in stack, if any of them are empty, return false
         Set<Map.Entry<String, PlayerCardPile>> entrySet = playerCardPileStack.entrySet();
         for (Map.Entry<String, PlayerCardPile> entry : entrySet) {
             PlayerCardPile pile = entry.getValue();
@@ -68,6 +72,8 @@ public class PlayerCardPileStack {
     public int getTotalScore(){
 
         int total = 0;
+
+        // for every playercardpile in the stack, get their individual score and sum it up
         Set<Map.Entry<String, PlayerCardPile>> entrySet = playerCardPileStack.entrySet();
         for (Map.Entry<String, PlayerCardPile> entry : entrySet) {
             PlayerCardPile pile = entry.getValue();
@@ -79,6 +85,8 @@ public class PlayerCardPileStack {
     }
 
     public int getTotalCards(){
+
+        // get number of cards in stack 
         int result = 0;
         for(PlayerCardPile current : playerCardPileStack.values()){
             result += current.getPlayerCardPile().size();
