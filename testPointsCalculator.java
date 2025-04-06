@@ -29,7 +29,7 @@ public class testPointsCalculator {
         }
 
         PointsCalculator pc = new PointsCalculator(listofPlayer);
-        pc.majorityDecider();
+        pc.flipMajorityCardPiles();
 
 
         System.out.println("-----PLAYERS SCORE-----");
