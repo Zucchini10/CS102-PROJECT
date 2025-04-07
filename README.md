@@ -10,9 +10,6 @@ Assumptions:
 
 3) If 2 players have the same amount of cards in player card pile, they are both considered majority. If all 6 players have the same number of cards from their playercardpiles, they will all be considered to have the majority
 
-4) There will be no situation where players have the same number of points and same number of cards 
-
-
 Things to Note:
 
 - The game will not display the CPU's hand / card drawn from deck, only his player card piles

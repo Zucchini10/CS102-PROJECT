@@ -16,6 +16,22 @@ public class Game {
     private PointsCalculator pc;
     private String colourResetCode = "\033[0m\033[1m";
 
+    // for testing purposes
+    public Game(List<Player> players, Parade parade, int num){
+        isEndGame = true;
+        this.playerList = players;
+        this.parade = parade;
+        deck = new Deck();
+        totalPlayers = num;
+
+
+        if (totalPlayers == 2) {
+            pc = new PointsCalculator2P(playerList);
+        } else {
+            pc = new PointsCalculator(playerList);
+        }
+    }
+
     public Game() {
         // Initialising attributes
         isEndGame = false;
@@ -178,8 +194,6 @@ public class Game {
 
         // finally print out the winner(s)
         winnerPrint(winners);
-    
-        
 
     }
 
@@ -521,20 +535,20 @@ public class Game {
         if (winners.size()==1){
             Player winner = winners.get(0);
             System.out.println(
-                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards");
+                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards !");
         } else {
             System.out.print("\n\n\nThere is a tie! Winners are ");
             for (int i = 0;i<winners.size();i++){
-                Player p = winners.get(0);
+                Player p = winners.get(i);
                 System.out.print(p.getName());
 
-                if (i!=winners.size()){
+                if (i!=winners.size()-1){
                     System.out.print(" and ");
                 }
             }
 
             Player winner = winners.get(0);
-            System.out.println("! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards");
+            System.out.println("! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards !");
         }
     }
 }

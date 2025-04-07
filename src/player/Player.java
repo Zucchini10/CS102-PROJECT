@@ -27,7 +27,6 @@ public class Player {
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;
-
     }
 
     // getters
