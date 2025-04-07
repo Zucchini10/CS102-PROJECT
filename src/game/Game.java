@@ -168,17 +168,18 @@ public class Game {
 
         // find the winner by finding the player with lowest score and lowest number of
         // cards, then get winner score
-        Player winner = pc.getWinner();
-        int winnerScore = winner.getScore();
-
+        List<Player> winners = pc.getWinners();
+        
         // print out
         endingScorePrint();
 
         System.out.print("Press Enter to get Winner");
         sc.nextLine();
-        // finally print out the winner
-        System.out.println(
-                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winnerScore + " points" + ", and " + winner.getStack().getTotalCards() + " cards");
+
+        // finally print out the winner(s)
+        winnerPrint(winners);
+    
+        
 
     }
 
@@ -514,5 +515,26 @@ public class Game {
 
         player.removeCardFromHand(chosen);
         return chosen;
+    }
+
+    public void winnerPrint(List<Player> winners){
+        if (winners.size()==1){
+            Player winner = winners.get(0);
+            System.out.println(
+                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards");
+        } else {
+            System.out.print("\n\n\nThere is a tie! Winners are ");
+            for (int i = 0;i<winners.size();i++){
+                Player p = winners.get(0);
+                System.out.print(p.getName());
+
+                if (i!=winners.size()){
+                    System.out.print(" and ");
+                }
+            }
+
+            Player winner = winners.get(0);
+            System.out.println("! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards");
+        }
     }
 }
