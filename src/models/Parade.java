@@ -1,4 +1,7 @@
+package models;
 import java.util.*;
+
+import utils.cardPrinter;
 
 public class Parade {
     private List<Card> paradeLine;

@@ -1,6 +1,11 @@
+package player;
 import java.util.*;
 
-class Player {
+import models.Card;
+import models.Parade;
+import utils.cardPrinter;
+
+public class Player {
     private String name;
     private List<Card> hand;
     private PlayerCardPileStack stack;

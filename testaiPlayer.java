@@ -2,6 +2,11 @@
 
 import java.util.*;
 
+import src.models.Card;
+import src.models.Deck;
+import src.player.Player;
+import src.player.aiPlayer;
+
 public class testaiPlayer {
     public static void main(String[] args) {
         Deck d = new Deck();

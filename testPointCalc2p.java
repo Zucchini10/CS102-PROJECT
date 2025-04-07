@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import src.game.PointsCalculator;
+import src.game.PointsCalculator2P;
+import src.models.Card;
+import src.player.Player;
+
 public class testPointCalc2p {
      public static void main(String args[]){
         Random random = new Random();

@@ -1,4 +1,11 @@
+package game;
 import java.util.*;
+
+import models.Card;
+import models.Deck;
+import models.Parade;
+import player.Player;
+import player.aiPlayer;
 
 public class Game {
     private boolean isEndGame;

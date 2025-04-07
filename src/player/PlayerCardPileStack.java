@@ -1,4 +1,7 @@
+package player;
 import java.util.*;
+
+import models.Card;
 
 public class PlayerCardPileStack {
     private HashMap<String, PlayerCardPile> playerCardPileStack;

@@ -1,3 +1,8 @@
+import src.models.Card;
+import src.models.Deck;
+import src.models.Parade;
+import src.utils.cardPrinter;
+
 public class testremovedFromParade {
     public static void main(String[] args) {
         Deck d = new Deck();

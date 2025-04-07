@@ -1,5 +1,9 @@
 import java.util.*;
 
+import src.game.PointsCalculator;
+import src.models.Card;
+import src.player.Player;
+
 public class testPointsCalculator {
     public static void main(String args[]){
         Random random = new Random();

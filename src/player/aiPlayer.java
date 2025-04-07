@@ -1,4 +1,8 @@
+package player;
 import java.util.*;
+
+import models.Card;
+import models.Parade;
 
 public class aiPlayer extends Player {
 
