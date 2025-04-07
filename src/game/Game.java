@@ -178,7 +178,7 @@ public class Game {
         sc.nextLine();
         // finally print out the winner
         System.out.println(
-                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winnerScore + " points");
+                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winnerScore + " points" + ", and " + winner.getStack().getTotalCards() + " cards");
 
     }
 
