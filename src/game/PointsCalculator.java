@@ -107,7 +107,7 @@ public class PointsCalculator {
             }
         }
 
-        // remove players that do not have the lowest card count
+        // Remove players that do not have the lowest card count
         Iterator<Player> iterator = winners.iterator();
         while (iterator.hasNext()) {
             Player p = iterator.next();
