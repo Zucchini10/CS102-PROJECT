@@ -21,7 +21,8 @@ public class Test {
         Card c10 = new Card ("PURPLE",0);
         Card c11 = new Card ("PURPLE",1);
         Card c12 = new Card ("PURPLE",1);
-
+        Card c13 = new Card ("PURPLE",10);
+        Card c14 = new Card ("BLUE", 9);
 
         Parade pa = new Parade();
         pa.addCardToParade(c12);
@@ -31,11 +32,15 @@ public class Test {
 
         List<Card> l1 = new ArrayList<>();
         l1.add(c2);
-        l1.add(c5);
+        l1.add(c14);
 
         List<Card> l2 = new ArrayList<>();
         l2.add(c8);
         l2.add(c10);
+
+        List <Card> l3 = new ArrayList<>();
+        l3.add(c13);
+        l3.add(c5);
 
         Player p1 = new Player("Ryan");
         p1.addIntoPlayerCardPile(l1);
@@ -44,6 +49,9 @@ public class Test {
         p2.addIntoPlayerCardPile(l2);
         
         Player p3 = new Player("Le Shen");
+        p3.addIntoPlayerCardPile(l3);
+
+        
         Player p4 = new Player("Kevin");
 
         List<Player> players = new ArrayList<>();

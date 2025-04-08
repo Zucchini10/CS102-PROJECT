@@ -189,7 +189,7 @@ public class Game {
         // print out
         endingScorePrint();
 
-        System.out.print("Press Enter to get Winner");
+        System.out.print("Press Enter to get Winner >");
         sc.nextLine();
 
         // finally print out the winner(s)
@@ -490,9 +490,6 @@ public class Game {
             }
         }
 
-        // System.out.println(colourResetCode + "Press Enter to Continue");
-        // sc.nextLine();
-
         // 2) put into player's playercardpile
         player.addIntoPlayerCardPile(player.getHand());
 
@@ -532,10 +529,14 @@ public class Game {
     }
 
     public void winnerPrint(List<Player> winners){
+        
+        // if there is only one winner
         if (winners.size()==1){
             Player winner = winners.get(0);
             System.out.println(
                 "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards !");
+
+                // if there are multiple winners
         } else {
             System.out.print("\n\n\nThere is a tie! Winners are ");
             for (int i = 0;i<winners.size();i++){
