@@ -301,7 +301,11 @@ public class Game {
                 }
 
                 numPlayers = sc.nextInt();
-                break;
+                if (numPlayers < 0) {
+                    System.out.println("Invalid input! Please enter a valid number");
+                } else {
+                    break;
+                }
 
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input! Please enter a valid number");
