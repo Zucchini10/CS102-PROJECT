@@ -337,33 +337,61 @@ public class Game {
         System.out.println();
         
         // for every player, keep prompting them for player name until valid input or no duplicate name
-        for (int i = 1; i <= numPlayers; i++) {
-            while (true) {
-                try {
-                    System.out.print("Enter Player " + i + " name > ");
-                    String inputName = sc.nextLine().trim();
+        // for (int i = 1; i <= numPlayers; i++) {
+        //     while (true) {
+        //         try {
+        //             System.out.print("Enter Player " + i + " name > ");
+        //             String inputName = sc.nextLine().trim();
 
-                    // Check for duplicate names
-                    for (Player p : playerList) {
+        //             if(!playerList.isEmpty()){
+        //             // Check for duplicate names
+        //             for (Player p : playerList) {
         
-                        String existingName = p.getName();
+        //                 String existingName = p.getName();
 
-                        // if name exists, throw error and loop to prompt for another name
-                        if (existingName.equals(inputName)) {
-                            throw new Exception("Name already taken. Please enter a different name.");
-                        }
-                    }
+        //                 // if name exists, throw error and loop to prompt for another name
+        //                 if (existingName.equals(inputName)) {
+        //                     throw new Exception("Name already taken. Please enter a different name.");
+        //                 }
+        //             }
+        //         }
+        //             // if does not exist, create player and put inside player list
+        //             playerList.add(new Player(inputName));
+        //             break;
 
-                    // if does not exist, create player and put inside player list
-                    playerList.add(new Player(inputName));
-                    break;
+        //         } catch (Exception e) {
+        //             System.out.println(e.getMessage());
+        //         }
+        //     }
+        // }
 
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+        //come up with a list of names,
+        List<String> playerNames = new ArrayList<>();
+        for (int i = 1; i <= numPlayers; i++) {
+
+            System.out.print("Enter Player " + i + " name > ");
+            String inputName = sc.nextLine().trim();
+            //if not empty, check if already inside, if inside, i--, print msg and loop
+            if(!playerNames.isEmpty()){
+                if(playerNames.contains(inputName)){
+                    i--;
+                    System.out.println("Duplicate name detected, please enter something else.");
+                    continue;
                 }
             }
+            playerNames.add(inputName);
         }
-    }
+        //initialising player 
+        for(String s:playerNames){
+            playerList.add(new Player(s));
+        }
+            
+        }
+
+        //to check just use contains methods 
+        //if dont contain then add 
+        //run for each loop to initialise playerlist 
+    
 
     private void inputCPUDifficulty(int numCPU) {
         Scanner sc = new Scanner(System.in);
