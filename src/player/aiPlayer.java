@@ -27,7 +27,7 @@ public class aiPlayer extends Player {
         usedNames.add(name);
 
         // Set the name with green color and bold
-        name = "\033[1m\033[38;2;0;153;0m" + name;
+        name = "\033[1m\033[38;2;0;153;0m" + name + "(" + difficulty + ")";
         
         super.setName(name);
         super.setAI(true);

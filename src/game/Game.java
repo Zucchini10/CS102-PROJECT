@@ -1,4 +1,5 @@
 package game;
+
 import java.util.*;
 
 import models.Card;
@@ -17,13 +18,12 @@ public class Game {
     private String colourResetCode = "\033[0m\033[1m";
 
     // for testing purposes
-    public Game(List<Player> players, Parade parade, int num){
+    public Game(List<Player> players, Parade parade, int num) {
         isEndGame = true;
         this.playerList = players;
         this.parade = parade;
         deck = new Deck();
         totalPlayers = num;
-
 
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
@@ -50,7 +50,8 @@ public class Game {
         // Create players and CPU and add them into playerList
         totalPlayers = initialisePlayers();
 
-        // initialise points calculators for the game, either 2 player game or >2 player game
+        // initialise points calculators for the game, either 2 player game or >2 player
+        // game
         System.out.println();
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
@@ -73,7 +74,7 @@ public class Game {
         parade.printParade();
         System.out.print(colourResetCode + "\nPress Enter to start game > ");
         sc.nextLine();
-
+        
     }
 
     // Getters and Setters
@@ -147,7 +148,8 @@ public class Game {
         System.out.print(colourResetCode + "Press Enter to Continue");
         sc.nextLine();
 
-        // re-order the playerList to give everyone one last turn, and next player is the first element
+        // re-order the playerList to give everyone one last turn, and next player is
+        // the first element
         Collections.rotate(playerList, -nextPlayerIndex);
         System.out.println(
                 "------------------------------------------------------------------ Endgame starting ... ------------------------------------------------------------------\n");
@@ -178,14 +180,14 @@ public class Game {
                 "------------------------------------------------------------------- GAME END! -------------------------------------------------------------------\n");
 
         System.out.println("Tabulating score ... ");
-        
-        // find the players who has majority in their playercardpiles and flips them 
+
+        // find the players who has majority in their playercardpiles and flips them
         pc.flipMajorityCardPiles();
 
         // find the winner by finding the player with lowest score and lowest number of
         // cards, then get winner score
         List<Player> winners = pc.getWinners();
-        
+
         // print out
         endingScorePrint();
 
@@ -301,8 +303,10 @@ public class Game {
                 }
 
                 numPlayers = sc.nextInt();
-                if (numPlayers < 0) {
+                if (numPlayers < 0 ) {
                     System.out.println("Invalid input! Please enter a valid number");
+                } else if (numPlayers > 6){
+                    System.out.println("Invalid input! Maximum number of players is 6.");
                 } else {
                     break;
                 }
@@ -339,45 +343,46 @@ public class Game {
     private void inputPlayerName(int numPlayers) {
         Scanner sc = new Scanner(System.in);
         System.out.println();
-        
-        // for every player, keep prompting them for player name until valid input or no duplicate name
+
+        // for every player, keep prompting them for player name until valid input or no
+        // duplicate name
         // for (int i = 1; i <= numPlayers; i++) {
-        //     while (true) {
-        //         try {
-        //             System.out.print("Enter Player " + i + " name > ");
-        //             String inputName = sc.nextLine().trim();
+        // while (true) {
+        // try {
+        // System.out.print("Enter Player " + i + " name > ");
+        // String inputName = sc.nextLine().trim();
 
-        //             if(!playerList.isEmpty()){
-        //             // Check for duplicate names
-        //             for (Player p : playerList) {
-        
-        //                 String existingName = p.getName();
+        // if(!playerList.isEmpty()){
+        // // Check for duplicate names
+        // for (Player p : playerList) {
 
-        //                 // if name exists, throw error and loop to prompt for another name
-        //                 if (existingName.equals(inputName)) {
-        //                     throw new Exception("Name already taken. Please enter a different name.");
-        //                 }
-        //             }
-        //         }
-        //             // if does not exist, create player and put inside player list
-        //             playerList.add(new Player(inputName));
-        //             break;
+        // String existingName = p.getName();
 
-        //         } catch (Exception e) {
-        //             System.out.println(e.getMessage());
-        //         }
-        //     }
+        // // if name exists, throw error and loop to prompt for another name
+        // if (existingName.equals(inputName)) {
+        // throw new Exception("Name already taken. Please enter a different name.");
+        // }
+        // }
+        // }
+        // // if does not exist, create player and put inside player list
+        // playerList.add(new Player(inputName));
+        // break;
+
+        // } catch (Exception e) {
+        // System.out.println(e.getMessage());
+        // }
+        // }
         // }
 
-        //come up with a list of names,
+        // come up with a list of names,
         List<String> playerNames = new ArrayList<>();
         for (int i = 1; i <= numPlayers; i++) {
 
             System.out.print("Enter Player " + i + " name > ");
             String inputName = sc.nextLine().trim();
-            //if not empty, check if already inside, if inside, i--, print msg and loop
-            if(!playerNames.isEmpty()){
-                if(playerNames.contains(inputName)){
+            // if not empty, check if already inside, if inside, i--, print msg and loop
+            if (!playerNames.isEmpty()) {
+                if (playerNames.contains(inputName)) {
                     i--;
                     System.out.println("Duplicate name detected, please enter something else.");
                     continue;
@@ -385,44 +390,49 @@ public class Game {
             }
             playerNames.add(inputName);
         }
-        //initialising player 
-        for(String s:playerNames){
+        // initialising player
+        for (String s : playerNames) {
             playerList.add(new Player(s));
         }
-            
-        }
 
-        //to check just use contains methods 
-        //if dont contain then add 
-        //run for each loop to initialise playerlist 
-    
+    }
+
+    // to check just use contains methods
+    // if dont contain then add
+    // run for each loop to initialise playerlist
 
     private void inputCPUDifficulty(int numCPU) {
         Scanner sc = new Scanner(System.in);
 
-        
         boolean valid = false;
         String difficulty = null;
 
-        // loops until valid input 
-        while (!valid) {
-            System.out.println("1. Easy   2. Medium    3. Hard");
-            System.out.print("Enter CPU difficulty > ");
+        // loops until valid input
+        for (int i = 1; i < numCPU + 1; i++) {
+            while (!valid) {
+                System.out.println("1. Easy   2. Medium    3. Hard");
+                System.out.print("Enter CPU " + i + " difficulty > ");
 
-            String difficultyNum = sc.nextLine();
-            if (difficultyNum.equals("1")) {
-                difficulty = "Easy";
-                valid = true;
-            } else if (difficultyNum.equals("2")) {
-                difficulty = "Medium";
-                valid = true;
-            } else if (difficultyNum.equals("3")) {
-                difficulty = "Hard";
-                valid = true;
-            } else {
-                System.out.println("Invalid input! Please enter a valid number.");
+                String difficultyNum = sc.nextLine().toLowerCase();
+                if (difficultyNum.equals("1") || difficultyNum.equals("easy")) {
+                    difficulty = "Easy";
+                    valid = true;
+                } else if (difficultyNum.equals("2") || difficultyNum.equals("medium")) {
+                    difficulty = "Medium";
+                    valid = true;
+                } else if (difficultyNum.equals("3") || difficultyNum.equals("hard")) {
+                    difficulty = "Hard";
+                    valid = true;
+                } else {
+                    System.out.println("Invalid input! Please enter a valid input.");
+                    System.out.println();
+                }
+
             }
-
+            System.out.println("Difficulty chosen: "+ difficulty);
+            System.out.println();
+            playerList.add(new aiPlayer(difficulty));
+            valid = false;
         }
 
         // creates number of CPUs with chosen difficulty
@@ -451,7 +461,8 @@ public class Game {
     private void endingScorePrint() {
         Scanner sc = new Scanner(System.in);
 
-        // for every player, print out their playercardpile and their score after game has ended
+        // for every player, print out their playercardpile and their score after game
+        // has ended
         for (Player player : playerList) {
 
             System.out.println("----- " + player.getName() + " -----");
@@ -560,28 +571,30 @@ public class Game {
         return chosen;
     }
 
-    public void winnerPrint(List<Player> winners){
-        
+    public void winnerPrint(List<Player> winners) {
+
         // if there is only one winner
-        if (winners.size()==1){
+        if (winners.size() == 1) {
             Player winner = winners.get(0);
             System.out.println(
-                "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards !");
+                    "\n\n\nWinner is... " + winner.getName() + colourResetCode + "! with " + winner.getScore()
+                            + " points" + ", and " + winner.getStack().getTotalCards() + " cards !");
 
-                // if there are multiple winners
+            // if there are multiple winners
         } else {
             System.out.print("\n\n\nThere is a tie! Winners are ");
-            for (int i = 0;i<winners.size();i++){
+            for (int i = 0; i < winners.size(); i++) {
                 Player p = winners.get(i);
                 System.out.print(p.getName());
 
-                if (i!=winners.size()-1){
+                if (i != winners.size() - 1) {
                     System.out.print(" and ");
                 }
             }
 
             Player winner = winners.get(0);
-            System.out.println("! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards() + " cards !");
+            System.out.println("! with " + winner.getScore() + " points" + ", and " + winner.getStack().getTotalCards()
+                    + " cards !");
         }
     }
 }
