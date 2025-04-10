@@ -427,7 +427,7 @@ public class Game {
 
         // creates number of CPUs with chosen difficulty
         System.out.println("Difficulty chosen : " + difficulty);
-        for (int i = 1; i < numCPU + 1; i++) {
+        for (int i = 1; i < numCPU; i++) {
             playerList.add(new aiPlayer(difficulty));
 
         }
