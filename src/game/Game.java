@@ -203,7 +203,7 @@ public class Game {
         Scanner sc = new Scanner(System.in);
 
         // print out which player turn
-        System.out.println("\n----- " + player.getName() + colourResetCode + "'s Turn ! -----\n");
+        System.out.println(colourResetCode + "\n----- " + player.getName() + colourResetCode + "'s Turn ! -----\n");
 
         // Print out parade and playercardpile
         player.printPlayerCardPile();
