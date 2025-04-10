@@ -434,14 +434,6 @@ public class Game {
             playerList.add(new aiPlayer(difficulty));
             valid = false;
         }
-
-        // creates number of CPUs with chosen difficulty
-        System.out.println("Difficulty chosen : " + difficulty);
-        for (int i = 1; i < numCPU; i++) {
-            playerList.add(new aiPlayer(difficulty));
-
-        }
-
     }
 
     private void printTurnOrder() {
