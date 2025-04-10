@@ -8,8 +8,7 @@ Assumptions:
 
 2) The assignment also states "It should allow 2 or more players: human vs computer(s) or human vs human(s)". For our game, we are able to allow play within more than 1 Human and more than 1 CPU. Human(s) vs computer(s).
 
-3) There can only be one winner
-
+3) If 2 players have the same amount of cards in player card pile, they are both considered majority. If all 6 players have the same number of cards from their playercardpiles, they will all be considered to have the majority
 
 Things to Note:
 

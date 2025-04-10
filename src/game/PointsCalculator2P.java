@@ -1,4 +1,9 @@
+package game;
 import java.util.*;
+
+import models.Card;
+import player.Player;
+import player.PlayerCardPile;
 
 public class PointsCalculator2P extends PointsCalculator {
     public PointsCalculator2P(List<Player> players){

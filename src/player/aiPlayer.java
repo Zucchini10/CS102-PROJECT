@@ -1,4 +1,8 @@
+package player;
 import java.util.*;
+
+import models.Card;
+import models.Parade;
 
 public class aiPlayer extends Player {
 
@@ -13,7 +17,7 @@ public class aiPlayer extends Player {
         Random rand = new Random();
         String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
         
-        // Pick a random name and ensure it's not already used by another AI player
+        // Pick a random name and ensure it's not already used by another AI player from static attribute hashset
         String name;
         do {
             name = Names[rand.nextInt(Names.length)];
@@ -23,9 +27,9 @@ public class aiPlayer extends Player {
         usedNames.add(name);
 
         // Set the name with green color and bold
-        name = "\033[1m\033[38;2;0;153;0m" + name;
+        name = "\033[1m\033[38;2;0;153;0m" + name + "(" + difficulty + ")";
         
-        super.setName(name + "(" + difficulty + ")");
+        super.setName(name);
         super.setAI(true);
     }
 
@@ -53,6 +57,8 @@ public class aiPlayer extends Player {
     }
     public Card discardCard() {
         List<Card> hand = getHand();
+
+        // choose card with the biggest value
         Card largestCard = hand.get(0);
         for (Card card : hand) {
             if (card.getValue() > largestCard.getValue()) {

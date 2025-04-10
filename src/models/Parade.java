@@ -1,4 +1,7 @@
+package models;
 import java.util.*;
+
+import utils.cardPrinter;
 
 public class Parade {
     private List<Card> paradeLine;
@@ -23,6 +26,8 @@ public class Parade {
         int paradeIndex = paradeLine.size() - playedValue - 1;
 
         List<Card> paradeDrawn = new ArrayList<Card>();
+
+        // iterate through the parade and for every card in removal mode that is <= chosen cards value or same colour, will be added into list of cards that will be returned
         while (paradeIndex >= 0) {
             Card currentCard = paradeLine.get(paradeIndex);
             if (currentCard.getColour() == chosen.getColour() || currentCard.getValue() <= playedValue) {

@@ -1,4 +1,8 @@
+package player;
 import java.util.*;
+
+import models.Card;
+import utils.cardPrinter;
 
 public class PlayerCardPile {
     private List<Card> playerCardPile;
@@ -42,7 +46,8 @@ public class PlayerCardPile {
 
     
     public boolean isEmpty(){
-        
+
+        // if size of list of cards is 0, return true
         if (playerCardPile.size()== 0){
             return true;
         } else{

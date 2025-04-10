@@ -1,6 +1,11 @@
+package player;
 import java.util.*;
 
-class Player {
+import models.Card;
+import models.Parade;
+import utils.cardPrinter;
+
+public class Player {
     private String name;
     private List<Card> hand;
     private PlayerCardPileStack stack;
@@ -10,7 +15,8 @@ class Player {
 
     // constructor
     public Player(String name) {
-        this.name = colourResetCode + name;
+        //bold name 
+        this.name = "\033[1m" + name;
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;
@@ -21,7 +27,6 @@ class Player {
         hand = new ArrayList<Card>();
         stack = new PlayerCardPileStack();
         score = 0;
-
     }
 
     // getters
@@ -65,15 +70,6 @@ class Player {
 
     }
 
-    public Card getCard(int index) {
-        if (index >= 0 && index < hand.size()) {
-            return hand.get(index);
-        }
-
-        System.out.println("Invalid card selection.");
-        return null;
-    }
-
     public void printPlayerCardPile() {
         System.out.println(colourResetCode + "==============================================================================================================\n");
         System.out.println(name + colourResetCode + "'s card piles : \n");
@@ -82,9 +78,9 @@ class Player {
     }
 
     public void printHand() {
-        System.out.println(name + "'s Hand : ");
+        System.out.println(colourResetCode + name + "'s Hand : ");
         new cardPrinter(hand);
-        String handNumberLine = "\033[0m\033[1m   1       2       3";
+        String handNumberLine = colourResetCode + "   1       2       3";
         if (hand.size() == 4) {
             handNumberLine += "       4";
         } else if (hand.size() > 4) {
@@ -95,6 +91,7 @@ class Player {
     }
 
     public void addIntoPlayerCardPile(List<Card> paradeDrawn) {
+        //Add a list of cards into playercardpile
         for (Card card : paradeDrawn) {
             stack.addCard(card);
         }
@@ -102,8 +99,7 @@ class Player {
 
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out
-                .println(colourResetCode + "\n----- " + name + "'s Turn Overview -----\n");
+        System.out.println(colourResetCode + "\n----- " + name + "'s Turn Overview -----\n");
 
         // print drawn cards from parade
         System.out.println("Drawn from Parade : ");
