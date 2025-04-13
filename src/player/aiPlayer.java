@@ -162,6 +162,7 @@ public class aiPlayer extends Player {
         return colours[maxIndex];
     }
 
+    // CPU simulates how many cards will be taken if it plays each card, and from there chooses the card where it will get the least cards from parade
     private Card calculateHardMove(Parade parade) {
         List<Card> hand = getHand();
         Card bestCard = hand.get(0);
