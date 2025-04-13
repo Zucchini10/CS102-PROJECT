@@ -40,6 +40,23 @@ public class Parade {
         return paradeDrawn;
 
     }
+
+    public List<Card> simulateRemovedFromParade(Card chosen) {
+        int playedValue = chosen.getValue();
+        int paradeIndex = paradeLine.size() - playedValue - 1;
+    
+        List<Card> simulatedDrawn = new ArrayList<>();
+    
+        while (paradeIndex >= 0) {
+            Card currentCard = paradeLine.get(paradeIndex);
+            if (currentCard.getColour().equals(chosen.getColour()) || currentCard.getValue() <= playedValue) {
+                simulatedDrawn.add(currentCard);  // Simulate without removing
+            }
+            paradeIndex--;
+        }
+        return simulatedDrawn;
+    }
+    
     
     public List<Card> getParadeLine(){
         return paradeLine;

@@ -1,4 +1,5 @@
 package player;
+
 import java.util.*;
 
 import models.Card;
@@ -15,24 +16,25 @@ public class aiPlayer extends Player {
         this.difficulty = difficulty;
 
         Random rand = new Random();
-        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry", "Jason"};
-        
-        // Pick a random name and ensure it's not already used by another AI player from static attribute hashset
+        String[] Names = { "John", "Jane", "Alex", "Chris", "Emma", "Olivia", "Liam", "Sophia", "Mary", "Gary", "Jerry",
+                "Jason" };
+
+        // Pick a random name and ensure it's not already used by another AI player from
+        // static attribute hashset
         String name;
         do {
             name = Names[rand.nextInt(Names.length)];
-        } while (usedNames.contains(name));  // If the name has already been used, pick another
+        } while (usedNames.contains(name)); // If the name has already been used, pick another
 
         // Add the name to the set of used names to avoid duplicates
         usedNames.add(name);
 
         // Set the name with green color and bold
         name = "\033[1m\033[38;2;0;153;0m" + name + "(" + difficulty + ")";
-        
+
         super.setName(name);
         super.setAI(true);
     }
-
 
     public Card chooseCard(Parade parade) {
         Card chosen;
@@ -55,6 +57,7 @@ public class aiPlayer extends Player {
         // Return the chosen card to be added to the parade
         return chosen;
     }
+
     public Card discardCard() {
         List<Card> hand = getHand();
 
@@ -68,7 +71,6 @@ public class aiPlayer extends Player {
         super.getHand().remove(largestCard);
         return largestCard;
     }
-    
 
     private Card calculateEasyMove() {
         List<Card> hand = getHand();
@@ -81,38 +83,38 @@ public class aiPlayer extends Player {
         return smallestCard;
     }
 
+    // private Card calculateNormalMove(Parade parade) {
+    //     List<Card> hand = getHand();
+    //     int paradeSize = parade.getParadeLine().size();
+    //     Card bestCard = null;
+    //     int bestValue = Integer.MAX_VALUE;
+    //     boolean found = false;
+    //     Card highestCard = hand.get(0);
+    //     int highestValue = highestCard.getValue();
+
+    //     for (Card card : hand) {
+    //         int value = card.getValue();
+
+    //         if (value > highestValue) {
+    //             highestValue = value;
+    //             highestCard = card;
+    //         }
+
+    //         if (value >= paradeSize && value < bestValue) {
+    //             bestValue = value;
+    //             bestCard = card;
+    //             found = true;
+    //         }
+    //     }
+
+    //     if (!found) {
+    //         return highestCard;
+    //     }
+
+    //     return bestCard;
+    // }
+
     private Card calculateNormalMove(Parade parade) {
-        List<Card> hand = getHand();
-        int paradeSize = parade.getParadeLine().size();
-        Card bestCard = null;
-        int bestValue = Integer.MAX_VALUE;
-        boolean found = false;
-        Card highestCard = hand.get(0);
-        int highestValue = highestCard.getValue();
-
-        for (Card card : hand) {
-            int value = card.getValue();
-
-            if (value > highestValue) {
-                highestValue = value;
-                highestCard = card;
-            }
-
-            if (value >= paradeSize && value < bestValue) {
-                bestValue = value;
-                bestCard = card;
-                found = true;
-            }
-        }
-
-        if (!found) {
-            return highestCard;
-        }
-
-        return bestCard;
-    }
-
-    private Card calculateHardMove(Parade parade) {
         List<Card> hand = getHand();
         int paradeSize = parade.getParadeLine().size();
         Card bestCard = null;
@@ -122,7 +124,7 @@ public class aiPlayer extends Player {
         int highestValue = highestCard.getValue();
         String mostColour = findMajorityColour(parade.getParadeLine());
 
-        for (Card card: hand) {
+        for (Card card : hand) {
             int value = card.getValue();
             String colour = card.getColour();
 
@@ -147,7 +149,7 @@ public class aiPlayer extends Player {
 
         return bestCard;
     }
-    
+
     public String findMajorityColour(List<Card> cards) {
         // set each color count to 0
         int redCount = 0;
@@ -156,11 +158,11 @@ public class aiPlayer extends Player {
         int blueCount = 0;
         int greyCount = 0;
         int purpleCount = 0;
-        
+
         // count total number of each card colours
         for (Card card : cards) {
             String color = card.getColour();
-            if (color.equals("Red")){
+            if (color.equals("Red")) {
                 redCount++;
             } else if (color.equals("Green")) {
                 greenCount++;
@@ -170,13 +172,14 @@ public class aiPlayer extends Player {
                 blueCount++;
             } else if (color.equals("Grey")) {
                 greyCount++;
-            } else if (color.equals("Purple")){
+            } else if (color.equals("Purple")) {
                 purpleCount++;
             }
         }
-        
-        int[] count = {redCount, greenCount, orangeCount, blueCount, greyCount, purpleCount};
-        String[] colours = {"Red", "Green", "Orange", "Blue", "Grey", "Purple"};
+
+        int[] count = { redCount, greenCount, orangeCount, blueCount, greyCount,
+                purpleCount };
+        String[] colours = { "Red", "Green", "Orange", "Blue", "Grey", "Purple" };
         int maxIndex = 0;
         for (int i = 1; i < count.length; i++) {
             if (count[i] > count[maxIndex]) {
@@ -186,15 +189,31 @@ public class aiPlayer extends Player {
         return colours[maxIndex];
     }
 
+    private Card calculateHardMove(Parade parade) {
+        List<Card> hand = getHand();
+        Card bestCard = hand.get(0);
+        int leastCardsDrawn = parade.simulateRemovedFromParade(bestCard).size();
+
+        for (Card card : hand) {
+            int numCardsDrawn = parade.simulateRemovedFromParade(card).size();
+            if (numCardsDrawn < leastCardsDrawn) {
+                leastCardsDrawn = numCardsDrawn;
+                bestCard = card;
+            }
+        }
+        return bestCard;
+    }
+
     public void endingTurnPrint(List<Card> paradeDrawn, Card top) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(colourResetCode + "\n----- " + super.getName() + colourResetCode + "'s Turn Overview -----\n");
+        System.out
+                .println(colourResetCode + "\n----- " + super.getName() + colourResetCode + "'s Turn Overview -----\n");
 
         // print player card piles
         printPlayerCardPile();
 
         System.out.print(colourResetCode + "Press Enter to end CPU turn > ");
         sc.nextLine();
-    
+
     }
 }
