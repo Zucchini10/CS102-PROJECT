@@ -83,37 +83,6 @@ public class aiPlayer extends Player {
         return smallestCard;
     }
 
-    // private Card calculateNormalMove(Parade parade) {
-    //     List<Card> hand = getHand();
-    //     int paradeSize = parade.getParadeLine().size();
-    //     Card bestCard = null;
-    //     int bestValue = Integer.MAX_VALUE;
-    //     boolean found = false;
-    //     Card highestCard = hand.get(0);
-    //     int highestValue = highestCard.getValue();
-
-    //     for (Card card : hand) {
-    //         int value = card.getValue();
-
-    //         if (value > highestValue) {
-    //             highestValue = value;
-    //             highestCard = card;
-    //         }
-
-    //         if (value >= paradeSize && value < bestValue) {
-    //             bestValue = value;
-    //             bestCard = card;
-    //             found = true;
-    //         }
-    //     }
-
-    //     if (!found) {
-    //         return highestCard;
-    //     }
-
-    //     return bestCard;
-    // }
-
     private Card calculateNormalMove(Parade parade) {
         List<Card> hand = getHand();
         int paradeSize = parade.getParadeLine().size();
@@ -177,6 +146,7 @@ public class aiPlayer extends Player {
             }
         }
 
+        //compares the number of each color
         int[] count = { redCount, greenCount, orangeCount, blueCount, greyCount,
                 purpleCount };
         String[] colours = { "Red", "Green", "Orange", "Blue", "Grey", "Purple" };
