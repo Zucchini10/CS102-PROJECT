@@ -1,1 +1,1 @@
-java -cp "classes" src.App
+java -cp "classes" App

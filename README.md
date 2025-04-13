@@ -1,6 +1,7 @@
 #CS102-PROJECT G1TX
 
 This project is our terminal-based adaptation of the card game Parade, designed to be played locally on a single device.
+Our main method is on src/App.java. To start game, please run ./compile.bat and ./run.bat
 
 Assumptions:
 
@@ -15,4 +16,5 @@ Things to Note:
 - The game will not display the CPU's hand / card drawn from deck, only his player card piles
 - For the best experience, play with the terminal fully expanded.
 - Sometimes the display may exceed the space given and the player is required to scroll up to see all his cards
-- The game does not support networking and does not use images 
+- The game does not support networking and does not use images
+- Our Test.java contains another main method used for testing purposes to check for edge cases. By passing in playerlist and a parade, can check if our code works for different scenarios. The code has been commented out. Run this code to run Test.java : javac -d "classes" -cp "src" src/Test.java ; java -cp "classes" src.App

@@ -1,5 +1,3 @@
-package src;
-
 import game.Game;
 
 public class App {

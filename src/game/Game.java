@@ -18,12 +18,12 @@ public class Game {
     private String colourResetCode = "\033[0m\033[1m";
 
     // for testing purposes
-    public Game(List<Player> players, Parade parade, int num) {
+    public Game(List<Player> players, Parade parade) {
         isEndGame = true;
         this.playerList = players;
         this.parade = parade;
         deck = new Deck();
-        totalPlayers = num;
+        totalPlayers = players.size();
 
         if (totalPlayers == 2) {
             pc = new PointsCalculator2P(playerList);
