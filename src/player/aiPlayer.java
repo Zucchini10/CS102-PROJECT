@@ -51,7 +51,7 @@ public class aiPlayer extends Player {
         // print the card that CPU plays
         System.out.println(super.getName() + colourResetCode + " chosen card: ");
         chosen.printCard();
-        // Remove the chosen card from AI's hand after playing
+        // Remove the chosen card from CPU's hand after playing
         super.getHand().remove(chosen);
 
         // Return the chosen card to be added to the parade
@@ -72,6 +72,7 @@ public class aiPlayer extends Player {
         return largestCard;
     }
 
+    // plays whatever smallest card that the CPU has in its hand
     private Card calculateEasyMove() {
         List<Card> hand = getHand();
         Card smallestCard = hand.get(0);
@@ -83,6 +84,8 @@ public class aiPlayer extends Player {
         return smallestCard;
     }
 
+    // CPU plays the lowest value card that is still safe (value >= parade size) and does not match the most frequent parade colour.
+    // If all cards are risky, it falls back to highest value card
     private Card calculateNormalMove(Parade parade) {
         List<Card> hand = getHand();
         int paradeSize = parade.getParadeLine().size();
@@ -146,7 +149,7 @@ public class aiPlayer extends Player {
             }
         }
 
-        //compares the number of each color
+        // compares the number of each colour and return card with most colours
         int[] count = { redCount, greenCount, orangeCount, blueCount, greyCount,
                 purpleCount };
         String[] colours = { "Red", "Green", "Orange", "Blue", "Grey", "Purple" };
